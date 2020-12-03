@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>IOT - Group 7</title>
+    <title>Quản lý học sinh</title>
 
     <!-- Custom fonts for this template-->
     <link href="~/asset/template/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -97,10 +97,21 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" asp-area="" asp-controller="" asp-action="">
-                    <i class="fas fa-columns"></i>
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSummary" aria-expanded="true" aria-controls="collapseSummary">
+                    <i class="fas fa-fw fa-columns"></i>
                     <span>Thống kê</span>
                 </a>
+                <div id="collapseSummary" class="collapse" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" asp-area="" asp-controller="" asp-action="">
+                            Học Kỳ
+                        </a>
+                        <a class="collapse-item" asp-area="" asp-controller="" asp-action="">
+                            Cả Năm
+                        </a>    
+                    </div>
+
+                </div>
             </li>
             <li class="nav-item">
                 <a class="nav-link" asp-area="" asp-controller="" asp-action="">
@@ -198,7 +209,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; IOT Management 2020</span>
+                        <span>Copyright &copy; Group 10 - 2020</span>
                     </div>
                 </div>
             </footer>
