@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace StudentManagement.Models.Models
+namespace StudentManagement.Models
 {
     public partial class RecordSubject
     {
         public RecordSubject()
         {
-            ScoredRecordSubject = new HashSet<ScoredRecordSubject>();
+            ScoreRecordSubject = new HashSet<ScoreRecordSubject>();
         }
 
         public string Id { get; set; }
@@ -19,6 +19,6 @@ namespace StudentManagement.Models.Models
 
         public virtual Class Class { get; set; }
         public virtual Student Student { get; set; }
-        public virtual ICollection<ScoredRecordSubject> ScoredRecordSubject { get; set; }
+        public virtual ICollection<ScoreRecordSubject> ScoreRecordSubject { get; set; }
     }
 }

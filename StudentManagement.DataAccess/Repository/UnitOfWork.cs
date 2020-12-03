@@ -13,9 +13,24 @@ namespace StudentManagement.DataAccess.Repository
         {
             _db = db;
             ApplicationUser = new ApplicationUserRepository(_db);
+            Class = new ClassRepository(_db);
+            ClassStudent = new ClassStudentRepository(_db);
+            RecordSubject = new RecordSubjectRepository(_db);
+            ScoreRecordSubject = new ScoreRecordSubjectRepository(_db);
+            Student = new StudentRepository(_db);
+            SummarySubject = new SummarySubjectRepository(_db);
+            SummarySubjectSemeter = new SummarySubjectSemeterRepository(_db);
             SP_Call = new SP_Call(_db);
         }
         public IApplicationUserRepository ApplicationUser { get; private set; }
+        public IClassRepository Class { get; private set; }
+        public IClassStudentRepository ClassStudent { get; private set; }
+        public IRecordSubjectRepository RecordSubject { get; private set; }
+        public IScoreRecordSubjectRepository ScoreRecordSubject { get; private set; }
+        public IStudentRepository Student { get; private set; }
+        public ISummarySubjectRepository SummarySubject { get; private set; }
+        public ISummarySubjectSemeterRepository SummarySubjectSemeter { get; private set; }
+
         public ISP_Call SP_Call { get; private set; }
 
         public void Dispose()

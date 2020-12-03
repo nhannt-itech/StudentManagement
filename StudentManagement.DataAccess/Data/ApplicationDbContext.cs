@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using StudentManagement.Models;
-using StudentManagement.Models.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -18,7 +17,7 @@ namespace StudentManagement.DataAccess.Data
         public virtual DbSet<Class> Class { get; set; }
         public virtual DbSet<ClassStudent> ClassStudent { get; set; }
         public virtual DbSet<RecordSubject> RecordSubject { get; set; }
-        public virtual DbSet<ScoredRecordSubject> ScoredRecordSubject { get; set; }
+        public virtual DbSet<ScoreRecordSubject> ScoreRecordSubject { get; set; }
         public virtual DbSet<Student> Student { get; set; }
         public virtual DbSet<SummarySubject> SummarySubject { get; set; }
         public virtual DbSet<SummarySubjectSemeter> SummarySubjectSemeter { get; set; }
@@ -69,14 +68,14 @@ namespace StudentManagement.DataAccess.Data
                     .HasConstraintName("FK__Record_Su__Stude__2E1BDC42");
             });
 
-            modelBuilder.Entity<ScoredRecordSubject>(entity =>
+            modelBuilder.Entity<ScoreRecordSubject>(entity =>
             {
-                entity.ToTable("Scored_Record_Subject");
+                entity.ToTable("Score_Record_Subject");
 
                 entity.HasOne(d => d.RecordSubject)
-                    .WithMany(p => p.ScoredRecordSubject)
+                    .WithMany(p => p.ScoreRecordSubject)
                     .HasForeignKey(d => d.RecordSubjectId)
-                    .HasConstraintName("FK__Scored_Re__Recor__30F848ED");
+                    .HasConstraintName("FK__Score_Re__Recor__30F848ED");
             });
 
             modelBuilder.Entity<Student>(entity =>
