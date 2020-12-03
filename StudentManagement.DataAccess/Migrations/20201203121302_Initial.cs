@@ -51,6 +51,38 @@ namespace StudentManagement.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Class",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    Year = table.Column<string>(nullable: true),
+                    NumStudents = table.Column<int>(nullable: true),
+                    Grade = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Class", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Student",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    Gender = table.Column<string>(nullable: true),
+                    Birth = table.Column<DateTime>(type: "datetime", nullable: true),
+                    Address = table.Column<string>(nullable: true),
+                    Email = table.Column<string>(nullable: true),
+                    YearToSchool = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Student", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -156,6 +188,121 @@ namespace StudentManagement.DataAccess.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Summary_Subject",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    SubjectName = table.Column<string>(nullable: true),
+                    ClassId = table.Column<string>(nullable: true),
+                    PassQuantity = table.Column<int>(nullable: true),
+                    Percentage = table.Column<float>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Summary_Subject", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK__Summary_S__Class__38996AB5",
+                        column: x => x.ClassId,
+                        principalTable: "Class",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Summary_Subject_Semeter",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    SubjectName = table.Column<string>(nullable: true),
+                    ClassId = table.Column<string>(nullable: true),
+                    Semeter = table.Column<int>(nullable: true),
+                    PassQuantity = table.Column<int>(nullable: true),
+                    Percentage = table.Column<float>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Summary_Subject_Semeter", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK__Summary_S__Class__34C8D9D1",
+                        column: x => x.ClassId,
+                        principalTable: "Class",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Class_Student",
+                columns: table => new
+                {
+                    ClassId = table.Column<string>(nullable: false),
+                    StudentId = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK__Class_St__48357579DF6EC238", x => new { x.ClassId, x.StudentId });
+                    table.ForeignKey(
+                        name: "FK__Class_Stu__Class__286302EC",
+                        column: x => x.ClassId,
+                        principalTable: "Class",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK__Class_Stu__Stude__29572725",
+                        column: x => x.StudentId,
+                        principalTable: "Student",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Record_Subject",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    SubjectName = table.Column<string>(nullable: true),
+                    ClassId = table.Column<string>(nullable: true),
+                    StudentId = table.Column<string>(nullable: true),
+                    Semeter = table.Column<int>(nullable: true),
+                    Average = table.Column<float>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Record_Subject", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK__Record_Su__Class__2D27B809",
+                        column: x => x.ClassId,
+                        principalTable: "Class",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK__Record_Su__Stude__2E1BDC42",
+                        column: x => x.StudentId,
+                        principalTable: "Student",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Scored_Record_Subject",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    RecordSubjectId = table.Column<string>(nullable: true),
+                    RecordType = table.Column<string>(nullable: true),
+                    Scored = table.Column<float>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Scored_Record_Subject", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK__Scored_Re__Recor__30F848ED",
+                        column: x => x.RecordSubjectId,
+                        principalTable: "Record_Subject",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -194,6 +341,57 @@ namespace StudentManagement.DataAccess.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Class_Student_StudentId",
+                table: "Class_Student",
+                column: "StudentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Record_Subject_ClassId",
+                table: "Record_Subject",
+                column: "ClassId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Record_Subject_StudentId",
+                table: "Record_Subject",
+                column: "StudentId");
+
+            migrationBuilder.CreateIndex(
+                name: "UQ__Record_S__CA821CD02A967351",
+                table: "Record_Subject",
+                columns: new[] { "SubjectName", "Semeter", "ClassId", "StudentId" },
+                unique: true,
+                filter: "[SubjectName] IS NOT NULL AND [Semeter] IS NOT NULL AND [ClassId] IS NOT NULL AND [StudentId] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Scored_Record_Subject_RecordSubjectId",
+                table: "Scored_Record_Subject",
+                column: "RecordSubjectId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Summary_Subject_ClassId",
+                table: "Summary_Subject",
+                column: "ClassId");
+
+            migrationBuilder.CreateIndex(
+                name: "UQ__Summary___F5B4DD73D003A2C0",
+                table: "Summary_Subject",
+                columns: new[] { "SubjectName", "ClassId" },
+                unique: true,
+                filter: "[SubjectName] IS NOT NULL AND [ClassId] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Summary_Subject_Semeter_ClassId",
+                table: "Summary_Subject_Semeter",
+                column: "ClassId");
+
+            migrationBuilder.CreateIndex(
+                name: "UQ__Summary___73013082B281F30A",
+                table: "Summary_Subject_Semeter",
+                columns: new[] { "SubjectName", "Semeter", "ClassId" },
+                unique: true,
+                filter: "[SubjectName] IS NOT NULL AND [Semeter] IS NOT NULL AND [ClassId] IS NOT NULL");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -214,10 +412,31 @@ namespace StudentManagement.DataAccess.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Class_Student");
+
+            migrationBuilder.DropTable(
+                name: "Scored_Record_Subject");
+
+            migrationBuilder.DropTable(
+                name: "Summary_Subject");
+
+            migrationBuilder.DropTable(
+                name: "Summary_Subject_Semeter");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Record_Subject");
+
+            migrationBuilder.DropTable(
+                name: "Class");
+
+            migrationBuilder.DropTable(
+                name: "Student");
         }
     }
 }

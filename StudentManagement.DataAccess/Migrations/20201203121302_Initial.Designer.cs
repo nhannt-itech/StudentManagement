@@ -10,7 +10,7 @@ using StudentManagement.DataAccess.Data;
 namespace StudentManagement.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201202143255_Initial")]
+    [Migration("20201203121302_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -223,6 +223,188 @@ namespace StudentManagement.DataAccess.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("StudentManagement.Models.Models.Class", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int?>("Grade")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("NumStudents")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Year")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Class");
+                });
+
+            modelBuilder.Entity("StudentManagement.Models.Models.ClassStudent", b =>
+                {
+                    b.Property<string>("ClassId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("StudentId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("ClassId", "StudentId")
+                        .HasName("PK__Class_St__48357579DF6EC238");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("Class_Student");
+                });
+
+            modelBuilder.Entity("StudentManagement.Models.Models.RecordSubject", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<float?>("Average")
+                        .HasColumnType("real");
+
+                    b.Property<string>("ClassId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int?>("Semeter")
+                        .HasColumnType("int");
+
+                    b.Property<string>("StudentId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("SubjectName")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClassId");
+
+                    b.HasIndex("StudentId");
+
+                    b.HasIndex("SubjectName", "Semeter", "ClassId", "StudentId")
+                        .IsUnique()
+                        .HasName("UQ__Record_S__CA821CD02A967351")
+                        .HasFilter("[SubjectName] IS NOT NULL AND [Semeter] IS NOT NULL AND [ClassId] IS NOT NULL AND [StudentId] IS NOT NULL");
+
+                    b.ToTable("Record_Subject");
+                });
+
+            modelBuilder.Entity("StudentManagement.Models.Models.ScoredRecordSubject", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("RecordSubjectId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("RecordType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<float?>("Scored")
+                        .HasColumnType("real");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RecordSubjectId");
+
+                    b.ToTable("Scored_Record_Subject");
+                });
+
+            modelBuilder.Entity("StudentManagement.Models.Models.Student", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("Birth")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Gender")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("YearToSchool")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Student");
+                });
+
+            modelBuilder.Entity("StudentManagement.Models.Models.SummarySubject", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ClassId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int?>("PassQuantity")
+                        .HasColumnType("int");
+
+                    b.Property<float?>("Percentage")
+                        .HasColumnType("real");
+
+                    b.Property<string>("SubjectName")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClassId");
+
+                    b.HasIndex("SubjectName", "ClassId")
+                        .IsUnique()
+                        .HasName("UQ__Summary___F5B4DD73D003A2C0")
+                        .HasFilter("[SubjectName] IS NOT NULL AND [ClassId] IS NOT NULL");
+
+                    b.ToTable("Summary_Subject");
+                });
+
+            modelBuilder.Entity("StudentManagement.Models.Models.SummarySubjectSemeter", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ClassId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int?>("PassQuantity")
+                        .HasColumnType("int");
+
+                    b.Property<float?>("Percentage")
+                        .HasColumnType("real");
+
+                    b.Property<int?>("Semeter")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SubjectName")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClassId");
+
+                    b.HasIndex("SubjectName", "Semeter", "ClassId")
+                        .IsUnique()
+                        .HasName("UQ__Summary___73013082B281F30A")
+                        .HasFilter("[SubjectName] IS NOT NULL AND [Semeter] IS NOT NULL AND [ClassId] IS NOT NULL");
+
+                    b.ToTable("Summary_Subject_Semeter");
+                });
+
             modelBuilder.Entity("StudentManagement.Models.ApplicationUser", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
@@ -288,6 +470,58 @@ namespace StudentManagement.DataAccess.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("StudentManagement.Models.Models.ClassStudent", b =>
+                {
+                    b.HasOne("StudentManagement.Models.Models.Class", "Class")
+                        .WithMany("ClassStudent")
+                        .HasForeignKey("ClassId")
+                        .HasConstraintName("FK__Class_Stu__Class__286302EC")
+                        .IsRequired();
+
+                    b.HasOne("StudentManagement.Models.Models.Student", "Student")
+                        .WithMany("ClassStudent")
+                        .HasForeignKey("StudentId")
+                        .HasConstraintName("FK__Class_Stu__Stude__29572725")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("StudentManagement.Models.Models.RecordSubject", b =>
+                {
+                    b.HasOne("StudentManagement.Models.Models.Class", "Class")
+                        .WithMany("RecordSubject")
+                        .HasForeignKey("ClassId")
+                        .HasConstraintName("FK__Record_Su__Class__2D27B809");
+
+                    b.HasOne("StudentManagement.Models.Models.Student", "Student")
+                        .WithMany("RecordSubject")
+                        .HasForeignKey("StudentId")
+                        .HasConstraintName("FK__Record_Su__Stude__2E1BDC42");
+                });
+
+            modelBuilder.Entity("StudentManagement.Models.Models.ScoredRecordSubject", b =>
+                {
+                    b.HasOne("StudentManagement.Models.Models.RecordSubject", "RecordSubject")
+                        .WithMany("ScoredRecordSubject")
+                        .HasForeignKey("RecordSubjectId")
+                        .HasConstraintName("FK__Scored_Re__Recor__30F848ED");
+                });
+
+            modelBuilder.Entity("StudentManagement.Models.Models.SummarySubject", b =>
+                {
+                    b.HasOne("StudentManagement.Models.Models.Class", "Class")
+                        .WithMany("SummarySubject")
+                        .HasForeignKey("ClassId")
+                        .HasConstraintName("FK__Summary_S__Class__38996AB5");
+                });
+
+            modelBuilder.Entity("StudentManagement.Models.Models.SummarySubjectSemeter", b =>
+                {
+                    b.HasOne("StudentManagement.Models.Models.Class", "Class")
+                        .WithMany("SummarySubjectSemeter")
+                        .HasForeignKey("ClassId")
+                        .HasConstraintName("FK__Summary_S__Class__34C8D9D1");
                 });
 #pragma warning restore 612, 618
         }
