@@ -23,8 +23,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Teacher\Controllers\" />
-    <Folder Include="Areas\Teacher\Views\" />
     <Folder Include="Controllers\" />
     <Folder Include="wwwroot\asset\img\users\" />
   </ItemGroup>
