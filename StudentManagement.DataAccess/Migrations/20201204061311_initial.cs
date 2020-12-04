@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace StudentManagement.DataAccess.Migrations
 {
-    public partial class Initial : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -189,18 +189,18 @@ namespace StudentManagement.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Summary_Subject",
+                name: "Summary",
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
-                    SubjectName = table.Column<string>(nullable: true),
                     ClassId = table.Column<string>(nullable: true),
+                    Semeter = table.Column<int>(nullable: true),
                     PassQuantity = table.Column<int>(nullable: true),
                     Percentage = table.Column<float>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Summary_Subject", x => x.Id);
+                    table.PrimaryKey("PK_Summary", x => x.Id);
                     table.ForeignKey(
                         name: "FK__Summary_S__Class__38996AB5",
                         column: x => x.ClassId,
@@ -210,7 +210,7 @@ namespace StudentManagement.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Summary_Subject_Semeter",
+                name: "Summary_Subject",
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
@@ -222,7 +222,7 @@ namespace StudentManagement.DataAccess.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Summary_Subject_Semeter", x => x.Id);
+                    table.PrimaryKey("PK_Summary_Subject", x => x.Id);
                     table.ForeignKey(
                         name: "FK__Summary_S__Class__34C8D9D1",
                         column: x => x.ClassId,
@@ -284,19 +284,19 @@ namespace StudentManagement.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Scored_Record_Subject",
+                name: "Score_Record_Subject",
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
                     RecordSubjectId = table.Column<string>(nullable: true),
                     RecordType = table.Column<string>(nullable: true),
-                    Scored = table.Column<float>(nullable: true)
+                    Score = table.Column<float>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Scored_Record_Subject", x => x.Id);
+                    table.PrimaryKey("PK_Score_Record_Subject", x => x.Id);
                     table.ForeignKey(
-                        name: "FK__Scored_Re__Recor__30F848ED",
+                        name: "FK__Score_Re__Recor__30F848ED",
                         column: x => x.RecordSubjectId,
                         principalTable: "Record_Subject",
                         principalColumn: "Id",
@@ -365,9 +365,21 @@ namespace StudentManagement.DataAccess.Migrations
                 filter: "[SubjectName] IS NOT NULL AND [Semeter] IS NOT NULL AND [ClassId] IS NOT NULL AND [StudentId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Scored_Record_Subject_RecordSubjectId",
-                table: "Scored_Record_Subject",
+                name: "IX_Score_Record_Subject_RecordSubjectId",
+                table: "Score_Record_Subject",
                 column: "RecordSubjectId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Summary_ClassId",
+                table: "Summary",
+                column: "ClassId");
+
+            migrationBuilder.CreateIndex(
+                name: "UQ__Summary___F5B4DD73D003A2C0",
+                table: "Summary",
+                columns: new[] { "Semeter", "ClassId" },
+                unique: true,
+                filter: "[Semeter] IS NOT NULL AND [ClassId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Summary_Subject_ClassId",
@@ -375,20 +387,8 @@ namespace StudentManagement.DataAccess.Migrations
                 column: "ClassId");
 
             migrationBuilder.CreateIndex(
-                name: "UQ__Summary___F5B4DD73D003A2C0",
-                table: "Summary_Subject",
-                columns: new[] { "SubjectName", "ClassId" },
-                unique: true,
-                filter: "[SubjectName] IS NOT NULL AND [ClassId] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Summary_Subject_Semeter_ClassId",
-                table: "Summary_Subject_Semeter",
-                column: "ClassId");
-
-            migrationBuilder.CreateIndex(
                 name: "UQ__Summary___73013082B281F30A",
-                table: "Summary_Subject_Semeter",
+                table: "Summary_Subject",
                 columns: new[] { "SubjectName", "Semeter", "ClassId" },
                 unique: true,
                 filter: "[SubjectName] IS NOT NULL AND [Semeter] IS NOT NULL AND [ClassId] IS NOT NULL");
@@ -415,13 +415,13 @@ namespace StudentManagement.DataAccess.Migrations
                 name: "Class_Student");
 
             migrationBuilder.DropTable(
-                name: "Scored_Record_Subject");
+                name: "Score_Record_Subject");
+
+            migrationBuilder.DropTable(
+                name: "Summary");
 
             migrationBuilder.DropTable(
                 name: "Summary_Subject");
-
-            migrationBuilder.DropTable(
-                name: "Summary_Subject_Semeter");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

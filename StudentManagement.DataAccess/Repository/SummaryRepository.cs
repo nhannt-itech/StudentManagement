@@ -7,17 +7,17 @@ using System.Text;
 
 namespace StudentManagement.DataAccess.Repository
 {
-    public class SummarySubjectSemeterRepository : Repository<SummarySubjectSemeter>, ISummarySubjectSemeterRepository
+    public class SummaryRepository : Repository<Summary>, ISummaryRepository
     {
         private readonly ApplicationDbContext _db;
-        public SummarySubjectSemeterRepository(ApplicationDbContext db) : base(db)
+        public SummaryRepository(ApplicationDbContext db) : base(db)
         {
             _db = db;
         }
 
-        public void Update(SummarySubjectSemeter summarySubjectSemeter)
+        public void Update(Summary summary)
         {
-            _db.Update(summarySubjectSemeter);
+            _db.Update(summary);
         }
     }
 }

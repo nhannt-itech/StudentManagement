@@ -19,8 +19,8 @@ namespace StudentManagement.DataAccess.Data
         public virtual DbSet<RecordSubject> RecordSubject { get; set; }
         public virtual DbSet<ScoreRecordSubject> ScoreRecordSubject { get; set; }
         public virtual DbSet<Student> Student { get; set; }
+        public virtual DbSet<Summary> Summary { get; set; }
         public virtual DbSet<SummarySubject> SummarySubject { get; set; }
-        public virtual DbSet<SummarySubjectSemeter> SummarySubjectSemeter { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -83,30 +83,30 @@ namespace StudentManagement.DataAccess.Data
                 entity.Property(e => e.Birth).HasColumnType("datetime");
             });
 
-            modelBuilder.Entity<SummarySubject>(entity =>
+            modelBuilder.Entity<Summary>(entity =>
             {
-                entity.ToTable("Summary_Subject");
+                entity.ToTable("Summary");
 
-                entity.HasIndex(e => new { e.SubjectName, e.ClassId })
+                entity.HasIndex(e => new { e.Semeter, e.ClassId })
                     .HasName("UQ__Summary___F5B4DD73D003A2C0")
                     .IsUnique();
 
                 entity.HasOne(d => d.Class)
-                    .WithMany(p => p.SummarySubject)
+                    .WithMany(p => p.Summary)
                     .HasForeignKey(d => d.ClassId)
                     .HasConstraintName("FK__Summary_S__Class__38996AB5");
             });
 
-            modelBuilder.Entity<SummarySubjectSemeter>(entity =>
+            modelBuilder.Entity<SummarySubject>(entity =>
             {
-                entity.ToTable("Summary_Subject_Semeter");
+                entity.ToTable("Summary_Subject");
 
                 entity.HasIndex(e => new { e.SubjectName, e.Semeter, e.ClassId })
                     .HasName("UQ__Summary___73013082B281F30A")
                     .IsUnique();
 
                 entity.HasOne(d => d.Class)
-                    .WithMany(p => p.SummarySubjectSemeter)
+                    .WithMany(p => p.SummarySubject)
                     .HasForeignKey(d => d.ClassId)
                     .HasConstraintName("FK__Summary_S__Class__34C8D9D1");
             });

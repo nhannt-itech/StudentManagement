@@ -12,8 +12,8 @@ namespace StudentManagement.DataAccess.Repository.IRepository
         IRecordSubjectRepository RecordSubject { get; }
         IScoreRecordSubjectRepository ScoreRecordSubject { get; }
         IStudentRepository Student { get; }
+        ISummaryRepository Summary { get; }
         ISummarySubjectRepository SummarySubject { get; }
-        ISummarySubjectSemeterRepository SummarySubjectSemeter { get; }
 
         ISP_Call SP_Call { get; }
         void Save();

@@ -9,8 +9,8 @@ namespace StudentManagement.Models
         {
             ClassStudent = new HashSet<ClassStudent>();
             RecordSubject = new HashSet<RecordSubject>();
+            Summary = new HashSet<Summary>();
             SummarySubject = new HashSet<SummarySubject>();
-            SummarySubjectSemeter = new HashSet<SummarySubjectSemeter>();
         }
 
         public string Id { get; set; }
@@ -21,7 +21,7 @@ namespace StudentManagement.Models
 
         public virtual ICollection<ClassStudent> ClassStudent { get; set; }
         public virtual ICollection<RecordSubject> RecordSubject { get; set; }
+        public virtual ICollection<Summary> Summary { get; set; }
         public virtual ICollection<SummarySubject> SummarySubject { get; set; }
-        public virtual ICollection<SummarySubjectSemeter> SummarySubjectSemeter { get; set; }
     }
 }

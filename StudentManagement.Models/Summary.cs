@@ -3,10 +3,10 @@ using System.Collections.Generic;
 
 namespace StudentManagement.Models
 {
-    public partial class SummarySubjectSemeter
+    public partial class Summary
     {
         public string Id { get; set; }
-        public string SubjectName { get; set; }
+
         public string ClassId { get; set; }
         public int? Semeter { get; set; }
         public int? PassQuantity { get; set; }

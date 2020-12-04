@@ -221,7 +221,7 @@ namespace StudentManagement.DataAccess.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("StudentManagement.Models.Models.Class", b =>
+            modelBuilder.Entity("StudentManagement.Models.Class", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -243,7 +243,7 @@ namespace StudentManagement.DataAccess.Migrations
                     b.ToTable("Class");
                 });
 
-            modelBuilder.Entity("StudentManagement.Models.Models.ClassStudent", b =>
+            modelBuilder.Entity("StudentManagement.Models.ClassStudent", b =>
                 {
                     b.Property<string>("ClassId")
                         .HasColumnType("nvarchar(450)");
@@ -259,7 +259,7 @@ namespace StudentManagement.DataAccess.Migrations
                     b.ToTable("Class_Student");
                 });
 
-            modelBuilder.Entity("StudentManagement.Models.Models.RecordSubject", b =>
+            modelBuilder.Entity("StudentManagement.Models.RecordSubject", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -293,7 +293,7 @@ namespace StudentManagement.DataAccess.Migrations
                     b.ToTable("Record_Subject");
                 });
 
-            modelBuilder.Entity("StudentManagement.Models.Models.ScoredRecordSubject", b =>
+            modelBuilder.Entity("StudentManagement.Models.ScoreRecordSubject", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -304,17 +304,17 @@ namespace StudentManagement.DataAccess.Migrations
                     b.Property<string>("RecordType")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<float?>("Scored")
+                    b.Property<float?>("Score")
                         .HasColumnType("real");
 
                     b.HasKey("Id");
 
                     b.HasIndex("RecordSubjectId");
 
-                    b.ToTable("Scored_Record_Subject");
+                    b.ToTable("Score_Record_Subject");
                 });
 
-            modelBuilder.Entity("StudentManagement.Models.Models.Student", b =>
+            modelBuilder.Entity("StudentManagement.Models.Student", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -342,7 +342,7 @@ namespace StudentManagement.DataAccess.Migrations
                     b.ToTable("Student");
                 });
 
-            modelBuilder.Entity("StudentManagement.Models.Models.SummarySubject", b =>
+            modelBuilder.Entity("StudentManagement.Models.Summary", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -356,22 +356,22 @@ namespace StudentManagement.DataAccess.Migrations
                     b.Property<float?>("Percentage")
                         .HasColumnType("real");
 
-                    b.Property<string>("SubjectName")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int?>("Semeter")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ClassId");
 
-                    b.HasIndex("SubjectName", "ClassId")
+                    b.HasIndex("Semeter", "ClassId")
                         .IsUnique()
                         .HasName("UQ__Summary___F5B4DD73D003A2C0")
-                        .HasFilter("[SubjectName] IS NOT NULL AND [ClassId] IS NOT NULL");
+                        .HasFilter("[Semeter] IS NOT NULL AND [ClassId] IS NOT NULL");
 
-                    b.ToTable("Summary_Subject");
+                    b.ToTable("Summary");
                 });
 
-            modelBuilder.Entity("StudentManagement.Models.Models.SummarySubjectSemeter", b =>
+            modelBuilder.Entity("StudentManagement.Models.SummarySubject", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -400,7 +400,7 @@ namespace StudentManagement.DataAccess.Migrations
                         .HasName("UQ__Summary___73013082B281F30A")
                         .HasFilter("[SubjectName] IS NOT NULL AND [Semeter] IS NOT NULL AND [ClassId] IS NOT NULL");
 
-                    b.ToTable("Summary_Subject_Semeter");
+                    b.ToTable("Summary_Subject");
                 });
 
             modelBuilder.Entity("StudentManagement.Models.ApplicationUser", b =>
@@ -470,54 +470,54 @@ namespace StudentManagement.DataAccess.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("StudentManagement.Models.Models.ClassStudent", b =>
+            modelBuilder.Entity("StudentManagement.Models.ClassStudent", b =>
                 {
-                    b.HasOne("StudentManagement.Models.Models.Class", "Class")
+                    b.HasOne("StudentManagement.Models.Class", "Class")
                         .WithMany("ClassStudent")
                         .HasForeignKey("ClassId")
                         .HasConstraintName("FK__Class_Stu__Class__286302EC")
                         .IsRequired();
 
-                    b.HasOne("StudentManagement.Models.Models.Student", "Student")
+                    b.HasOne("StudentManagement.Models.Student", "Student")
                         .WithMany("ClassStudent")
                         .HasForeignKey("StudentId")
                         .HasConstraintName("FK__Class_Stu__Stude__29572725")
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("StudentManagement.Models.Models.RecordSubject", b =>
+            modelBuilder.Entity("StudentManagement.Models.RecordSubject", b =>
                 {
-                    b.HasOne("StudentManagement.Models.Models.Class", "Class")
+                    b.HasOne("StudentManagement.Models.Class", "Class")
                         .WithMany("RecordSubject")
                         .HasForeignKey("ClassId")
                         .HasConstraintName("FK__Record_Su__Class__2D27B809");
 
-                    b.HasOne("StudentManagement.Models.Models.Student", "Student")
+                    b.HasOne("StudentManagement.Models.Student", "Student")
                         .WithMany("RecordSubject")
                         .HasForeignKey("StudentId")
                         .HasConstraintName("FK__Record_Su__Stude__2E1BDC42");
                 });
 
-            modelBuilder.Entity("StudentManagement.Models.Models.ScoredRecordSubject", b =>
+            modelBuilder.Entity("StudentManagement.Models.ScoreRecordSubject", b =>
                 {
-                    b.HasOne("StudentManagement.Models.Models.RecordSubject", "RecordSubject")
-                        .WithMany("ScoredRecordSubject")
+                    b.HasOne("StudentManagement.Models.RecordSubject", "RecordSubject")
+                        .WithMany("ScoreRecordSubject")
                         .HasForeignKey("RecordSubjectId")
-                        .HasConstraintName("FK__Scored_Re__Recor__30F848ED");
+                        .HasConstraintName("FK__Score_Re__Recor__30F848ED");
                 });
 
-            modelBuilder.Entity("StudentManagement.Models.Models.SummarySubject", b =>
+            modelBuilder.Entity("StudentManagement.Models.Summary", b =>
                 {
-                    b.HasOne("StudentManagement.Models.Models.Class", "Class")
-                        .WithMany("SummarySubject")
+                    b.HasOne("StudentManagement.Models.Class", "Class")
+                        .WithMany("Summary")
                         .HasForeignKey("ClassId")
                         .HasConstraintName("FK__Summary_S__Class__38996AB5");
                 });
 
-            modelBuilder.Entity("StudentManagement.Models.Models.SummarySubjectSemeter", b =>
+            modelBuilder.Entity("StudentManagement.Models.SummarySubject", b =>
                 {
-                    b.HasOne("StudentManagement.Models.Models.Class", "Class")
-                        .WithMany("SummarySubjectSemeter")
+                    b.HasOne("StudentManagement.Models.Class", "Class")
+                        .WithMany("SummarySubject")
                         .HasForeignKey("ClassId")
                         .HasConstraintName("FK__Summary_S__Class__34C8D9D1");
                 });

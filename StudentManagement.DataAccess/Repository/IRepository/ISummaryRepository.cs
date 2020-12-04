@@ -5,8 +5,9 @@ using System.Text;
 
 namespace StudentManagement.DataAccess.Repository.IRepository
 {
-    public interface ISummarySubjectSemeterRepository : IRepository<SummarySubjectSemeter>
+    
+    public interface ISummaryRepository : IRepository<Summary>
     {
-        void Update(SummarySubjectSemeter summarySubjectSemeter);
+        void Update(Summary summary);
     }
 }
