@@ -11,7 +11,7 @@ namespace StudentManagement.Models
         }
 
         public string Id { get; set; }
-        public string SubjectName { get; set; }
+        public int? SubjectId { get; set; }
         public string ClassId { get; set; }
         public string StudentId { get; set; }
         public int? Semeter { get; set; }
@@ -19,6 +19,7 @@ namespace StudentManagement.Models
 
         public virtual Class Class { get; set; }
         public virtual Student Student { get; set; }
+        public virtual Subject Subject { get; set; }
         public virtual ICollection<ScoreRecordSubject> ScoreRecordSubject { get; set; }
     }
 }

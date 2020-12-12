@@ -19,22 +19,21 @@ namespace StudentManagement.DataAccess.Data
         public virtual DbSet<RecordSubject> RecordSubject { get; set; }
         public virtual DbSet<ScoreRecordSubject> ScoreRecordSubject { get; set; }
         public virtual DbSet<Student> Student { get; set; }
+        public virtual DbSet<Subject> Subject { get; set; }
         public virtual DbSet<Summary> Summary { get; set; }
         public virtual DbSet<SummarySubject> SummarySubject { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Class>(entity =>
-            {
-            });
-
             modelBuilder.Entity<ClassStudent>(entity =>
             {
                 entity.HasKey(e => new { e.ClassId, e.StudentId })
                     .HasName("PK__Class_St__48357579DF6EC238");
 
                 entity.ToTable("Class_Student");
+
+                entity.HasIndex(e => e.StudentId);
 
                 entity.HasOne(d => d.Class)
                     .WithMany(p => p.ClassStudent)
@@ -53,9 +52,9 @@ namespace StudentManagement.DataAccess.Data
             {
                 entity.ToTable("Record_Subject");
 
-                entity.HasIndex(e => new { e.SubjectName, e.Semeter, e.ClassId, e.StudentId })
-                    .HasName("UQ__Record_S__CA821CD02A967351")
-                    .IsUnique();
+                entity.HasIndex(e => e.ClassId);
+
+                entity.HasIndex(e => e.StudentId);
 
                 entity.HasOne(d => d.Class)
                     .WithMany(p => p.RecordSubject)
@@ -66,11 +65,18 @@ namespace StudentManagement.DataAccess.Data
                     .WithMany(p => p.RecordSubject)
                     .HasForeignKey(d => d.StudentId)
                     .HasConstraintName("FK__Record_Su__Stude__2E1BDC42");
+
+                entity.HasOne(d => d.Subject)
+                    .WithMany(p => p.RecordSubject)
+                    .HasForeignKey(d => d.SubjectId)
+                    .HasConstraintName("FK_Record_Subject_Subject");
             });
 
             modelBuilder.Entity<ScoreRecordSubject>(entity =>
             {
                 entity.ToTable("Score_Record_Subject");
+
+                entity.HasIndex(e => e.RecordSubjectId);
 
                 entity.HasOne(d => d.RecordSubject)
                     .WithMany(p => p.ScoreRecordSubject)
@@ -83,13 +89,19 @@ namespace StudentManagement.DataAccess.Data
                 entity.Property(e => e.Birth).HasColumnType("datetime");
             });
 
+            modelBuilder.Entity<Subject>(entity =>
+            {
+                entity.Property(e => e.Id).ValueGeneratedNever();
+            });
+
             modelBuilder.Entity<Summary>(entity =>
             {
-                entity.ToTable("Summary");
+                entity.HasIndex(e => e.ClassId);
 
                 entity.HasIndex(e => new { e.Semeter, e.ClassId })
                     .HasName("UQ__Summary___F5B4DD73D003A2C0")
-                    .IsUnique();
+                    .IsUnique()
+                    .HasFilter("([Semeter] IS NOT NULL AND [ClassId] IS NOT NULL)");
 
                 entity.HasOne(d => d.Class)
                     .WithMany(p => p.Summary)
@@ -101,14 +113,17 @@ namespace StudentManagement.DataAccess.Data
             {
                 entity.ToTable("Summary_Subject");
 
-                entity.HasIndex(e => new { e.SubjectName, e.Semeter, e.ClassId })
-                    .HasName("UQ__Summary___73013082B281F30A")
-                    .IsUnique();
+                entity.HasIndex(e => e.ClassId);
 
                 entity.HasOne(d => d.Class)
                     .WithMany(p => p.SummarySubject)
                     .HasForeignKey(d => d.ClassId)
                     .HasConstraintName("FK__Summary_S__Class__34C8D9D1");
+
+                entity.HasOne(d => d.Subject)
+                    .WithMany(p => p.SummarySubject)
+                    .HasForeignKey(d => d.SubjectId)
+                    .HasConstraintName("FK_Summary_Subject_Subject");
             });
         }
     }

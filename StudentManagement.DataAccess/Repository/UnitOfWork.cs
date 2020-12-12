@@ -18,6 +18,7 @@ namespace StudentManagement.DataAccess.Repository
             RecordSubject = new RecordSubjectRepository(_db);
             ScoreRecordSubject = new ScoreRecordSubjectRepository(_db);
             Student = new StudentRepository(_db);
+            Subject = new SubjectRepository(_db);
             Summary = new SummaryRepository(_db);
             SummarySubject = new SummarySubjectRepository(_db);
             SP_Call = new SP_Call(_db);
@@ -28,6 +29,7 @@ namespace StudentManagement.DataAccess.Repository
         public IRecordSubjectRepository RecordSubject { get; private set; }
         public IScoreRecordSubjectRepository ScoreRecordSubject { get; private set; }
         public IStudentRepository Student { get; private set; }
+        public ISubjectRepository Subject { get; private set; }
         public ISummaryRepository Summary { get; private set; }
         public ISummarySubjectRepository SummarySubject { get; private set; }
 
