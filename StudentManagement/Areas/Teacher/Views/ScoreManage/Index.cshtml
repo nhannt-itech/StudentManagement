@@ -1,0 +1,19 @@
+﻿@model IEnumerable<StudentManagement.Models.Subject>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="list-group" style="margin-left:200px; margin-right:200px; text-align:center;">
+    <a href="#" class="list-group-item list-group-item-action list-group-item-success active">
+        <b>DANH SÁCH MÔN HỌC</b>
+    </a>
+    @foreach (var subject in Model)
+    {
+        <a href="/Teacher/ScoreManage/ClassList?id=@subject.Id" class="list-group-item list-group-item-action"><b>@subject.Name</b></a>
+    }
+
+</div>
+<br />
+
