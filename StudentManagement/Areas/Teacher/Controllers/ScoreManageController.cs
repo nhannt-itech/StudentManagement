@@ -9,9 +9,8 @@ using StudentManagement.DataAccess.Data;
 using StudentManagement.DataAccess.Repository.IRepository;
 using StudentManagement.Models;
 using StudentManagement.Models.ViewModels;
-using static StudentManagement.Helper;
-
-namespace StudentManagement.Areas.Teacher.Controllers
+using StudentManagement.Utility;
+using static StudentManagement.Helper;namespace StudentManagement.Areas.Teacher.Controllers
 {
     [Area("Teacher")]
     public class ScoreManageController : Controller
@@ -148,6 +147,52 @@ namespace StudentManagement.Areas.Teacher.Controllers
             }
             return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "EditScore", scoreVM) });
         }
+
+        public IActionResult AverageScore()
+        {
+            ViewBag.subject = _unitOfWork.Subject.Get(SubId).Name;
+            ViewBag.lop = _unitOfWork.Class.Get(ClassId).Name;
+            ViewBag.semester =SemesterId;
+            var recordSubjectList = _unitOfWork.RecordSubject.GetAll(x => x.ClassId == ClassId && x.SubjectId == SubId && x.Semeter == SemesterId, includeProperties: "Student");
+            var scoreVMList = new List<ScoreVM>();
+
+
+            foreach (var obj in recordSubjectList)
+            {
+                ScoreVM scoreVM = new ScoreVM();
+                scoreVM.Student = obj.Student;
+                scoreVM.RecordSubject = obj;
+                scoreVM.ScoreList = _unitOfWork.ScoreRecordSubject.GetAll(x => x.RecordSubjectId == obj.Id).ToList();
+
+                float? score1 = scoreVM.ScoreList.Where(x => x.RecordType == "D15P").Select(x => x.Score).FirstOrDefault();
+                float? score2 = scoreVM.ScoreList.Where(x => x.RecordType == "D1T").Select(x => x.Score).FirstOrDefault();
+                float? score3 = scoreVM.ScoreList.Where(x => x.RecordType == "DHK").Select(x => x.Score).FirstOrDefault();
+
+                if (score1 == null)
+                {
+                    score1 = 0;
+
+                }
+                if (score2 == null)
+                {
+                    score2 = 0;
+
+                }
+                if (score3 == null)
+                {
+                    score3 = 0;
+
+                }
+                obj.Average = SD.GetAverageScore(score1, score2, score3);
+                _unitOfWork.RecordSubject.Update(obj);
+                _unitOfWork.Save();
+                scoreVM.RecordSubject.Average = SD.GetAverageScore(score1, score2, score3);
+
+                scoreVMList.Add(scoreVM);
+            }
+            return View(scoreVMList);
+        }
+       
 
 
         #region API CALL
