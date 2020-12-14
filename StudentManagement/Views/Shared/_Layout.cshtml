@@ -108,7 +108,7 @@
                         </a>
                         <a class="collapse-item" asp-area="" asp-controller="" asp-action="">
                             Cả Năm
-                        </a>    
+                        </a>
                     </div>
 
                 </div>
@@ -244,6 +244,26 @@
         </div>
     </div>
 
+    <div class="modal" tabindex="-1" role="dialog" id="form-modal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="loaderbody" id="loaderbody">
+        <div class="loader"></div>
+    </div>
+
     <!-- Bootstrap core JavaScript-->
     <script src="~/asset/template/vendor/jquery/jquery.min.js"></script>
     <script src="~/asset/template/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -258,8 +278,14 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="https://kit.fontawesome.com/e19c476714.js"></script>
 
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+            integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+            crossorigin="anonymous"></script>
+
     <!-- Custom scripts for all pages-->
     <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+    <script src="~/js/score.js" asp-append-version="true"></script>
+    <script src="~/js/notify.min.js" asp-append-version="true"></script>
 
     @RenderSection("Scripts", required: false)
     <partial name="_ValidationScriptsPartial" />
