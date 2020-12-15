@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace StudentManagement.Models
 {
@@ -14,9 +16,18 @@ namespace StudentManagement.Models
         }
 
         public string Id { get; set; }
+
+        [Required]
         public string Name { get; set; }
+
+        [Required]
         public string Year { get; set; }
+
+        [Required]
         public int? NumStudents { get; set; }
+
+        [Required]
+        [Remote("IsGradeValid", "Class", "Teacher", ErrorMessage = "Lớp trong khối này đã đủ!", AdditionalFields = nameof(Year))]
         public int? Grade { get; set; }
 
         public virtual ICollection<ClassStudent> ClassStudent { get; set; }

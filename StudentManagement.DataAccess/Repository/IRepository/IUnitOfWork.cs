@@ -7,8 +7,8 @@ namespace StudentManagement.DataAccess.Repository.IRepository
     public interface IUnitOfWork : IDisposable
     {
         IApplicationUserRepository ApplicationUser { get; }
-        IClassRepository Class { get; }
         IClassStudentRepository ClassStudent { get; }
+        IClassRepository Class { get; }
         IRecordSubjectRepository RecordSubject { get; }
         IScoreRecordSubjectRepository ScoreRecordSubject { get; }
         IStudentRepository Student { get; }

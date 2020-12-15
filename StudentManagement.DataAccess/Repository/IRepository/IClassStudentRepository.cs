@@ -5,8 +5,8 @@ using System.Text;
 
 namespace StudentManagement.DataAccess.Repository.IRepository
 {
-    public interface IClassRepository : IRepository<Class>
+    public interface IClassStudentRepository : IRepository<ClassStudent>
     {
-        void Update(Class @class);
+        void Update(ClassStudent classStudent);
     }
 }
