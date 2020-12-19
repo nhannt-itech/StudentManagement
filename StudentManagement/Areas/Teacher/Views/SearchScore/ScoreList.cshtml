@@ -1,0 +1,52 @@
+﻿@model List<StudentManagement.Models.ViewModels.SearchScoreVM>
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+<table class="table">
+    <thead class="thead-light">
+        <tr>
+            <th>
+                STT
+            </th>
+            <th>
+                Họ tên
+            </th>
+            <th>
+                Lớp
+            </th>
+            <th>
+                TB Học kỳ 1
+            </th>
+            <th>
+                TB Học kỳ 2
+            </th>
+          
+        </tr>
+    </thead>
+    <tbody>
+        @{ int count = 0;}
+        @foreach (var item in Model)
+        {
+            count = count + 1;
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => count)
+
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Student.Name)
+            </td>
+            <td>
+               @ViewBag.lop
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AvgSem1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AvgSem2)
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

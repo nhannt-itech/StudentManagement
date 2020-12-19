@@ -1,0 +1,32 @@
+﻿@model List<StudentManagement.Models.ViewModels.ScoreVM>;
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">@ViewBag.subject</a></li>
+        <li class="breadcrumb-item"><a href="#">@ViewBag.lop</a></li>
+        <li class="breadcrumb-item"><a href="#">@ViewBag.semester</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Danh sách học sinh</li>
+    </ol>
+</nav>
+<div class="row">
+    <div class="col-6">
+        <h2 class="text-primary">DANH SÁCH HỌC SINH </h2>
+    </div>
+    <div class="col-6 text-right">
+        <a class="btn btn-danger" asp-action="AverageScore"><i class="fas fa-calculator"></i> &nbsp; Điểm trung bình</a>
+    </div>
+</div>
+
+<br />
+<div id="view-all">
+    @Html.Partial("_ViewAll", Model)
+
+</div>
+
+@section Scripts{
+    <script src="~/js/score.js"></script>
+}
