@@ -70,3 +70,54 @@ function SelectGradeSetClassName() {
         $('#Name').attr('value', '');
     }
 }
+
+function Delete(url) {
+    swalWithBootstrapButtons.fire({
+        title: 'Bạn có muốn xóa lớp?',
+        text: "Khi xóa lớp bạn sẽ xóa hết học sinh trong lớp và bảng điểm có sẵn!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Có',
+        cancelButtonText: 'Không',
+        reverseButtons: true
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                type: "DELETE",
+                url: url,
+                success: function (data) {
+                    if (data.success) {
+                        swalWithBootstrapButtons.fire(
+                            'Deleted!',
+                            'Your file has been deleted.',
+                            'success'
+                        );
+                        dataTable.ajax.reload();
+                    }
+                    else {
+                        swalWithBootstrapButtons.fire(
+                            'Error',
+                            'Can not delete this, maybe it not exit or error from sever',
+                            'error'
+                        )
+                    }
+                }
+            })
+        }
+        else if (result.dismiss === Swal.DismissReason.cancel) {
+            swalWithBootstrapButtons.fire(
+                'Cancelled',
+                'Your record is safe :)',
+                'error'
+            )
+        }
+    })
+}
+
+const swalWithBootstrapButtons = Swal.mixin({
+    customClass: {
+        confirmButton: 'btn btn-success',
+        cancelButton: 'btn btn-danger'
+    },
+    buttonsStyling: false
+})

@@ -87,7 +87,7 @@
 }
 else
 {
-    <input type="text" id="ClassId" value="@Model.Id">
+    <input type="text" id="ClassId" value="@Model.Id" hidden>
     <h4>Danh sách học sinh lớp @Model.Name</h4>
     <div class="card shadow mb-4 bg-gray-100">
         <div class="card-header py-2">
@@ -106,6 +106,7 @@ else
                             <th>Tên</th>
                             <th>Giới tính</th>
                             <th>Năm sinh</th>
+                            <th>Địa chỉ</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -116,8 +117,8 @@ else
 
     <partial name="_AddStudent" model="ViewBag.AddStudent" />
 
-    @section Scripts{
-        <script src="~/js/studentinclass.js"></script>
-    }
 }
 
+@section Scripts{
+    <script src="~/js/studentinclass.js"></script>
+}

@@ -5,22 +5,31 @@ $(document).ready(function () {
     loadDataTable();
 
     $('.js-example-basic-single').select2();
+    ReloadStudent();
+});
+
+function ReloadStudent() {
+    var select = document.getElementById("StudentList");
+    var length = select.options.length;
+    for (i = length - 1; i >= 0; i--) {
+        select.options[i] = null;
+    }
+
     $.ajax({
         type: "GET",
         url: "/Teacher/Class/GetStudentNotInClass/",
         success: function (data) {
-
             $("#StudentList").addItems(data);
         }
     });
-});
+}
 
 $.fn.addItems = function (data) {
     return this.each(function () {
         $.each(data, function (index, itemData) {
             var opt = document.createElement('option');
             opt.appendChild(document.createTextNode(itemData.text));
-            opt.value = itemData.value; 
+            opt.value = itemData.value;
             document.getElementById('StudentList').appendChild(opt);
         });
     });
@@ -29,71 +38,56 @@ $.fn.addItems = function (data) {
 function loadDataTable() {
     dataTable = $('#tblStudentInClass').DataTable({
         "ajax": {
-            "url": "/Teacher/Class/GetStudentInClass/" + $('#ClassId').val(),
+            "url": "/Teacher/Class/GetStudentInClass/" + $('#ClassId').val()
         },
         "columns": [
             { "data": "id" },
             { "data": "name" },
             { "data": "gender" },
-            { "data": "birth" },
+            {
+                "data": "birth",
+                "render": function (data) {
+                    return new Date(data).toLocaleDateString();
+                }
+            },
+            { "data": "address" },
             {
                 "data": "id",
                 "render": function (data) {
                     return `
                             <div class="text-center">
-                                <a href="/Teacher/Class/Upsert/${data}" class="btn btn-success bg-gradient-success text-white" style="cursor:pointer">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                                <a onclick=Delete("/Teacher/Class/Delete/${data}") class="btn btn-danger bg-gradient-danger text-white" style="cursor:pointer">
+                                <a onclick=Delete("${data}") class="btn btn-danger bg-gradient-danger text-white" style="cursor:pointer">
                                     <i class="fas fa-trash-alt"></i> 
                                 </a>
                             </div>
                             `;
-                }, "width": "15%"
+                }
             }
         ]
     });
 }
 
 function AddStudentInClass() {
-    swalWithBootstrapButtons.fire({
-        title: 'Thêm học sinh vào lớp',
-        text: "Đồng thời sẽ tạo bảng điểm cho học sinh!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Có',
-        cancelButtonText: 'Không',
-        reverseButtons: true
-    }).then((result) => {
-        if (result.isConfirmed) {
-            $.ajax({
-                type: "POST",
-                url: "/Teacher/Class/AddStudentInClass/?classId=" + $('#ClassId').val() + "&studentId=" + $('#StudentList').val(),
-                success: function (data) {
-                    if (data.success) {
-                        swalWithBootstrapButtons.fire(
-                            'Thêm thành công!',
-                            'Học sinh đã được thêm vào lớp học.',
-                            'success'
-                        );
-                        dataTable.ajax.reload();
-                    }
-                    else {
-                        swalWithBootstrapButtons.fire(
-                            'Thất bại!',
-                            'Mã học sinh không tồn tại.',
-                            'error'
-                        )
-                    }
-                }
-            })
-        }
-        else if (result.dismiss === Swal.DismissReason.cancel) {
-            swalWithBootstrapButtons.fire(
-                'Hủy bỏ',
-                'Học sinh chưa thêm vào lớp',
-                'error'
-            )
+    $.ajax({
+        type: "POST",
+        url: "/Teacher/Class/AddStudentInClass/?classId=" + $('#ClassId').val() + "&studentId=" + $('#StudentList').val(),
+        success: function (data) {
+            if (data.success) {
+                swalWithBootstrapButtons.fire(
+                    'Thêm thành công!',
+                    'Học sinh đã được thêm vào lớp học.',
+                    'success'
+                );
+                dataTable.ajax.reload();
+                ReloadStudent();
+            }
+            else {
+                swalWithBootstrapButtons.fire(
+                    'Thất bại!',
+                    data.message,
+                    'error'
+                )
+            }
         }
     })
 }
@@ -113,6 +107,50 @@ function SelectGradeSetClassName() {
     else {
         $('#Name').attr('value', '');
     }
+}
+
+function Delete(id) {
+    swalWithBootstrapButtons.fire({
+        title: 'Bạn có muốn xóa học sinh?',
+        text: "Khi xóa lớp bạn sẽ xóa hết học sinh trong lớp và bảng điểm có sẵn!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Có',
+        cancelButtonText: 'Không',
+        reverseButtons: true
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                type: "DELETE",
+                url: "/Teacher/Class/DeleteStudentFromClass/?classId=" + $('#ClassId').val() + "&studentId=" + id,
+                success: function (data) {
+                    if (data.success) {
+                        swalWithBootstrapButtons.fire(
+                            'Deleted!',
+                            'Your file has been deleted.',
+                            'success'
+                        );
+                        dataTable.ajax.reload();
+                        ReloadStudent();
+                    }
+                    else {
+                        swalWithBootstrapButtons.fire(
+                            'Error',
+                            'Can not delete this, maybe it not exit or error from sever',
+                            'error'
+                        )
+                    }
+                }
+            })
+        }
+        else if (result.dismiss === Swal.DismissReason.cancel) {
+            swalWithBootstrapButtons.fire(
+                'Cancelled',
+                'Your record is safe :)',
+                'error'
+            )
+        }
+    })
 }
 
 const swalWithBootstrapButtons = Swal.mixin({

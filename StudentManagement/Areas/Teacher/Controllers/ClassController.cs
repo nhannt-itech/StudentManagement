@@ -93,9 +93,9 @@ namespace StudentManagement.Areas.Teacher.Controllers
                 Value = i.Id
             });
             return Json(StudentList);
-
-            //return Json(new { data = allObjStudentNotInClass });
         }
+
+        
 
         [HttpGet]
         public IActionResult GetStudentInClass(string? id)
@@ -111,6 +111,10 @@ namespace StudentManagement.Areas.Teacher.Controllers
             {
                 return Json(new { success = false, message = "Thêm học sinh lỗi!" });
             }
+            else if (_unitOfWork.ClassStudent.GetAll(x => x.ClassId == classId && x.StudentId == studentId).Count() >= 40)
+            {
+                return Json(new { success = false, message = "Lớp đã đạt 40 học sinh!" });
+            }
             ClassStudent classStudent = new ClassStudent()
             {
                 ClassId = classId,
@@ -120,8 +124,120 @@ namespace StudentManagement.Areas.Teacher.Controllers
             _unitOfWork.Save();
             CreateRecordStudent(classId, studentId);
             return Json(new { success = true, message = "Bạn đã thêm học sinh thành công!" });
+        }       
+
+        [HttpGet]
+        public IActionResult SelectGradeSetClassName(int grade, string year)
+        {
+            var allObj = _unitOfWork.Class.GetAll(x => x.Grade == grade && x.Year == year);
+            int max, count = allObj.Count();
+            string name;
+            try
+            {
+                max = allObj.Max(x => Convert.ToInt32(x.Name.Replace(grade.ToString() + "/", "")));
+            }
+            catch
+            {
+                max = 0;
+            }
+            if (count != 0 && count != max)
+            {
+                for (int i = 1; i < max; i++)
+                {
+                    if (allObj.Count(x => x.Name.Replace(grade.ToString() + "/", "") == i.ToString()) == 0)
+                    {
+                        name = grade.ToString() + "/" + i.ToString();
+                        return Json(new { name = name });
+                    }
+                }
+            }
+            name = grade.ToString() + "/" + (count + 1).ToString();
+            return Json(new { name = name });
         }
 
+        [HttpDelete]
+        public IActionResult Delete(string? id)
+        {
+            var obj = _unitOfWork.Class.Get(id);
+            if (obj == null)
+            {
+                return Json(new { success = false, message = "Error When Delete!" });
+            }
+
+            foreach (var item in _unitOfWork.RecordSubject.GetAll(x => x.ClassId == id))
+            {
+                foreach(var srs in _unitOfWork.ScoreRecordSubject.GetAll(x=>x.RecordSubjectId == item.Id))
+                {
+                    _unitOfWork.ScoreRecordSubject.Remove(srs);
+                    _unitOfWork.Save();
+                }
+                _unitOfWork.RecordSubject.Remove(item);
+                _unitOfWork.Save();
+            }
+
+            foreach (var item in _unitOfWork.ClassStudent.GetAll(x=>x.ClassId == id))
+            {
+                _unitOfWork.ClassStudent.Remove(item);
+                _unitOfWork.Save();
+            }
+
+            _unitOfWork.Class.Remove(obj);
+            _unitOfWork.Save();
+            return Json(new { success = true, message = "Delete successful!" });
+        }
+
+        [HttpDelete]
+        public IActionResult DeleteStudentFromClass(string? classId, string studentId)
+        {
+            foreach(var rc in _unitOfWork.RecordSubject.GetAll(x => x.StudentId == studentId && x.ClassId == classId))
+            {
+                foreach(var src in _unitOfWork.ScoreRecordSubject.GetAll(x=>x.RecordSubjectId == rc.Id))
+                {
+                    _unitOfWork.ScoreRecordSubject.Remove(src);
+                    _unitOfWork.Save();
+                }
+                _unitOfWork.RecordSubject.Remove(rc);
+                _unitOfWork.Save();
+            }
+
+            var obj = _unitOfWork.ClassStudent.GetFirstOrDefault(x => x.StudentId == studentId && x.ClassId == classId);
+            _unitOfWork.ClassStudent.Remove(obj);
+            _unitOfWork.Save();
+
+            return Json(new { success = true, message = "Delete successful!" });
+        }
+        #endregion
+
+        #region ValidationOnModal
+        [AcceptVerbs("Get", "Post")]
+        public JsonResult IsGradeValid(int Grade, string Year)
+        {
+            if (Grade == 10)
+            {
+                if (_unitOfWork.Class.GetAll(x => x.Grade == Grade && x.Year == Year).Count() == 4) //THAY ĐỔI QUY ĐỊNH
+                {
+                    return Json(false);
+                }
+            }
+            if (Grade == 11)
+            {
+                if (_unitOfWork.Class.GetAll(x => x.Grade == Grade && x.Year == Year).Count() == 3) //THAY ĐỔI QUY ĐỊNH
+                {
+                    return Json(false);
+                }
+            }
+            if (Grade == 12)
+            {
+                if (_unitOfWork.Class.GetAll(x => x.Grade == Grade && x.Year == Year).Count() == 2) //THAY ĐỔI QUY ĐỊNH
+                {
+                    return Json(false);
+                }
+            }
+            return Json(true);
+        }
+        #endregion
+
+        #region ExtensionFunc
         public void CreateRecordStudent(string classId, string studentId)
         {
             string[] typeRecord = new string[3] { "15minutes", "45minutes", "Final" };
@@ -170,64 +286,6 @@ namespace StudentManagement.Areas.Teacher.Controllers
                     _unitOfWork.Save();
                 }
             }
-        }
-
-        [HttpGet]
-        public IActionResult SelectGradeSetClassName(int grade, string year)
-        {
-            var allObj = _unitOfWork.Class.GetAll(x => x.Grade == grade && x.Year == year);
-            int max, count = allObj.Count();
-            string name;
-            try
-            {
-                max = allObj.Max(x => Convert.ToInt32(x.Name.Replace(grade.ToString() + "/", "")));
-            }
-            catch
-            {
-                max = 0;
-            }
-            if (count != 0 && count != max)
-            {
-                for (int i = 1; i < max; i++)
-                {
-                    if (allObj.Count(x => x.Name.Replace(grade.ToString() + "/", "") == i.ToString()) == 0)
-                    {
-                        name = grade.ToString() + "/" + i.ToString();
-                        return Json(new { name = name });
-                    }
-                }
-            }
-            name = grade.ToString() + "/" + (count + 1).ToString();
-            return Json(new { name = name });
-        }
-        #endregion
-
-        #region ValidationOnModal
-        [AcceptVerbs("Get", "Post")]
-        public JsonResult IsGradeValid(int Grade, string Year)
-        {
-            if (Grade == 10)
-            {
-                if (_unitOfWork.Class.GetAll(x => x.Grade == Grade && x.Year == Year).Count() == 4) //THAY ĐỔI QUY ĐỊNH
-                {
-                    return Json(false);
-                }
-            }
-            if (Grade == 11)
-            {
-                if (_unitOfWork.Class.GetAll(x => x.Grade == Grade && x.Year == Year).Count() == 3) //THAY ĐỔI QUY ĐỊNH
-                {
-                    return Json(false);
-                }
-            }
-            if (Grade == 12)
-            {
-                if (_unitOfWork.Class.GetAll(x => x.Grade == Grade && x.Year == Year).Count() == 2) //THAY ĐỔI QUY ĐỊNH
-                {
-                    return Json(false);
-                }
-            }
-            return Json(true);
         }
         #endregion
     }
