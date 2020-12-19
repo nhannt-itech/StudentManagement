@@ -184,9 +184,10 @@ using static StudentManagement.Helper;namespace StudentManagement.Areas.Teacher.
 
                 }
                 obj.Average = SD.GetAverageScore(score1, score2, score3);
+                obj.Average = (float)Math.Round((float)obj.Average, 2);
                 _unitOfWork.RecordSubject.Update(obj);
                 _unitOfWork.Save();
-                scoreVM.RecordSubject.Average = SD.GetAverageScore(score1, score2, score3);
+                scoreVM.RecordSubject.Average = obj.Average;
 
                 scoreVMList.Add(scoreVM);
             }

@@ -39,8 +39,8 @@ namespace StudentManagement.Areas.Teacher.Controllers
             {
                 SearchScoreVM score = new SearchScoreVM();
                 score.Student = st;
-                score.AvgSem1 = st.RecordSubject.Where(x=>x.Semeter ==1).Select(x => x.Average).Average().GetValueOrDefault().ToString("0.0");
-                score.AvgSem2 = st.RecordSubject.Where(x => x.Semeter == 2).Select(x => x.Average).Average().GetValueOrDefault().ToString("0.0");
+                score.AvgSem1 = st.RecordSubject.Where(x=>x.Semeter ==1 && x.ClassId == id).Select(x => x.Average).Average().GetValueOrDefault();
+                score.AvgSem2 = st.RecordSubject.Where(x => x.Semeter == 2 && x.ClassId == id).Select(x => x.Average).Average().GetValueOrDefault();
                 searchScoreList.Add(score);
             }
             return View(searchScoreList);
