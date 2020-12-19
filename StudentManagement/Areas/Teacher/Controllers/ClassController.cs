@@ -240,26 +240,26 @@ namespace StudentManagement.Areas.Teacher.Controllers
         #region ExtensionFunc
         public void CreateRecordStudent(string classId, string studentId)
         {
-            string[] typeRecord = new string[3] { "15minutes", "45minutes", "Final" };
+            string[] typeRecord = new string[3] { "D15P", "D1T", "DHK" };
             foreach (var item in _unitOfWork.Subject.GetAll())
             {
                 RecordSubject recordSubject1 = new RecordSubject()
                 {
-                    Id = new Guid().ToString(),
+                    Id = System.Guid.NewGuid().ToString(),
                     ClassId = classId,
                     StudentId = studentId,
                     Semeter = 1,
                     SubjectId = item.Id,
-                    Average = 0
+                    Average = null
                 };
                 RecordSubject recordSubject2 = new RecordSubject()
                 {
-                    Id = new Guid().ToString(),
+                    Id = System.Guid.NewGuid().ToString(),
                     ClassId = classId,
                     StudentId = studentId,
-                    Semeter = 1,
+                    Semeter = 2,
                     SubjectId = item.Id,
-                    Average = 0
+                    Average = null
                 };
                 _unitOfWork.RecordSubject.Add(recordSubject1);
                 _unitOfWork.RecordSubject.Add(recordSubject2);
@@ -269,17 +269,17 @@ namespace StudentManagement.Areas.Teacher.Controllers
                 {
                     ScoreRecordSubject scoreRecordSubject1 = new ScoreRecordSubject()
                     {
-                        Id = new Guid().ToString(),
+                        Id = System.Guid.NewGuid().ToString(),
                         RecordSubjectId = recordSubject1.Id,
                         RecordType = tr,
-                        Score = 0
+                        Score = null
                     };
                     ScoreRecordSubject scoreRecordSubject2 = new ScoreRecordSubject()
                     {
-                        Id = new Guid().ToString(),
+                        Id = System.Guid.NewGuid().ToString(),
                         RecordSubjectId = recordSubject1.Id,
                         RecordType = tr,
-                        Score = 0
+                        Score = null
                     };
                     _unitOfWork.ScoreRecordSubject.Add(scoreRecordSubject1);
                     _unitOfWork.ScoreRecordSubject.Add(scoreRecordSubject2);
