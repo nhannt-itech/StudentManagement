@@ -10,5 +10,10 @@ namespace StudentManagement.Utility
         public const string Role_Manager = "Manager";
         public const string Role_Teacher = "Teacher";
         public const string Role_Student = "Student";
+
+        public static float? GetAverageScore(float? score1, float? score2, float? score3)
+        {
+            return (score1 + score2 * 2 + score3 * 3) / 6;
+        }
     }
 }

@@ -10,8 +10,8 @@ using StudentManagement.DataAccess.Data;
 namespace StudentManagement.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201212132538_SubjectModels")]
-    partial class SubjectModels
+    [Migration("20201215070409_intial")]
+    partial class intial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -347,7 +347,9 @@ namespace StudentManagement.DataAccess.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
 
                     b.HasKey("Id");
 
