@@ -32,15 +32,21 @@ namespace StudentManagement.Areas.Teacher.Controllers
         }
         public IActionResult ScoreList(string id) //id của class
         {
-            var studentList = _unitOfWork.Student.GetAll(includeProperties: "RecordSubject");
+            var studentList = _unitOfWork.ClassStudent.GetAll(x => x.ClassId == id, includeProperties: "Student");
+            var recordList = _unitOfWork.RecordSubject.GetAll(x => x.ClassId == id);
+            foreach(var u in studentList)
+            {
+                u.Student.RecordSubject = _unitOfWork.RecordSubject.GetAll(x=> x.StudentId == u.StudentId ).ToList();
+            }
+            
             ViewBag.lop = _unitOfWork.Class.Get(id).Name.ToString();
             var searchScoreList = new List<SearchScoreVM>();
             foreach(var st in studentList)
             {
                 SearchScoreVM score = new SearchScoreVM();
-                score.Student = st;
-                score.AvgSem1 = st.RecordSubject.Where(x=>x.Semeter ==1 && x.ClassId == id).Select(x => x.Average).Average().GetValueOrDefault();
-                score.AvgSem2 = st.RecordSubject.Where(x => x.Semeter == 2 && x.ClassId == id).Select(x => x.Average).Average().GetValueOrDefault();
+                score.Student = st.Student;
+                score.AvgSem1 = st.Student.RecordSubject.Where(x=>x.Semeter ==1 && x.ClassId == id).Select(x => x.Average).Average().GetValueOrDefault();
+                score.AvgSem2 = st.Student.RecordSubject.Where(x => x.Semeter == 2 && x.ClassId == id).Select(x => x.Average).Average().GetValueOrDefault();
                 searchScoreList.Add(score);
             }
             return View(searchScoreList);
