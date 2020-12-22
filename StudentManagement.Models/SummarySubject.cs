@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StudentManagement.Models
 {
@@ -14,5 +16,11 @@ namespace StudentManagement.Models
 
         public virtual Class Class { get; set; }
         public virtual Subject Subject { get; set; }
+
+        [NotMapped]
+        public IEnumerable<SelectListItem> SubjectList { get; set; }
+        [NotMapped]
+        public IEnumerable<SelectListItem> YearList { get; set; }
+
     }
 }

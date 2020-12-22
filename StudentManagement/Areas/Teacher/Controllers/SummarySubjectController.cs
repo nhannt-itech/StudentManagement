@@ -3,21 +3,68 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using StudentManagement.DataAccess.Repository.IRepository;
+using StudentManagement.Models.ViewModels;
 
 namespace StudentManagement.Areas.Teacher.Controllers
 {
     [Area("Teacher")]
     public class SummarySubjectController : Controller
     {
-        public IActionResult Index()
+        private readonly IUnitOfWork _unitOfWork;
+
+        public SummarySubjectController(IUnitOfWork unitOfWork)
         {
-            return View();
+            _unitOfWork = unitOfWork;
         }
 
-        public IActionResult SummarySubject(string? classId,int? semeter)
+        public IActionResult Index()
         {
+            SummarySubjectVM summarySubjectVM = new SummarySubjectVM()
+            {
+                YearList = _unitOfWork.Class.GetAll().Select(x => x.Year).Distinct()
+                                    .Select(i => new SelectListItem
+                                    {
+                                        Text = i,
+                                        Value = i
+                                    }),
+                SubjectList = _unitOfWork.Subject.GetAll()
+                                    .Select(i => new SelectListItem
+                                    {
+                                        Text = i.Name,
+                                        Value = i.Id.ToString()
+                                    })
+            };
+            return View(summarySubjectVM);
+        }
 
-            return Json("hi");
+        [HttpPost]
+        public IActionResult Index(int subjectId, int grade, string year, int semester)
+        {
+             var allObj = _unitOfWork.SummarySubject.GetAll(x => x.SubjectId == subjectId &&
+                                                                        x.Class.Grade == grade &&
+                                                                        x.Class.Year == year &&
+                                                                        x.Semeter == semester, includeProperties: "Class");
+            foreach(var item in allObj)
+            {
+                item.PassQuantity = _unitOfWork.RecordSubject.GetAll().Count(x => x.ClassId == item.ClassId &&
+                                                                                        x.Semeter == item.Semeter &&
+                                                                                        x.SubjectId == item.SubjectId &&
+                                                                                        x.Average >= 5);
+                if (_unitOfWork.ClassStudent.GetAll().Count(x => x.ClassId == item.ClassId) != 0)
+                {
+                    item.Percentage = item.PassQuantity / _unitOfWork.ClassStudent.GetAll().Count(x => x.ClassId == item.ClassId);
+                }
+                else
+                {
+                    item.Percentage = 0;
+                }
+                _unitOfWork.SummarySubject.Update(item);
+                _unitOfWork.Save();
+                // coi chừng khúc này nếu chưa có học sinh.
+            }
+            return Json(new { data = allObj });
         }
     }
 }

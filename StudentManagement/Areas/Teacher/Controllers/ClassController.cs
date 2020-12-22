@@ -48,6 +48,8 @@ namespace StudentManagement.Areas.Teacher.Controllers
                     @class.Id = Guid.NewGuid().ToString();
                     _unitOfWork.Class.Add(@class);
                     _unitOfWork.Save();
+
+                    CreateSummary(@class.Id); // Tạo ra bảng tổng kết
                     return View("Index");
                 }
                 else
@@ -181,6 +183,17 @@ namespace StudentManagement.Areas.Teacher.Controllers
                 _unitOfWork.Save();
             }
 
+            foreach (var item in _unitOfWork.Summary.GetAll(x=> x.ClassId == id))
+            {
+                _unitOfWork.Summary.Remove(item);
+                _unitOfWork.Save();
+            }
+            foreach (var item in _unitOfWork.SummarySubject.GetAll(x => x.ClassId == id))
+            {
+                _unitOfWork.SummarySubject.Remove(item);
+                _unitOfWork.Save();
+            }
+
             _unitOfWork.Class.Remove(obj);
             _unitOfWork.Save();
             return Json(new { success = true, message = "Delete successful!" });
@@ -286,6 +299,53 @@ namespace StudentManagement.Areas.Teacher.Controllers
                     _unitOfWork.Save();
                 }
             }
+        }
+        public void CreateSummary(string classId)
+        {
+            foreach (var item in _unitOfWork.Subject.GetAll())
+            {
+                SummarySubject summarySubject1 = new SummarySubject()
+                {
+                    Id = System.Guid.NewGuid().ToString(),
+                    SubjectId = item.Id,
+                    ClassId = classId,
+                    Semeter = 1,
+                    PassQuantity = 0,
+                    Percentage = 0
+                };
+                SummarySubject summarySubject2 = new SummarySubject()
+                {
+                    Id = System.Guid.NewGuid().ToString(),
+                    SubjectId = item.Id,
+                    ClassId = classId,
+                    Semeter = 2,
+                    PassQuantity = 0,
+                    Percentage = 0
+                };
+                _unitOfWork.SummarySubject.Add(summarySubject1);
+                _unitOfWork.SummarySubject.Add(summarySubject2);
+                _unitOfWork.Save();
+            }
+
+            Summary summary1 = new Summary()
+            {
+                Id = System.Guid.NewGuid().ToString(),
+                ClassId = classId,
+                Semeter = 1,
+                PassQuantity = 0,
+                Percentage = 0
+            };
+            Summary summary2 = new Summary()
+            {
+                Id = System.Guid.NewGuid().ToString(),
+                ClassId = classId,
+                Semeter = 2,
+                PassQuantity = 0,
+                Percentage = 0
+            };
+            _unitOfWork.Summary.Add(summary1);
+            _unitOfWork.Summary.Add(summary2);
+            _unitOfWork.Save();
         }
         #endregion
     }

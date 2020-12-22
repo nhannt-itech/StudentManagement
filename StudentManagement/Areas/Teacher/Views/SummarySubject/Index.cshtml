@@ -1,39 +1,39 @@
-﻿<div class="row">
+﻿@model StudentManagement.Models.ViewModels.SummarySubjectVM
+
+<div class="row">
     <div class="col-6">
-        <h2 class="text-primary">Tổng kết</h2>
+        <h2 class="text-primary">Tổng kết theo môn học</h2>
     </div>
 </div>
 <br />
 <div class="row">
     <div class="col-8 row">
-        <label class="col-1 mt-1">Môn(Subject Name): </label>
-        <select class="col-2 form-control">
-            <option value="Toán">Toán</option>
-            <option value="Lý">Lý</option>
-            <option value="Hóa">Hóa</option>
-            <option value="Sinh">Sinh</option>
-            <option value="Sử">Sử</option>
-            <option value="Địa">Địa</option>
-            <option value="Văn">Văn</option>
-            <option value="Đạo Đức">Đạo Đức</option>
-            <option value="Thể Dục">Thể Dục</option>
+
+        <label class="ml-2 col-1 mt-1">Môn: </label>
+        @Html.DropDownListFor(x => x.SubjectList, Model.SubjectList, "-Chọn",
+        new { @class = "col-2 form-control", @id = "SubjectId" })
+
+        <label class="ml-2 col-1 mt-1">HK: </label>
+        <select id="Semester" class="col-1 form-control">
+            <option value="1">1</option>
+            <option value="2">2</option>
         </select>
-        <label class="ml-2 col-1 mt-1">Khối(Class Grade): </label>
-        <select class="col-2 form-control">
+
+        <label class="ml-2 col-1 mt-1">Khối: </label>
+        <select id="Grade" class="col-1 form-control">
             <option value="10">10</option>
             <option value="11">11</option>
             <option value="12">12</option>
         </select>
-        <label class="ml-2 col-1 mt-1">Năm(Class Year): </label>
-        <select class="col-2 form-control">
-            <option value="volvo">Volvo</option>
-            <option value="saab">Saab</option>
-            <option value="mercedes">Mercedes</option>
-            <option value="audi">Audi</option>
-        </select>
+
+        <label class="ml-2 col-1 mt-1">Năm: </label>
+        @Html.DropDownListFor(x => x.Year, Model.YearList, "-Chọn",
+        new { @class = "col-2 form-control", @id = "Year" })
     </div>
-    <div class="col-4">
-        <h2 class="btn btn-primary bg-gradient-primary text-light">Tổng kết học kỳ</h2>
+    <div class="col-4" style="text-align:right">
+        <a onclick="loadDataTable()">
+            <h2 class="btn btn-primary bg-gradient-primary text-light">Tổng kết học kỳ</h2>
+        </a>
     </div>
 </div>
 <br />
@@ -49,5 +49,9 @@
         </thead>
     </table>
 </div>
+
+@section Scripts{
+    <script src="~/js/summarySubject.js"></script>
+}
 
 
