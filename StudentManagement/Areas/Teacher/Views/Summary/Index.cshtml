@@ -2,17 +2,12 @@
 
 <div class="row">
     <div class="col-6">
-        <h2 class="text-primary">Tổng kết theo môn học</h2>
+        <h2 class="text-primary">Tổng kết</h2>
     </div>
 </div>
 <br />
 <div class="row">
     <div class="col-8 row">
-
-        <label class="ml-2 col-1 mt-1">Môn: </label>
-        @Html.DropDownListFor(x => x.SubjectList, Model.SubjectList, "-Chọn",
-        new { @class = "col-2 form-control", @id = "SubjectId" })
-
         <label class="ml-2 col-1 mt-1">HK: </label>
         <select id="Semester" class="col-1 form-control">
             <option value="1">1</option>
@@ -51,7 +46,7 @@
 </div>
 
 @section Scripts{
-    <script src="~/js/summarySubject.js"></script>
+    <script src="~/js/summary.js"></script>
 }
 
 
