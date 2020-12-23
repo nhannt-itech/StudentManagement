@@ -248,7 +248,7 @@ namespace StudentManagement.Areas.Teacher.Controllers
                     Id = System.Guid.NewGuid().ToString(),
                     ClassId = classId,
                     StudentId = studentId,
-                    Semeter = 1,
+                    Semester = 1,
                     SubjectId = item.Id,
                     Average = null
                 };
@@ -257,7 +257,7 @@ namespace StudentManagement.Areas.Teacher.Controllers
                     Id = System.Guid.NewGuid().ToString(),
                     ClassId = classId,
                     StudentId = studentId,
-                    Semeter = 2,
+                    Semester = 2,
                     SubjectId = item.Id,
                     Average = null
                 };

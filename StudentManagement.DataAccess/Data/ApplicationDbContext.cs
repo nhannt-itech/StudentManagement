@@ -98,10 +98,10 @@ namespace StudentManagement.DataAccess.Data
             {
                 entity.HasIndex(e => e.ClassId);
 
-                entity.HasIndex(e => new { e.Semeter, e.ClassId })
+                entity.HasIndex(e => new { e.Semester, e.ClassId })
                     .HasName("UQ__Summary___F5B4DD73D003A2C0")
                     .IsUnique()
-                    .HasFilter("([Semeter] IS NOT NULL AND [ClassId] IS NOT NULL)");
+                    .HasFilter("([Semester] IS NOT NULL AND [ClassId] IS NOT NULL)");
 
                 entity.HasOne(d => d.Class)
                     .WithMany(p => p.Summary)
