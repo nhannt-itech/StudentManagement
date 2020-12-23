@@ -45,11 +45,11 @@ namespace StudentManagement.Areas.Teacher.Controllers
              var allObj = _unitOfWork.SummarySubject.GetAll(x => x.SubjectId == subjectId &&
                                                                         x.Class.Grade == grade &&
                                                                         x.Class.Year == year &&
-                                                                        x.Semeter == semester, includeProperties: "Class");
+                                                                        x.Semester == semester, includeProperties: "Class");
             foreach(var item in allObj)
             {
                 item.PassQuantity = _unitOfWork.RecordSubject.GetAll().Count(x => x.ClassId == item.ClassId &&
-                                                                                        x.Semeter == item.Semeter &&
+                                                                                        x.Semester == item.Semester &&
                                                                                         x.SubjectId == item.SubjectId &&
                                                                                         x.Average >= 5);
                 if (_unitOfWork.ClassStudent.GetAll().Count(x => x.ClassId == item.ClassId) != 0)

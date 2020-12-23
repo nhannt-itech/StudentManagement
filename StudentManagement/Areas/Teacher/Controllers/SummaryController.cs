@@ -37,7 +37,7 @@ namespace StudentManagement.Areas.Teacher.Controllers
         {
             var allObj = _unitOfWork.Summary.GetAll(x => x.Class.Grade == grade &&
                                                                        x.Class.Year == year &&
-                                                                       x.Semeter == semester, includeProperties: "Class");
+                                                                       x.Semester == semester, includeProperties: "Class");
             foreach (var item in allObj)
             {
                 var passAllObj = _unitOfWork.RecordSubject.GetAll().GroupBy(x => new { x.ClassId, x.StudentId })
