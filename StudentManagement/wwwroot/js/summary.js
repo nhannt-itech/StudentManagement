@@ -10,8 +10,7 @@ function loadDataTable() {
         dataTable = $('#tblData').DataTable({
             "ajax": {
                 "type": "POST",
-                "url": "/Teacher/SummarySubject/Index/?subjectId=" + $("#SubjectId").val()
-                    + "&grade=" + $("#Grade").val()
+                "url": "/Teacher/Summary/Index/?grade=" + $("#Grade").val()
                     + "&year=" + $("#Year").val()
                     + "&semester=" + $("#Semester").val()
             },

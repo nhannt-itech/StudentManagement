@@ -113,7 +113,7 @@ namespace StudentManagement.Areas.Teacher.Controllers
             {
                 return Json(new { success = false, message = "Thêm học sinh lỗi!" });
             }
-            else if (_unitOfWork.ClassStudent.GetAll(x => x.ClassId == classId && x.StudentId == studentId).Count() >= 40)
+            else if (_unitOfWork.ClassStudent.GetAll(x => x.ClassId == classId).Count() >= 40)
             {
                 return Json(new { success = false, message = "Lớp đã đạt 40 học sinh!" });
             }
@@ -122,6 +122,11 @@ namespace StudentManagement.Areas.Teacher.Controllers
                 ClassId = classId,
                 StudentId = studentId
             };
+            //--------------------Tăng sỉ số lớp--------------------
+            var classObj = _unitOfWork.Class.Get(classId);
+            classObj.NumStudents++;
+            _unitOfWork.Class.Update(classObj);
+            //--------------------Thêm học sinh vào lớp--------------------
             _unitOfWork.ClassStudent.Add(classStudent);
             _unitOfWork.Save();
             CreateRecordStudent(classId, studentId);

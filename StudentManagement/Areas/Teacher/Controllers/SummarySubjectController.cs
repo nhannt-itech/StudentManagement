@@ -54,7 +54,7 @@ namespace StudentManagement.Areas.Teacher.Controllers
                                                                                         x.Average >= 5);
                 if (_unitOfWork.ClassStudent.GetAll().Count(x => x.ClassId == item.ClassId) != 0)
                 {
-                    item.Percentage = item.PassQuantity / _unitOfWork.ClassStudent.GetAll().Count(x => x.ClassId == item.ClassId);
+                    item.Percentage = (float)item.PassQuantity / (float)_unitOfWork.ClassStudent.GetAll().Count(x => x.ClassId == item.ClassId);
                 }
                 else
                 {
