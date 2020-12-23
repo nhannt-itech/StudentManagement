@@ -314,7 +314,7 @@ namespace StudentManagement.Areas.Teacher.Controllers
                     Id = System.Guid.NewGuid().ToString(),
                     SubjectId = item.Id,
                     ClassId = classId,
-                    Semeter = 1,
+                    Semester = 1,
                     PassQuantity = 0,
                     Percentage = 0
                 };
@@ -323,7 +323,7 @@ namespace StudentManagement.Areas.Teacher.Controllers
                     Id = System.Guid.NewGuid().ToString(),
                     SubjectId = item.Id,
                     ClassId = classId,
-                    Semeter = 2,
+                    Semester = 2,
                     PassQuantity = 0,
                     Percentage = 0
                 };
@@ -336,7 +336,7 @@ namespace StudentManagement.Areas.Teacher.Controllers
             {
                 Id = System.Guid.NewGuid().ToString(),
                 ClassId = classId,
-                Semeter = 1,
+                Semester = 1,
                 PassQuantity = 0,
                 Percentage = 0
             };
@@ -344,7 +344,7 @@ namespace StudentManagement.Areas.Teacher.Controllers
             {
                 Id = System.Guid.NewGuid().ToString(),
                 ClassId = classId,
-                Semeter = 2,
+                Semester = 2,
                 PassQuantity = 0,
                 Percentage = 0
             };

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace StudentManagement.DataAccess.Migrations
 {
-    public partial class intial : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -55,10 +55,10 @@ namespace StudentManagement.DataAccess.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
-                    Year = table.Column<string>(nullable: true),
-                    NumStudents = table.Column<int>(nullable: true),
-                    Grade = table.Column<int>(nullable: true)
+                    Name = table.Column<string>(nullable: false),
+                    Year = table.Column<string>(nullable: false),
+                    NumStudents = table.Column<int>(nullable: false),
+                    Grade = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -206,7 +206,7 @@ namespace StudentManagement.DataAccess.Migrations
                 {
                     Id = table.Column<string>(nullable: false),
                     ClassId = table.Column<string>(nullable: true),
-                    Semeter = table.Column<int>(nullable: true),
+                    Semester = table.Column<int>(nullable: true),
                     PassQuantity = table.Column<int>(nullable: true),
                     Percentage = table.Column<float>(nullable: true)
                 },
@@ -253,7 +253,7 @@ namespace StudentManagement.DataAccess.Migrations
                     SubjectId = table.Column<int>(nullable: true),
                     ClassId = table.Column<string>(nullable: true),
                     StudentId = table.Column<string>(nullable: true),
-                    Semeter = table.Column<int>(nullable: true),
+                    Semester = table.Column<int>(nullable: true),
                     Average = table.Column<float>(nullable: true)
                 },
                 constraints: table =>
@@ -286,7 +286,7 @@ namespace StudentManagement.DataAccess.Migrations
                     Id = table.Column<string>(nullable: false),
                     SubjectId = table.Column<int>(nullable: true),
                     ClassId = table.Column<string>(nullable: true),
-                    Semeter = table.Column<int>(nullable: true),
+                    Semester = table.Column<int>(nullable: true),
                     PassQuantity = table.Column<int>(nullable: true),
                     Percentage = table.Column<float>(nullable: true)
                 },
@@ -399,9 +399,9 @@ namespace StudentManagement.DataAccess.Migrations
             migrationBuilder.CreateIndex(
                 name: "UQ__Summary___F5B4DD73D003A2C0",
                 table: "Summary",
-                columns: new[] { "Semeter", "ClassId" },
+                columns: new[] { "Semester", "ClassId" },
                 unique: true,
-                filter: "([Semeter] IS NOT NULL AND [ClassId] IS NOT NULL)");
+                filter: "([Semester] IS NOT NULL AND [ClassId] IS NOT NULL)");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Summary_Subject_ClassId",
