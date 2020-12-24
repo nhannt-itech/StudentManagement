@@ -222,6 +222,11 @@ namespace StudentManagement.Areas.Teacher.Controllers
             _unitOfWork.ClassStudent.Remove(obj);
             _unitOfWork.Save();
 
+            var classObj = _unitOfWork.Class.Get(classId);
+            classObj.NumStudents--;
+            _unitOfWork.Class.Update(classObj);
+            _unitOfWork.Save();
+
             return Json(new { success = true, message = "Delete successful!" });
         }
         #endregion
