@@ -78,6 +78,11 @@ namespace StudentManagement.DataAccess.Repository
             T entity = dbSet.Find(id);
             Remove(entity);
         }
+        public void Remove(string id)
+        {
+            T entity = dbSet.Find(id);
+            Remove(entity);
+        }
 
         public void Remove(T entity)
         {
