@@ -28,23 +28,33 @@ using static StudentManagement.Helper;namespace StudentManagement.Areas.Teacher.
             _unitOfWork = unitOfWork;
             _db = db;
         }
-        public IActionResult Index()
+
+
+        public IActionResult Index(string searchString)
         {
-            var subjectList = _unitOfWork.Subject.GetAll();
-            return View(subjectList);
+            var subjectList = from m in _db.Subject
+                              select m;
+
+            if(!String.IsNullOrEmpty(searchString))
+            {
+                subjectList = subjectList.Where(s => s.Name.Contains(searchString));
+            }
+            return View(subjectList.ToList());
         }
 
-        public IActionResult ClassList(int id) //Id of Subject
+        public IActionResult ClassList(int id, string searchString) //Id of Subject
         {
             SubId = id;
+            ViewBag.subId = SubId;
+
             var objList = _unitOfWork.RecordSubject.GetAll(x => x.SubjectId == id, includeProperties: "Class");
             ViewBag.subject = _unitOfWork.Subject.Get(SubId).Name;
             var classList = new List<Class>();
             int check = 1;
-            foreach (var obj in objList)
+            foreach (var obj in objList) // chạy từng redcord subject
             {
                 check = 1;
-                foreach(var cls in classList)
+                foreach(var cls in classList) // chạy từng lớp trong classList để kiểm tra đã thêm lớp đó vô chưa
                 {
                     if(obj.Class == cls)
                     {
@@ -57,10 +67,19 @@ using static StudentManagement.Helper;namespace StudentManagement.Areas.Teacher.
                 }
 
             }
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                classList = classList.Where(s => s.Name.Contains(searchString)).ToList();
+            }
             return View(classList);
         }
+        //public IActionResult SearchFor(string searchString)
+        //{
+
+        //}
         public IActionResult SemesterList(string? id) //id of class
         {
+            ViewBag.subId = SubId;
             ViewBag.subject = _unitOfWork.Subject.Get(SubId).Name;
             ViewBag.lop = _unitOfWork.Class.Get(id).Name;
             ClassId = id;
