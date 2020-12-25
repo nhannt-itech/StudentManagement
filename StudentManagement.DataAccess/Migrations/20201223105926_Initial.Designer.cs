@@ -10,8 +10,8 @@ using StudentManagement.DataAccess.Data;
 namespace StudentManagement.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201213040625_Initial1")]
-    partial class Initial1
+    [Migration("20201223105926_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -276,7 +276,7 @@ namespace StudentManagement.DataAccess.Migrations
                     b.Property<string>("ClassId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int?>("Semeter")
+                    b.Property<int?>("Semester")
                         .HasColumnType("int");
 
                     b.Property<string>("StudentId")
@@ -351,7 +351,9 @@ namespace StudentManagement.DataAccess.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
 
                     b.HasKey("Id");
 
@@ -372,17 +374,17 @@ namespace StudentManagement.DataAccess.Migrations
                     b.Property<float?>("Percentage")
                         .HasColumnType("real");
 
-                    b.Property<int?>("Semeter")
+                    b.Property<int?>("Semester")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ClassId");
 
-                    b.HasIndex("Semeter", "ClassId")
+                    b.HasIndex("Semester", "ClassId")
                         .IsUnique()
                         .HasName("UQ__Summary___F5B4DD73D003A2C0")
-                        .HasFilter("([Semeter] IS NOT NULL AND [ClassId] IS NOT NULL)");
+                        .HasFilter("([Semester] IS NOT NULL AND [ClassId] IS NOT NULL)");
 
                     b.ToTable("Summary");
                 });
@@ -401,7 +403,7 @@ namespace StudentManagement.DataAccess.Migrations
                     b.Property<float?>("Percentage")
                         .HasColumnType("real");
 
-                    b.Property<int?>("Semeter")
+                    b.Property<int?>("Semester")
                         .HasColumnType("int");
 
                     b.Property<int?>("SubjectId")

@@ -92,7 +92,7 @@ using static StudentManagement.Helper;namespace StudentManagement.Areas.Teacher.
             ViewBag.lop = _unitOfWork.Class.Get(ClassId).Name;
             ViewBag.semester = "Học kỳ " + id;
             SemesterId = id;
-            var recordSubjectList = _unitOfWork.RecordSubject.GetAll(x => x.ClassId == ClassId && x.SubjectId == SubId && x.Semeter == id, includeProperties: "Student");
+            var recordSubjectList = _unitOfWork.RecordSubject.GetAll(x => x.ClassId == ClassId && x.SubjectId == SubId && x.Semester == id, includeProperties: "Student");
             var scoreVMList = new List<ScoreVM>();
 
 
@@ -172,7 +172,7 @@ using static StudentManagement.Helper;namespace StudentManagement.Areas.Teacher.
             ViewBag.subject = _unitOfWork.Subject.Get(SubId).Name;
             ViewBag.lop = _unitOfWork.Class.Get(ClassId).Name;
             ViewBag.semester =SemesterId;
-            var recordSubjectList = _unitOfWork.RecordSubject.GetAll(x => x.ClassId == ClassId && x.SubjectId == SubId && x.Semeter == SemesterId, includeProperties: "Student");
+            var recordSubjectList = _unitOfWork.RecordSubject.GetAll(x => x.ClassId == ClassId && x.SubjectId == SubId && x.Semester == SemesterId, includeProperties: "Student");
             var scoreVMList = new List<ScoreVM>();
 
 

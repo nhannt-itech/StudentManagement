@@ -91,7 +91,7 @@
                 Giáo Viên
             </div>
             <li class="nav-item">
-                <a class="nav-link" asp-area="" asp-controller="" asp-action="">
+                <a class="nav-link" asp-area="Teacher" asp-controller="Class" asp-action="Index">
                     <i class="fas fa-user-friends"></i>
                     <span>Quản lý lớp học</span>
                 </a>
@@ -116,10 +116,10 @@
                 <div id="collapseSummary" class="collapse" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" asp-area="Teacher" asp-controller="SummarySubject" asp-action="Index">
-                            Học Kỳ
+                            Môn học
                         </a>
-                        <a class="collapse-item" asp-area="" asp-controller="" asp-action="">
-                            Cả Năm
+                        <a class="collapse-item" asp-area="Teacher" asp-controller="Summary" asp-action="Index">
+                            Tổng quát
                         </a>
                     </div>
 
