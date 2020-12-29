@@ -27,6 +27,10 @@ namespace StudentManagement.Areas.Manager.Controllers
         {
             return View();
         }
+        public IActionResult SearchStudent()
+        {
+            return View();
+        }
         public IActionResult GetAll()
         {
             var obj = _unitOfWork.Student.GetAll().Select(x => new
@@ -134,7 +138,57 @@ namespace StudentManagement.Areas.Manager.Controllers
                 return Json(new { success = false, message = ex.Message });
 
             }
-        }
 
+        }
+        [HttpGet]
+        public IActionResult Details(string id)
+        {
+            //.Include(x => x.RecordSubject).ThenInclude(x => x.Average)
+            var student = _db.Student.Include(x => x.ClassStudent).ThenInclude(x => x.Class)               
+                .Where(x => x.Id == id).SingleOrDefault();
+
+            string ec;
+            string ec2;
+
+            var average = _unitOfWork.RecordSubject.GetFirstOrDefault(x => x.StudentId == id);
+            if(average == null)
+            {
+                ec  = "Chưa nhập đủ điểm";
+            }
+            else
+            {
+                ec = average.Average.ToString();
+            }
+            if (average != null && average.Average >= 8)
+            {
+                ec2 = "Học sinh giỏi";
+            }
+            else if (average != null && average.Average >= 6.5 && average.Average < 8)
+            {
+                ec2 = "Học Sinh Khá";
+            }
+            else if (average != null && average.Average < 6.5 && average.Average > 5)
+            {
+                ec2 = "Học sinh Trung bình";
+            }
+            else if (average != null && average.Average < 5 && average.Average > 0)
+                ec2 = "Học Sinh yếu";
+            else
+                ec2 = "Chưa xếp loại";
+            var obj = new
+            {
+                id = student.Id,
+                name = student.Name,
+                gender = student.Gender,
+                birth = student.Birth.GetValueOrDefault().ToShortDateString(),
+                address = student.Address,
+                email = student.Email,
+                yearToSchool = student.YearToSchool,
+                inClass = student.ClassStudent.Select(x => x.Class.Name).ToList(),
+                scores = ec,
+                achievements = ec2
+            };
+            return Json(obj);
+        }
     }
 }

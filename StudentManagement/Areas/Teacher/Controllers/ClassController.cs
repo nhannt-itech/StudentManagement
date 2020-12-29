@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using StudentManagement.DataAccess.Data;
 using StudentManagement.DataAccess.Repository.IRepository;
 using StudentManagement.Models;
 
@@ -13,11 +15,18 @@ namespace StudentManagement.Areas.Teacher.Controllers
     public class ClassController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
-        public ClassController(IUnitOfWork unitOfWork)
+        private readonly ApplicationDbContext _db;
+        public ClassController(IUnitOfWork unitOfWork, ApplicationDbContext db)
         {
             _unitOfWork = unitOfWork;
+            _db = db;
         }
         public IActionResult Index()
+        {
+            return View();
+        }
+
+        public IActionResult SearchClass()
         {
             return View();
         }
@@ -353,5 +362,35 @@ namespace StudentManagement.Areas.Teacher.Controllers
             _unitOfWork.Save();
         }
         #endregion
+
+        [HttpGet]
+        public IActionResult Details(string id)
+        {
+            var lopHoc = _unitOfWork.Class.GetFirstOrDefault(x => x.Id == id);
+
+
+            // var summary = (_unitOfWork.RecordSubject.GetFirstOrDefault(x => x.ClassId == id && x.Average > 8));
+            var hocSinhGioi = (_db.RecordSubject.Where(x => x.Average >= 8 && x.ClassId == id)).Count();
+            var hocSinhKha = (_db.RecordSubject.Where(x => x.Average >= 6.5 && x.Average < 8 && x.Class.Id == id)).Count();
+            var hocSinhTB = (_db.RecordSubject.Where(x => x.Average >= 5 && x.Average < 6.5 && x.Class.Id == id)).Count();
+            var hocSinhYeu = (_db.RecordSubject.Where(x => x.Average <= 5 && x.Class.Id == id)).Count();
+ 
+         
+
+            var obj = new
+            {
+                id = lopHoc.Id,
+                name = lopHoc.Name,
+                year = lopHoc.Year,
+                numStudents = lopHoc.NumStudents,
+                grade = lopHoc.Grade,
+                gioi=hocSinhGioi,
+                kha=hocSinhKha,
+                tb=hocSinhTB,
+                yeu=hocSinhYeu
+
+            };
+            return Json(obj);
+        }
     }
 }

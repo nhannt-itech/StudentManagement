@@ -1,0 +1,77 @@
+﻿@model StudentManagement.Models.Class
+
+
+<div class="modal fade" id="Detail">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center">
+                <h4>Chi tiết lớp học</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <dl class="row">
+                        <dt class="col-sm-3">
+                            Tên lớp học
+                        </dt>
+                        <dd class="col-sm-9">
+                            <input asp-for="Name" id="Name" class="form-control" disabled />
+                        </dd>
+
+                        <dt class="col-sm-3">
+                            Năm học
+                        </dt>
+                        <dd class="col-sm-9">
+                            <input asp-for="Year" id="Year" disabled class="form-control"></input>
+                        </dd>
+
+                        <dt class="col-sm-3">
+                            Số lượng học sinh
+                        </dt>
+                        <dd class="col-sm-9">
+                            <input asp-for="NumStudents" id="NumStudents" disabled class="form-control"></input>
+                        </dd>
+
+                        <dt class="col-sm-3">
+                            Khối
+                        </dt>
+                        <dd class="col-sm-9">
+                            <input asp-for="Grade" id="Grade" disabled class="form-control"></input>
+                        </dd>
+
+                        <dt class="col-sm-3">
+                            Số lượng học sinh giỏi
+                        </dt>
+                        <dd class="col-sm-9">
+                            <input id="hocSinhGioi" disabled class="form-control"></input>
+                        </dd>
+
+                        <dt class="col-sm-3">
+                            Số lượng học sinh khá
+                        </dt>
+                        <dd class="col-sm-9">
+                            <input id="hocSinhKha" disabled class="form-control"></input>
+                        </dd>
+
+                        <dt class="col-sm-3">
+                            Số lượng học sinh TB
+                        </dt>
+                        <dd class="col-sm-9">
+                            <input id="hocSinhTB" disabled class="form-control"></input>
+                        </dd>
+
+                        <dt class="col-sm-3">
+                            Số lượng học sinh yếu
+                        </dt>
+                        <dd class="col-sm-9">
+                            <input id="hocSinhYeu" disabled class="form-control"></input>
+                        </dd>
+
+                    </dl>
+                </form>
+                <div>
+                    <a asp-action="SearchClass">Quay lại</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

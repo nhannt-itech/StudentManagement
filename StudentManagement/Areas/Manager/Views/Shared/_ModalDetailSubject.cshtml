@@ -1,0 +1,41 @@
+﻿@model StudentManagement.Models.Subject
+
+
+<div class="modal fade" id="Detail">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center">
+                <h4>Chi tiết môn học</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <dl class="row">
+                        <dt class="col-sm-3">
+                            Tên môn học
+                        </dt>
+                        <dd class="col-sm-9">
+                            <input asp-for="Name" id="Name" class="form-control" disabled />
+                        </dd>
+
+                        <dt class="col-sm-3">
+                           Số lượng qua môn
+                        </dt>
+                        <dd class="col-sm-9">
+                            <textarea id="PassQuantity" disabled class="form-control"></textarea>
+                        </dd>
+
+                        <dt class="col-sm-3">
+                            Tỉ lệ 
+                        </dt>
+                        <dd class="col-sm-9">
+                            <textarea id="PercentTage" disabled class="form-control"></textarea>
+                        </dd>
+                    </dl>
+                </form>
+                <div>
+                    <a asp-action="SearchSubject">Quay lại</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

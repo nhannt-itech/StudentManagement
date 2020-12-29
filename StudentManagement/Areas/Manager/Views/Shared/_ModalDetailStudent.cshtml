@@ -1,0 +1,83 @@
+﻿@model StudentManagement.Models.Student
+
+
+<div class="modal fade" id="Detail">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center">
+                <h4>Chi tiết học sinh</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <dl class="row">
+                        <dt class="col-sm-3">
+                            Tên học sinh
+                        </dt>
+                        <dd class="col-sm-9">
+                            <input asp-for="Name" id="Name" class="form-control" disabled />
+                        </dd>
+                        <dt class="col-sm-3">
+                            Giới tính
+                        </dt>
+                        <dd class="col-sm-9">
+                            <input asp-for="Gender" id="Gender" class="form-control" disabled />
+                        </dd>
+                        <dt class="col-sm-3">
+                            Ngày sinh
+                        </dt>
+                        <dd class="col-sm-9">
+                            <input id="Birth" class="form-control" disabled />
+                        </dd>
+                        <dt class="col-sm-3">
+                            Địa chỉ
+                        </dt>
+                        <dd class="col-sm-9">
+                            <input asp-for="Address" id="Address" class="form-control" disabled />
+                        </dd>
+
+                        <dt class="col-sm-3">
+                            Email
+                        </dt>
+                        <dd class="col-sm-9">
+                            <input asp-for="Email" id="Email" class="form-control" disabled />
+                        </dd>
+                        <dt class="col-sm-3">
+                            Năm học
+                        </dt>
+                        <dd class="col-sm-9">
+                            <input asp-for="YearToSchool" id="YearToSchool" class="form-control" disabled />
+                        </dd>            
+                        <dt class="col-sm-3">
+                            
+                        </dt>
+                        <dd class="col-sm-9">
+                            <br />
+                        </dd>
+                        <dt class="col-sm-3">
+                            Thuộc lớp
+                        </dt>
+                        <dd class="col-sm-9">
+                            <textarea asp-for="ClassStudent" id="ClassStudent" disabled class="form-control"></textarea>
+                        </dd>
+                        <dt class="col-sm-3">
+                            Điểm trung bình
+                        </dt>
+                        <dd class="col-sm-9">
+                            <textarea asp-for="RecordSubject" id="RecordSubject" disabled class="form-control"></textarea>
+                        </dd>
+
+                         <dt class="col-sm-3">
+                            Điểm trung bình
+                        </dt>
+                        <dd class="col-sm-9">
+                            <textarea  id="Achievements" disabled class="form-control"></textarea>
+                        </dd>
+                    </dl>
+                </form>
+                <div>
+                    <a asp-action="SearchStudent">Quay lại</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

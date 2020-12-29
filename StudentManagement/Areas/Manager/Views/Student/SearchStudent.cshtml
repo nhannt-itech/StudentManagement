@@ -1,0 +1,63 @@
+﻿@model IEnumerable<StudentManagement.Models.Student>
+
+@{
+}
+
+
+<!-- Page Heading -->
+<div class="row">
+    <div class="col-6">
+        <h2 class="text-primary">Danh sách học sinh </h2>
+    </div>
+
+</div>
+<!-- DataTales Example -->
+<partial name="_ModalDetailStudent" model="new StudentManagement.Models.Student()" />
+
+
+<div class="card shadow mb-4">
+
+    <div class="card-body">
+        <div class="table-responsive">
+
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Họ tên học sinh</th>
+                        <th>Giới tính</th>
+                        <th>Ngày sinh</th>
+                        <th>Địa chỉ</th>
+                        <th>Email</th>
+                        <th>Năm học</th>
+                        <th></th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+@section Scripts{
+    <!-- Page level plugins -->
+    @*<script src="~/Admin/vendor/datatables/jquery.dataTables.min.js"></script>*@
+    <script src="~/lib/datatables/jquery.dataTables.min.js"></script>
+
+
+    @*<script src="~/Admin/vendor/datatables/dataTables.bootstrap4.min.js"></script>*@
+    <script src="~/lib/datatables/dataTables.bootstrap4.min.js"></script>
+
+    @*<script src="~/Admin/js/build/toastr.min.js"></script>*@
+    <script src="~/js/build/toastr.min.js"></script>
+
+
+    <!--cái này của thông báo-->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <!--cái này của selectlist search-->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+    <!-- Page level custom scripts -->
+    <script src="~/js/searchstudent.js"></script>
+}
