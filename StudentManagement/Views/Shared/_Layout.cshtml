@@ -122,14 +122,31 @@
                             Tổng quát
                         </a>
                     </div>
-
                 </div>
             </li>
             <li class="nav-item">
-                <a class="nav-link" asp-area="" asp-controller="" asp-action="">
+                @*<a class="nav-link" asp-area="" asp-controller="" asp-action="">
+                    <i class="fas fa-search"></i>
+                    <span>Thông tin</span>
+                </a>*@
+
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSearch" aria-expanded="true" aria-controls="collapseSummary">
                     <i class="fas fa-search"></i>
                     <span>Thông tin</span>
                 </a>
+                <div id="collapseSearch" class="collapse" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" asp-area="Manager" asp-controller="Student" asp-action="SearchStudent">
+                            Học sinh
+                        </a>
+                        <a class="collapse-item" asp-area="Teacher" asp-controller="Class" asp-action="SearchClass">
+                            Lớp học
+                        </a>
+                        <a class="collapse-item" asp-area="Manager" asp-controller="Subject" asp-action="SearchSubject">
+                            Môn học
+                        </a>
+                    </div>
+                </div>
             </li>
 
             <!-- Divider -->

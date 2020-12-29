@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using StudentManagement.DataAccess.Data;
 using StudentManagement.DataAccess.Repository.IRepository;
 using StudentManagement.Models;
 
@@ -13,16 +15,21 @@ namespace StudentManagement.Areas.Admin.Controllers
     public class SubjectController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
-
-        public SubjectController(IUnitOfWork unitOfWork)
+        private readonly ApplicationDbContext _db;
+        public SubjectController(IUnitOfWork unitOfWork, ApplicationDbContext db)
         {
             _unitOfWork = unitOfWork;
+            _db = db;
         }
         public IActionResult Index()
         {
             return View();
         }
 
+        public IActionResult SearchSubject()
+        {
+            return View();
+        }
 
         public IActionResult Upsert(int? id)
         {
@@ -88,6 +95,36 @@ namespace StudentManagement.Areas.Admin.Controllers
             return Json(new { data = allObj });
         }
         #endregion
+
+        [HttpGet]
+        public IActionResult Details(int id)
+        {
+            //.Include(x => x.RecordSubject).ThenInclude(x => x.Average)
+            //var subject1 = _db.Subject.Include(x => x.ClassStudent).ThenInclude(x => x.Class)
+            //    .Where(x => x.Id == id).SingleOrDefault();
+
+            var subject = _unitOfWork.Subject.GetFirstOrDefault(x => x.Id == id);
+
+            int? passQuantity = 0;
+            float? percent = 0;
+
+            var summary = _unitOfWork.SummarySubject.GetFirstOrDefault(x => x.SubjectId == id);
+            if(summary != null)
+            {
+                passQuantity = summary.PassQuantity;
+                percent = summary.Percentage;
+            }
+
+
+            var obj = new
+            {
+                id = subject.Id,
+                name = subject.Name,
+                pass = passQuantity,
+                per = percent
+            };
+            return Json(obj);
+        }
     }
 }
 
