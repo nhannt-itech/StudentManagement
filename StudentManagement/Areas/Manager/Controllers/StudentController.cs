@@ -122,15 +122,42 @@ namespace StudentManagement.Areas.Manager.Controllers
         [HttpDelete]
         public async Task<IActionResult> Delete(string id)
         {
-            var d = await _db.Student.Include(x => x.ClassStudent).Include(x => x.RecordSubject).FirstOrDefaultAsync(x => x.Id == id);
+            //lấy ra học sinh cần xóa
+            var student = await _db.Student.Include(x => x.ClassStudent).Include(x => x.RecordSubject).FirstOrDefaultAsync(x => x.Id == id);
 
+
+            //Lấy ra lớp học nào mà có học sinh bị xóa để trừ đi sỉ số
             try
             {
-                _db.ClassStudent.RemoveRange(d.ClassStudent);
-                _db.RecordSubject.RemoveRange(d.RecordSubject);
-
-                _unitOfWork.Student.Remove(id);
+                var classStudent = _unitOfWork.ClassStudent.GetFirstOrDefault(x => x.StudentId == id);
+                var lophoc = _db.Class.FirstOrDefault(x => x.Id == classStudent.ClassId);
+                lophoc.NumStudents--;
+            }
+            catch // Lỡ mà xóa trung học sinh chưa được thêm vào lớp nên bỏ vào trycatch
+            {
+            }
+            //Lấy ra mấy cái điểm của học sinh đó để xóa đi
+            List<RecordSubject> recordSubject = _unitOfWork.RecordSubject.GetAll(x => x.StudentId == id).ToList();
+            foreach (var c in recordSubject)
+            {
+                List<ScoreRecordSubject> obj = _unitOfWork.ScoreRecordSubject.GetAll(x => x.RecordSubjectId == c.Id).ToList();
+                foreach (var a in obj)
+                {
+                    _unitOfWork.ScoreRecordSubject.Remove(a);
+                }
                 _unitOfWork.Save();
+            }
+            try
+            {
+
+                _db.ClassStudent.RemoveRange(student.ClassStudent);
+
+                _db.RecordSubject.RemoveRange(student.RecordSubject);
+
+                _db.Student.Remove(student);
+
+                
+                _db.SaveChanges();
                 return Json(new { success = true, message = "xóa mục thành công" });
             }
             catch (Exception ex)
@@ -138,7 +165,6 @@ namespace StudentManagement.Areas.Manager.Controllers
                 return Json(new { success = false, message = ex.Message });
 
             }
-
         }
         [HttpGet]
         public IActionResult Details(string id)
