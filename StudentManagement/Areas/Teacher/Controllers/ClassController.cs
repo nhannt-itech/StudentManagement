@@ -309,7 +309,7 @@ namespace StudentManagement.Areas.Teacher.Controllers
                     ScoreRecordSubject scoreRecordSubject2 = new ScoreRecordSubject()
                     {
                         Id = System.Guid.NewGuid().ToString(),
-                        RecordSubjectId = recordSubject1.Id,
+                        RecordSubjectId = recordSubject2.Id,
                         RecordType = tr,
                         Score = null
                     };
