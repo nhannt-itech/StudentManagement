@@ -76,6 +76,22 @@ namespace StudentManagement.Areas.Admin.Controllers
         public IActionResult Delete(int id)
         {
             var ObjfromDb = _unitOfWork.Subject.Get(id);
+            var recordList = _unitOfWork.RecordSubject.GetAll(x => x.SubjectId == id);
+            foreach (var rs in recordList)
+            {
+                var scoreList = _unitOfWork.ScoreRecordSubject.GetAll(x => x.RecordSubjectId == rs.Id);
+                foreach (var s in scoreList)
+                {
+                    _unitOfWork.ScoreRecordSubject.Remove(s);
+                }
+                _unitOfWork.RecordSubject.Remove(rs);
+
+            }
+            var summaryList = _unitOfWork.SummarySubject.GetAll(x => x.SubjectId == id);
+            foreach(var sl in summaryList)
+            {
+                _unitOfWork.SummarySubject.Remove(sl);
+            }
             if (ObjfromDb == null)
             {
                 return Json(new { success = false, message = "Error while deleting" });

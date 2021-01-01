@@ -3,8 +3,14 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@if (ViewBag.Message == "NotFound")
+{
+    <div class="alert alert-danger" role="alert">
+        Không tìm thấy!
+    </div>
+}
 
-<form asp-controller="SearchScore" asp-action="Index"  method="get">
+<form asp-controller="SearchScore" asp-action="Index" method="get">
     <p>
         Tìm kiếm: <input type="text" name="SearchString">
         <input type="submit" value="Filter" />

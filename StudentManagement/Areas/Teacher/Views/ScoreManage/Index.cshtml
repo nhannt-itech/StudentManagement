@@ -4,6 +4,12 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@if (ViewBag.Message == "NotFound")
+{
+    <div class="alert alert-danger" role="alert">
+        Không tìm thấy!
+    </div>
+}
 
 <form asp-controller="ScoreManage" asp-action="Index" method="get">
     <p>
@@ -23,4 +29,5 @@
 
 </div>
 <br />
+
 

@@ -29,10 +29,17 @@ namespace StudentManagement.Areas.Teacher.Controllers
         {
             var classList = from m in _db.Class
                               select m;
+            var tempList = classList;
 
             if (!String.IsNullOrEmpty(searchString))
             {
                 classList = classList.Where(s => s.Name.Contains(searchString));
+                if (classList.Count()==0)
+                {
+                    ViewBag.Message = "NotFound";
+                    classList = tempList;
+                }
+                
             }
             return View(classList.ToList());
         }
