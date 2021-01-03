@@ -34,6 +34,9 @@ namespace StudentManagement.DataAccess.Repository
         public ISubjectRepository Subject { get; private set; }
         public ISummaryRepository Summary { get; private set; }
         public ISummarySubjectRepository SummarySubject { get; private set; }
+        public IRuleRepository Rule { get; private set; }
+        public IFinalResultRepository FinalResult { get; private set; }
+
 
         public ISP_Call SP_Call { get; private set; }
 
