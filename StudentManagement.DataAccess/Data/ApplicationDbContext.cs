@@ -23,6 +23,7 @@ namespace StudentManagement.DataAccess.Data
         public virtual DbSet<Summary> Summary { get; set; }
         public virtual DbSet<SummarySubject> SummarySubject { get; set; }
         public virtual DbSet<Rule> Rule { get; set; }
+        public virtual DbSet<FinalResult> FinalResult { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -49,7 +50,7 @@ namespace StudentManagement.DataAccess.Data
                     .HasConstraintName("FK__Class_Stu__Stude__29572725");
             });
 
-            modelBuilder.Entity<RecordSubject>(entity =>
+        modelBuilder.Entity<RecordSubject>(entity =>
             {
                 entity.ToTable("Record_Subject");
 

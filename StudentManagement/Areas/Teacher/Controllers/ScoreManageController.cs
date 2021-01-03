@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using StudentManagement.DataAccess.Data;
 using StudentManagement.DataAccess.Repository.IRepository;
@@ -35,9 +36,18 @@ using static StudentManagement.Helper;namespace StudentManagement.Areas.Teacher.
             var subjectList = from m in _db.Subject
                               select m;
 
+            var tempList = subjectList;
+
             if(!String.IsNullOrEmpty(searchString))
             {
                 subjectList = subjectList.Where(s => s.Name.Contains(searchString));
+                if( subjectList.Count() == 0)
+                {
+                    ViewBag.Message = "NotFound";
+                    subjectList = tempList;
+                   
+                }
+                
             }
             return View(subjectList.ToList());
         }
@@ -47,7 +57,8 @@ using static StudentManagement.Helper;namespace StudentManagement.Areas.Teacher.
             SubId = id;
             ViewBag.subId = SubId;
 
-            var objList = _unitOfWork.RecordSubject.GetAll(x => x.SubjectId == id, includeProperties: "Class");
+            var objList = _unitOfWork.RecordSubject.GetAll(x => x.SubjectId == id,includeProperties: "Class");
+          
             ViewBag.subject = _unitOfWork.Subject.Get(SubId).Name;
             var classList = new List<Class>();
             int check = 1;
@@ -67,16 +78,20 @@ using static StudentManagement.Helper;namespace StudentManagement.Areas.Teacher.
                 }
 
             }
+            var tempList = classList;
             if (!String.IsNullOrEmpty(searchString))
             {
                 classList = classList.Where(s => s.Name.Contains(searchString)).ToList();
+                if (classList.Count() ==  0)
+                {
+                    ViewBag.Message = "NotFound";
+                    classList = tempList;
+                }
+                
             }
             return View(classList);
         }
-        //public IActionResult SearchFor(string searchString)
-        //{
-
-        //}
+    
         public IActionResult SemesterList(string? id) //id of class
         {
             ViewBag.subId = SubId;
@@ -111,8 +126,9 @@ using static StudentManagement.Helper;namespace StudentManagement.Areas.Teacher.
         {
             var scoreVM = new ScoreVM();
             var obj = _unitOfWork.RecordSubject.Get(id);
-            obj.Student = _unitOfWork.Student.Get(obj.StudentId);
-            obj.Subject = _unitOfWork.Subject.Get(obj.SubjectId.GetValueOrDefault());
+            
+            obj.Student = _unitOfWork.Student.Get(obj.StudentId); //lấy student
+            obj.Subject = _unitOfWork.Subject.Get(obj.SubjectId.GetValueOrDefault()); // lấy môn học 
             scoreVM.Student = obj.Student;
             scoreVM.RecordSubject = obj;
             scoreVM.ScoreList = _unitOfWork.ScoreRecordSubject.GetAll(x => x.RecordSubjectId == obj.Id).ToList() ;
@@ -210,13 +226,16 @@ using static StudentManagement.Helper;namespace StudentManagement.Areas.Teacher.
 
                 scoreVMList.Add(scoreVM);
             }
+
+          
             return View(scoreVMList);
         }
+
        
 
 
-        #region API CALL
-        [HttpGet]
+            #region API CALL
+            [HttpGet]
         public IActionResult GetAllStudent(string? id) // id of Class
         {
             var objList = _unitOfWork.RecordSubject.GetAll(x => x.ClassId == id && x.SubjectId == SubId, includeProperties: "Student");

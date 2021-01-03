@@ -30,7 +30,10 @@
             <th>
                 TB Học kỳ 2
             </th>
-          
+            <th>
+                Cả năm
+            </th>
+
         </tr>
     </thead>
     <tbody>
@@ -47,13 +50,17 @@
                 @Html.DisplayFor(modelItem => item.Student.Name)
             </td>
             <td>
-               @ViewBag.lop
+                @ViewBag.lop
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.AvgSem1)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.AvgSem2)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FinalAvg
+           )
             </td>
         </tr>
         }

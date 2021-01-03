@@ -263,6 +263,31 @@ namespace StudentManagement.DataAccess.Migrations
                     b.ToTable("Class_Student");
                 });
 
+            modelBuilder.Entity("StudentManagement.Models.FinalResult", b =>
+                {
+                    b.Property<string>("StudentId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<float>("AvgSem1")
+                        .HasColumnType("real");
+
+                    b.Property<float>("AvgSem2")
+                        .HasColumnType("real");
+
+                    b.Property<string>("ClassId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<float>("Final")
+                        .HasColumnType("real");
+
+                    b.Property<string>("Rate")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("StudentId");
+
+                    b.ToTable("FinalResult");
+                });
+
             modelBuilder.Entity("StudentManagement.Models.RecordSubject", b =>
                 {
                     b.Property<string>("Id")

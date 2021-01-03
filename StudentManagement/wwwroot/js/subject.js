@@ -34,8 +34,8 @@ function loadDataTable() {
 
 function Delete(url) {
     swal({
-        title: "Are you sure you want to Delete?",
-        text: "You will not be able to restore the data!",
+        title: "Bạn có chắc chắn muốn xóa Môn học?",
+        text: "Xóa môn học sẽ xóa tất cả dữ liệu của học sinh, bảng điểm, lớp học, thống kê có môn học",
         icon: "warning",
         buttons: true,
         dangerMode: true

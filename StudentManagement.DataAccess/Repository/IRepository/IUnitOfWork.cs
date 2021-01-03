@@ -16,6 +16,7 @@ namespace StudentManagement.DataAccess.Repository.IRepository
         ISummaryRepository Summary { get; }
         ISummarySubjectRepository SummarySubject { get; }
         IRuleRepository Rule { get; }
+        IFinalResultRepository FinalResult { get; }
 
         ISP_Call SP_Call { get; }
         void Save();

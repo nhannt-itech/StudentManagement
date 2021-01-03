@@ -79,5 +79,31 @@ namespace StudentManagement.DataAccess.Repository
                 return (T)Convert.ChangeType(sqlCon.ExecuteScalar<T>(procedureName, param, commandType: System.Data.CommandType.StoredProcedure), typeof(T));
             }
         }
+
+        public (bool success, string message) ExecuteJson(string proceduceName, DynamicParameters param = null)
+        {
+            using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
+            {
+                sqlConnection.Open();
+                try
+                {
+                    var obj = sqlConnection.ExecuteReader(proceduceName, param,
+                        commandType: System.Data.CommandType.StoredProcedure);
+                    var r = "";
+                    while (obj.Read())
+                    {
+                        var a = obj.GetValue(0);
+                        r += a.ToString();
+
+                    }
+                    return (true, r);
+                }
+                catch (Exception e)
+                {
+
+                    return (false, e.Message);
+                }
+            }
+        }
     }
 }

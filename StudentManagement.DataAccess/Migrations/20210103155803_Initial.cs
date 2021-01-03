@@ -66,6 +66,22 @@ namespace StudentManagement.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "FinalResult",
+                columns: table => new
+                {
+                    StudentId = table.Column<string>(nullable: false),
+                    ClassId = table.Column<string>(nullable: true),
+                    AvgSem1 = table.Column<float>(nullable: false),
+                    AvgSem2 = table.Column<float>(nullable: false),
+                    Final = table.Column<float>(nullable: false),
+                    Rate = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FinalResult", x => x.StudentId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Student",
                 columns: table => new
                 {
@@ -433,6 +449,9 @@ namespace StudentManagement.DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "Class_Student");
+
+            migrationBuilder.DropTable(
+                name: "FinalResult");
 
             migrationBuilder.DropTable(
                 name: "Score_Record_Subject");

@@ -82,6 +82,22 @@
                     <i class="fas fa-user-graduate"></i>
                     <span>Quản lý môn học</span>
                 </a>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSummary" aria-expanded="true" aria-controls="collapseSummary">
+                    <i class="fas fa-fw fa-columns"></i>
+                    <span>Biểu đồ thống kê</span>
+                </a>
+                <div id="collapseSummary" class="collapse" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" asp-area="Manager" asp-controller="Statistic" asp-action="Index">
+                            Thống kê thông tin
+                        </a>
+                        <a class="collapse-item" asp-area="Manager" asp-controller="ResultStatistic" asp-action="Index">
+                            Thống kê kết quả
+                        </a>
+                    </div>
+                </div>
+            </li>
             </li>
 
             <!-- Divider -->
@@ -105,7 +121,7 @@
             <li class="nav-item">
                 <a class="nav-link" asp-area="Teacher" asp-controller="SearchScore" asp-action="Index">
                     <i class="fas fa-bookmark"></i>
-                    <span>Tra cứu điểm </span>
+                    <span>Tổng kết điểm </span>
                 </a>
             </li>
             <li class="nav-item">
@@ -125,6 +141,7 @@
                 </div>
             </li>
             <li class="nav-item">
+
 
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSearch" aria-expanded="true" aria-controls="collapseSummary">
                     <i class="fas fa-search"></i>

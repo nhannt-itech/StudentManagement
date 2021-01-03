@@ -4,6 +4,13 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+
+@if (ViewBag.Message == "NotFound")
+{
+    <div class="alert alert-danger" role="alert">
+        Không tìm thấy!
+    </div>
+}
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="">@ViewBag.subject</a></li>
@@ -16,9 +23,9 @@
         Tìm kiếm: <input type="text" name="SearchString">
         <input type="submit" value="Filter" />
     </p>
-</form> 
+</form>
 
-\
+
 <div class="list-group" style="margin-left:200px; margin-right:200px; text-align:center;">
     <a href="#" class="list-group-item list-group-item-action list-group-item-success active">
         <b>DANH SÁCH LỚP HỌC</b>

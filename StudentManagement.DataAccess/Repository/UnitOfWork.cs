@@ -22,6 +22,7 @@ namespace StudentManagement.DataAccess.Repository
             Summary = new SummaryRepository(_db);
             SummarySubject = new SummarySubjectRepository(_db);
             Rule = new RuleRepository(_db);
+            FinalResult = new FinalResultRepository(_db);
             SP_Call = new SP_Call(_db);
         }
         public IApplicationUserRepository ApplicationUser { get; private set; }
@@ -33,7 +34,6 @@ namespace StudentManagement.DataAccess.Repository
         public ISubjectRepository Subject { get; private set; }
         public ISummaryRepository Summary { get; private set; }
         public ISummarySubjectRepository SummarySubject { get; private set; }
-        public IRuleRepository Rule { get; private set; }
 
         public ISP_Call SP_Call { get; private set; }
 

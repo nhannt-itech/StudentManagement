@@ -29,10 +29,17 @@ namespace StudentManagement.Areas.Teacher.Controllers
         {
             var classList = from m in _db.Class
                               select m;
+            var tempList = classList;
 
             if (!String.IsNullOrEmpty(searchString))
             {
                 classList = classList.Where(s => s.Name.Contains(searchString));
+                if (classList.Count()==0)
+                {
+                    ViewBag.Message = "NotFound";
+                    classList = tempList;
+                }
+                
             }
             return View(classList.ToList());
         }
@@ -58,8 +65,28 @@ namespace StudentManagement.Areas.Teacher.Controllers
 
                 score.AvgSem1 = st.Student.RecordSubject.Where(x=>x.Semester ==1 && x.ClassId == id).Select(x => x.Average).Average().GetValueOrDefault();
                 score.AvgSem2 = st.Student.RecordSubject.Where(x => x.Semester == 2 && x.ClassId == id).Select(x => x.Average).Average().GetValueOrDefault();
-
+                score.FinalAvg = (score.AvgSem1 + score.AvgSem2) / 2;
                 searchScoreList.Add(score);
+
+
+                FinalResult finalResult = new FinalResult();
+                finalResult.StudentId = score.Student.Id;
+                finalResult.ClassId = id;
+                finalResult.AvgSem1 = score.AvgSem1;
+                finalResult.AvgSem2 = score.AvgSem2;
+                finalResult.Final = score.FinalAvg;
+                try
+                {
+                    _unitOfWork.FinalResult.Add(finalResult);
+                }
+                catch
+                {
+                    _unitOfWork.FinalResult.Update(finalResult);
+                }
+                _unitOfWork.Save();
+              
+
+                
             }
             return View(searchScoreList);
         }
