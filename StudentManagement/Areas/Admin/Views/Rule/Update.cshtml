@@ -1,0 +1,54 @@
+﻿@model StudentManagement.Models.Rule
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Quản lý quy định";
+}
+<div class="container">
+    <!-- Nested Row within Card Body -->
+    <div class="row">
+        <div class="offset-3 col-lg-6 ">
+            <div class="p-5">
+                <div class="text-center">
+                    <h1 class="h4 text-gray-900 mb-4">Chỉnh sửa quy định</h1>
+                </div>
+                <form method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="row">
+                        <div class="col-3 text-lg">
+                            <label>Tên quy định:</label>
+                        </div>
+                        <div class="form-group col-9">
+                            <input id="Name" asp-for="Name" type="text" class="form-control">
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3 text-lg">
+                            <label>Giá trị tối thiếu:</label>
+                        </div>
+                        <div class="form-group col-9">
+                            <input id="Year" asp-for="Min" type="text" class="form-control">
+                            <span asp-validation-for="Min" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3 text-lg">
+                            <label>Giá trị tối đa:</label>
+                        </div>
+                        <div class="form-group col-9">
+                            <input id="Year" asp-for="Max" type="text" class="form-control">
+                            <span asp-validation-for="Max" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-user btn-block">
+                        Chỉnh sửa
+                    </button>
+                    <a asp-controller="Rule" asp-action="Index" class="btn btn-warning btn-user btn-block">
+                        Trở vể
+                    </a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
