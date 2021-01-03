@@ -12,6 +12,6 @@ namespace StudentManagement.DataAccess.Repository.IRepository
         T OnRecord<T>(string procedureName, DynamicParameters param = null);
         IEnumerable<T> List<T>(string procedureName, DynamicParameters param = null);
         Tuple<IEnumerable<T1>, IEnumerable<T2>> List<T1, T2>(string procedureName, DynamicParameters param = null);
-
+        (bool success, string message) ExecuteJson(string proceduceName, DynamicParameters param = null);
     }
 }

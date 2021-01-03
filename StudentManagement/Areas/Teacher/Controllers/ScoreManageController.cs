@@ -226,13 +226,16 @@ using static StudentManagement.Helper;namespace StudentManagement.Areas.Teacher.
 
                 scoreVMList.Add(scoreVM);
             }
+
+          
             return View(scoreVMList);
         }
+
        
 
 
-        #region API CALL
-        [HttpGet]
+            #region API CALL
+            [HttpGet]
         public IActionResult GetAllStudent(string? id) // id of Class
         {
             var objList = _unitOfWork.RecordSubject.GetAll(x => x.ClassId == id && x.SubjectId == SubId, includeProperties: "Student");

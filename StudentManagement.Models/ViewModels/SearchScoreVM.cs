@@ -9,5 +9,6 @@ namespace StudentManagement.Models.ViewModels
         public Student Student { get; set; }
         public float AvgSem1 { get; set; } //điểm trung bình HK1
         public float AvgSem2 { get; set; }//điểm trung bình HK2
+        public float FinalAvg { get; set; }
     }
 }
