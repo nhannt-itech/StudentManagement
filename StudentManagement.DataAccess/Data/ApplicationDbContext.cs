@@ -22,6 +22,7 @@ namespace StudentManagement.DataAccess.Data
         public virtual DbSet<Subject> Subject { get; set; }
         public virtual DbSet<Summary> Summary { get; set; }
         public virtual DbSet<SummarySubject> SummarySubject { get; set; }
+        public virtual DbSet<Rule> Rule { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
