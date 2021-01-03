@@ -9,12 +9,12 @@ function loadDataTable() {
             "url": "/Admin/ApplicationUser/GetAll"
         },
         "columns": [
-            {
-                "data": { id: "id", imageUrl: "imageUrl" },
-                "render": function (data) {
-                    return `<img src="${data.imageUrl}" style="border-radius:50%" width="60" height="60" />`
-                }
-            },
+            //{
+            //    "data": { id: "id", imageUrl: "imageUrl" },
+            //    "render": function (data) {
+            //        return `<img src="${data.imageUrl}" style="border-radius:50%" width="60" height="60" />`
+            //    }
+            //},
             { "data": "name" },
             { "data": "email" },
             { "data": "phoneNumber" },

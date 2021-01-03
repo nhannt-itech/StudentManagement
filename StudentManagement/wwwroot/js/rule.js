@@ -6,7 +6,7 @@ $(document).ready(function () {
 function loadDataTable() {
     dataTable = $('#tblData').DataTable({
         "ajax": {
-            "url": "/Admin/Rule/GetAll"
+            "url": "/Manager/Rule/GetAll"
         },
         "columns": [
             { "data": "name" },
@@ -17,7 +17,7 @@ function loadDataTable() {
                 "render": function (data) {
                     return `
                             <div class="text-center">
-                                <a href="/Admin/Rule/Update/${data}" class="btn btn-success bg-gradient-success text-white" style="cursor:pointer">
+                                <a href="/Manager/Rule/Update/${data}" class="btn btn-success bg-gradient-success text-white" style="cursor:pointer">
                                     <i class="fas fa-edit"></i>
                                 </a>
                             </div>

@@ -6,9 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 using StudentManagement.DataAccess.Repository.IRepository;
 using StudentManagement.Models;
 
-namespace StudentManagement.Areas.Admin.Controllers
+namespace StudentManagement.Areas.Manager.Controllers
 {
-    [Area("Admin")]
+    [Area("Manager")]
     public class RuleController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;

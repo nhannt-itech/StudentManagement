@@ -4,105 +4,86 @@
 @{
     ViewData["Title"] = "Register";
 }
-<div class="col-md-10 offset-md-1">
-    <form asp-route-returnUrl="@Model.ReturnUrl" method="post" enctype="multipart/form-data">
-        <div asp-validation-summary="All" class="text-danger"></div>
-        <div class="form-group">
-            <label asp-for="Input.Name"></label>
-            <input asp-for="Input.Name" class="form-control" />
-            <span asp-validation-for="Input.Name" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="Input.Email"></label>
-            <input asp-for="Input.Email" class="form-control" />
-            <span asp-validation-for="Input.Email" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="Input.Address"></label>
-            <input asp-for="Input.Address" class="form-control" />
-            <span asp-validation-for="Input.Address" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="Input.PhoneNumber"></label>
-            <input asp-for="Input.PhoneNumber" class="form-control" />
-            <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label asp-for="Input.Password"></label>
-                    <input asp-for="Input.Password" class="form-control" />
-                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+
+<div class="container">
+    <div class="row">
+        <div class="offset-2 col-lg-8 ">
+            <div class="p-5">
+                <div class="text-center">
+                    <h1 class="h4 text-gray-900 mb-4">Tạo tài khoản</h1>
                 </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label asp-for="Input.ConfirmPassword"></label>
-                    <input asp-for="Input.ConfirmPassword" class="form-control" />
-                    <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <div class="col-4">
-                Image
-            </div>
-            <div class="col-8">
-                <input type="file" name="files" id="uploadBox" multiple class="form-control" />
-            </div>
-        </div>
-
-
-        @if (User.IsInRole(SD.Role_Admin))
-        {
-            <div class="form-group">
-                <label asp-for="Input.Role"></label>
-                @Html.DropDownListFor(m => m.Input.Role, Model.Input.RoleList, "-Please select a role", new { @class = "form-control" })
-            </div>
-        }
-
-        <div class="form-group">
-            <label asp-for="Input.Role"></label>
-            @Html.DropDownListFor(m => m.Input.Role, Model.Input.RoleList, "-Please select a role", new { @class = "form-control" })
-        </div>
-
-        <button type="submit" onclick="return validateInput()" class="btn btn-primary">Register</button>
-    </form>
-</div>
-
-@*<div class="col-md-10 offset-md-1">
-        <section>
-            <h4>Use another service to register.</h4>
-            <hr />
-            @{
-                if ((Model.ExternalLogins?.Count ?? 0) == 0)
-                {
-                    <div>
-                        <p>
-                            There are no external authentication services configured. See <a href="https://go.microsoft.com/fwlink/?LinkID=532715">this article</a>
-                            for details on setting up this ASP.NET application to support logging in via external services.
-                        </p>
-                    </div>
-                }
-                else
-                {
-                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
-                        <div>
-                            <p>
-                                @foreach (var provider in Model.ExternalLogins)
-                                {
-                                    <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
-                                }
-                            </p>
+                <form method="post" asp-route-returnUrl="@Model.ReturnUrl" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="row">
+                        <div class="col-3 text-lg">
+                            <label>Tên:</label>
                         </div>
-                    </form>
-                }
-            }
-        </section>
-    </div>*@
+                        <div class="form-group col-9">
+                            <input asp-for="Input.Name" type="text" class="form-control">
+                            <span asp-validation-for="Input.Name" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3 text-lg">
+                            <label>Email:</label>
+                        </div>
+                        <div class="form-group col-9">
+                            <input asp-for="Input.Email" type="text" class="form-control">
+                            <span asp-validation-for="Input.Email" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3 text-lg">
+                            <label>Địa chỉ:</label>
+                        </div>
+                        <div class="form-group col-9">
+                            <input asp-for="Input.Address" type="text" class="form-control">
+                            <span asp-validation-for="Input.Address" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3 text-lg">
+                            <label>Số điện thoại:</label>
+                        </div>
+                        <div class="form-group col-9">
+                            <input asp-for="Input.PhoneNumber" type="text" class="form-control">
+                            <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3 text-lg">
+                            <label>Mật khẩu:</label>
+                        </div>
+                        <div class="form-group col-9">
+                            <input type="password" asp-for="Input.Password" class="form-control">
+                            <span asp-validation-for="Input.Password" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3 text-lg">
+                            <label>Xác nhận mật khẩu:</label>
+                        </div>
+                        <div class="form-group col-9">
+                            <input type="password" asp-for="Input.ConfirmPassword" class="form-control">
+                            <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3 text-lg">
+                            <label>Loại tài khoản:</label>
+                        </div>
+                        <div class="form-group col-9">
+                            @Html.DropDownListFor(m => m.Input.Role, Model.Input.RoleList, "-Chọn loại tài khoản", new { @class = "form-control" })
+                            <span asp-validation-for="Input.Role" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <button type="submit" onclick="return validateInput()" class="btn btn-primary btn-user btn-block">Tạo tài khoản</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
