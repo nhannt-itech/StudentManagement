@@ -92,6 +92,31 @@ namespace StudentManagement.Areas.Identity.Pages.Account
 
             }
 
+            if (_unitOfWork.Subject.GetAll().Count() == 0)
+            {
+                Subject sub = new Subject() { Id=1, Name = "Toán" };
+                Subject sub1 = new Subject() { Id = 2, Name = "Lý" };
+                Subject sub2 = new Subject() { Id = 3, Name = "Hóa" };
+                Subject sub3 = new Subject() { Id = 4, Name = "Sinh" };
+                Subject sub4 = new Subject() { Id = 5, Name = "Sử" };
+                Subject sub5 = new Subject() { Id = 6, Name = "Địa" };
+                Subject sub6 = new Subject() { Id = 7, Name = "Văn" };
+                Subject sub7 = new Subject() { Id = 8, Name = "Đạo Đức" };
+                Subject sub8 = new Subject() { Id = 9, Name = "Thể Dục" };
+
+                _unitOfWork.Subject.Add(sub);
+                _unitOfWork.Subject.Add(sub1);
+                _unitOfWork.Subject.Add(sub2);
+                _unitOfWork.Subject.Add(sub3);
+                _unitOfWork.Subject.Add(sub4);
+                _unitOfWork.Subject.Add(sub5);
+                _unitOfWork.Subject.Add(sub6);
+                _unitOfWork.Subject.Add(sub7);
+                _unitOfWork.Subject.Add(sub8);
+                _unitOfWork.Save();
+
+            }
+
 
             if (!string.IsNullOrEmpty(ErrorMessage))
             {
