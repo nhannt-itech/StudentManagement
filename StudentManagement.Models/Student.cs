@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -20,6 +21,7 @@ namespace StudentManagement.Models
         [Required(ErrorMessage = "Bạn phải nhập giới tính.")]
         public string Gender { get; set; }
         [Required(ErrorMessage = "Bạn phải nhập ngày sinh.")]
+        [Remote(areaName:"Manager",action:"checkAge", controller:"Student", ErrorMessage = "Tuổi của học sinh không đúng quy định")]
         public DateTime? Birth { get; set; }
         public string Address { get; set; }
         public string Email { get; set; }

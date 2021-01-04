@@ -213,6 +213,21 @@ namespace StudentManagement.Areas.Manager.Controllers
 
             }
         }
-       
+
+        [AcceptVerbs("Get", "Post")]
+        public JsonResult checkAge(DateTime Birth)
+        {
+            int age = DateTime.Now.Year - Birth.Year;
+            int ageMax = _unitOfWork.Rule.GetFirstOrDefault(x => x.Name == "Tuổi học sinh").Max;
+            int ageMin = _unitOfWork.Rule.GetFirstOrDefault(x => x.Name == "Tuổi học sinh").Min;
+
+            if (age>=ageMin && age <=ageMax)
+            {
+                return Json(true);
+            }
+
+            return Json(false);
+        }
+
     }
 }

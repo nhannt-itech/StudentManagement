@@ -63,6 +63,16 @@ namespace StudentManagement.Controllers
                 return Json(new { success = false, message = "Khóa " + objFromDb.Email });
             }
         }
+        [AcceptVerbs("Get", "Post")]
+        public JsonResult checkEmailIsValid([Bind(Prefix = "Input.Email")] string Email)
+        {
+            int count = _unitOfWork.ApplicationUser.GetAll(x => x.Email == Email).Count();
+            if (count == 1)
+            {
+                return Json(false);
+            }
+            return Json(true);
+        }
         #endregion
     }
 }

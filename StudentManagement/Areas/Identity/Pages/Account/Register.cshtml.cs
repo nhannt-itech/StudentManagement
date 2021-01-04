@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -66,6 +67,7 @@ namespace StudentManagement.Areas.Identity.Pages.Account
             [Required(ErrorMessage ="Bạn phải nhập Email.")]
             [EmailAddress(ErrorMessage = "Email không hợp lệ.")]
             [Display(Name = "Email")]
+            [Remote(areaName: "Admin", action: "checkEmailIsValid", controller: "ApplicationUser", ErrorMessage = "Email đã tồn tại.")]
             public string Email { get; set; }
 
             [Required(ErrorMessage = "Bạn phải nhập Password.")]
@@ -89,7 +91,9 @@ namespace StudentManagement.Areas.Identity.Pages.Account
             [Display(Name = "Address")]
             public string Address { get; set; }
             public string ImageUrl { get; set; }
+            [Required(ErrorMessage = "Bạn phải chọn loại tài khoản.")]
             public string Role { get; set; }
+            [NotMapped]
             public IEnumerable<SelectListItem> RoleList { get; set; }
         }
 
