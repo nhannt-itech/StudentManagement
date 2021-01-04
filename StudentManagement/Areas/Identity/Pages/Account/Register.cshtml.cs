@@ -63,12 +63,12 @@ namespace StudentManagement.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required]
-            [EmailAddress]
+            [Required(ErrorMessage ="Bạn phải nhập Email.")]
+            [EmailAddress(ErrorMessage = "Email không hợp lệ.")]
             [Display(Name = "Email")]
             public string Email { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "Bạn phải nhập Password.")]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
             [DataType(DataType.Password)]
             [Display(Name = "Password")]
@@ -76,10 +76,10 @@ namespace StudentManagement.Areas.Identity.Pages.Account
 
             [DataType(DataType.Password)]
             [Display(Name = "Confirm password")]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+            [Compare("Password", ErrorMessage = "Mật khẩu không trùng nhau.")]
             public string ConfirmPassword { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "Bạn phải nhập Tên.")]
             [Display(Name = "Name")]
             public string Name { get; set; }
 
@@ -91,10 +91,7 @@ namespace StudentManagement.Areas.Identity.Pages.Account
             public string ImageUrl { get; set; }
             public string Role { get; set; }
             public IEnumerable<SelectListItem> RoleList { get; set; }
-
         }
-
-
 
         public async Task OnGetAsync(string returnUrl = null)
         {
@@ -187,18 +184,7 @@ namespace StudentManagement.Areas.Identity.Pages.Account
                     {
                         await _userManager.AddToRoleAsync(user, user.Role);
                     }
-                    //------------------------------Send Email-----------------------------------
-                    //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    //code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-                    //var callbackUrl = Url.Page(
-                    //    "/Account/ConfirmEmail",
-                    //    pageHandler: null,
-                    //    values: new { area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl },
-                    //    protocol: Request.Scheme);
 
-                    //await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                    //    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
-                    //-------------------------------Send Email End-------------------------------
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
                         return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });

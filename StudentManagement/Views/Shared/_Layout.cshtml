@@ -38,34 +38,21 @@
                 <div class="sidebar-brand-text">QUẢN LÝ HỌC SINH</div>
             </a>
 
-            <!-- Divider -->
-            <hr class="sidebar-divider my-0">
-
-            <!-- Nav Item - Dashboard -->
-            <li class="nav-item">
-                <a class="nav-link" asp-area="Customer" asp-controller="Home" asp-action="Index">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Trang chủ</span>
-                </a>
-            </li>
-
-            <!-- Divider -->
             <hr class="sidebar-divider">
 
-            <!-- Heading -->
             <div class="sidebar-heading">
                 Admin
             </div>
-            <!-- Nav Item - Pages Collapse Menu -->
+
             <li class="nav-item">
                 <a class="nav-link" asp-area="Admin" asp-controller="ApplicationUser" asp-action="Index">
                     <i class="fas fa-user-cog"></i>
                     <span>Quản lý tài khoản</span>
                 </a>
             </li>
-            <!-- Divider -->
+
             <hr class="sidebar-divider">
-            <!-- Heading -->
+
             <div class="sidebar-heading">
                 Quản Lý
             </div>
@@ -79,13 +66,13 @@
                     <span>Quản lý học sinh</span>
                 </a>
                 <a class="nav-link" asp-area="Manager" asp-controller="Subject" asp-action="Index">
-                    <i class="fas fa-user-graduate"></i>
+                    <i class="fas fa-book"></i>
                     <span>Quản lý môn học</span>
                 </a>
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseChart" aria-expanded="true" aria-controls="collapseChart">
                     <i class="fas fa-fw fa-columns"></i>
-                    <span>Biểu đồ thống kê</span>
+                    <span>Biểu đồ</span>
                 </a>
                 <div id="collapseChart" class="collapse" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
@@ -97,7 +84,6 @@
                         </a>
                     </div>
                 </div>
-            </li>
             </li>
 
             <!-- Divider -->
@@ -114,7 +100,7 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link" asp-area="Teacher" asp-controller="ScoreManage" asp-action="Index">
-                    <i class="fas fa-bookmark"></i>
+                    <i class="fas fa-file-word"></i>
                     <span>Quản lý điểm số</span>
                 </a>
             </li>
@@ -162,23 +148,8 @@
                 </div>
             </li>
 
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Học sinh
-            </div>
-            <li class="nav-item">
-                <a class="nav-link" asp-area="" asp-controller="" asp-action="">
-                    <i class="fas fa-info"></i>
-                    <span>Thông tin cá nhân</span>
-                </a>
-            </li>
-
-            <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
-            <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
             </div>

@@ -51,11 +51,11 @@ namespace StudentManagement.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required]
-            [EmailAddress]
+            [Required(ErrorMessage = "Bạn phải nhập Email.")]
+            [EmailAddress(ErrorMessage = "Email không hợp lệ.")]
             public string Email { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "Bạn phải nhập Mật khẩu.")]
             [DataType(DataType.Password)]
             public string Password { get; set; }
 

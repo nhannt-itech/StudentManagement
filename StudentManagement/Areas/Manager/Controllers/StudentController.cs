@@ -129,17 +129,17 @@ namespace StudentManagement.Areas.Manager.Controllers
                     _db.Student.Add(students);
                     await _db.SaveChangesAsync();
 
-                    var user = new ApplicationUser()
-                    {
-                        UserName = student.Email,
-                        Email = student.Email,
-                        Name = student.Name,
-                        PhoneNumber = "",
-                        Address = student.Address,
-                        Role = SD.Role_Student
-                    };
+                    //var user = new ApplicationUser()
+                    //{
+                    //    UserName = student.Email,
+                    //    Email = student.Email,
+                    //    Name = student.Name,
+                    //    PhoneNumber = "",
+                    //    Address = student.Address,
+                    //    Role = SD.Role_Student
+                    //};
 
-                    await _userManager.CreateAsync(user, "Student123@"); //After is password
+                    //await _userManager.CreateAsync(user, "Student123@"); //After is password
  
                     return RedirectToAction(nameof(Index));
                 }
