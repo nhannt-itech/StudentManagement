@@ -1,7 +1,7 @@
 ﻿$(document).ready(function () {
     $('#dataTable').DataTable({
         "ajax": {
-            "url": "/Manager/Student/getall"
+            "url": "/Teacher/SearchInfo/getallstudent"
         },
         "columns": [
             { "data": "name" },
@@ -34,7 +34,7 @@ $('#Detail').on('show.bs.modal', function (event) {
     var modal = $(this)
     $.ajax({
         method: 'GET',
-        url: '/Manager/Student/Details/' + idStudent,
+        url: '/Teacher/SearchInfo/DetailsStudent/' + idStudent,
         success: function (data) {
             console.log(data.idDiscount);
             modal.find('#Id').val(data.id);

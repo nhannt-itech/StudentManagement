@@ -10,8 +10,8 @@ using StudentManagement.DataAccess.Data;
 namespace StudentManagement.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210103155803_Initial")]
-    partial class Initial
+    [Migration("20210104070751_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -321,6 +321,26 @@ namespace StudentManagement.DataAccess.Migrations
                     b.ToTable("Record_Subject");
                 });
 
+            modelBuilder.Entity("StudentManagement.Models.Rule", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Max")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Min")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Rule");
+                });
+
             modelBuilder.Entity("StudentManagement.Models.ScoreRecordSubject", b =>
                 {
                     b.Property<string>("Id")
@@ -351,15 +371,18 @@ namespace StudentManagement.DataAccess.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("Birth")
+                        .IsRequired()
                         .HasColumnType("datetime");
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Gender")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("YearToSchool")

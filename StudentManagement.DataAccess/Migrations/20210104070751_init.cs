@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace StudentManagement.DataAccess.Migrations
 {
-    public partial class Initial : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -82,13 +82,27 @@ namespace StudentManagement.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Rule",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(nullable: false),
+                    Min = table.Column<int>(nullable: false),
+                    Max = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Rule", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Student",
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
-                    Gender = table.Column<string>(nullable: true),
-                    Birth = table.Column<DateTime>(type: "datetime", nullable: true),
+                    Name = table.Column<string>(nullable: false),
+                    Gender = table.Column<string>(nullable: false),
+                    Birth = table.Column<DateTime>(type: "datetime", nullable: false),
                     Address = table.Column<string>(nullable: true),
                     Email = table.Column<string>(nullable: true),
                     YearToSchool = table.Column<int>(nullable: true)
@@ -452,6 +466,9 @@ namespace StudentManagement.DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "FinalResult");
+
+            migrationBuilder.DropTable(
+                name: "Rule");
 
             migrationBuilder.DropTable(
                 name: "Score_Record_Subject");

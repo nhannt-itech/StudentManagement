@@ -123,36 +123,36 @@ namespace StudentManagement.Areas.Identity.Pages.Account
 
             if (_unitOfWork.ApplicationUser.GetAll().Count() == 0)
             {
-                var user = new ApplicationUser()
-                {
-                    UserName = "admin@gmail.com",
-                    Email = "admin@gmail.com",
-                    Name = "Nhà phát triển",
-                    PhoneNumber = "0987639079",
-                    Address = "Không",
-                    Role = SD.Role_Admin
-                };
-                var result = await _userManager.CreateAsync(user, Input.Password);
-                if (result.Succeeded)
-                {
-                    if (!await _roleManager.RoleExistsAsync(SD.Role_Admin))
-                    {
-                        await _roleManager.CreateAsync(new IdentityRole(SD.Role_Admin));
-                    }
-                    if (!await _roleManager.RoleExistsAsync(SD.Role_Manager))
-                    {
-                        await _roleManager.CreateAsync(new IdentityRole(SD.Role_Manager));
-                    }
-                    if (!await _roleManager.RoleExistsAsync(SD.Role_Teacher))
-                    {
-                        await _roleManager.CreateAsync(new IdentityRole(SD.Role_Teacher));
-                    }
-                    if (!await _roleManager.RoleExistsAsync(SD.Role_Student))
-                    {
-                        await _roleManager.CreateAsync(new IdentityRole(SD.Role_Student));
-                    }
-                    await _userManager.AddToRoleAsync(user, user.Role);
-                }
+                //var user = new ApplicationUser()
+                //{
+                //    UserName = "admin@gmail.com",
+                //    Email = "admin@gmail.com",
+                //    Name = "Nhà phát triển",
+                //    PhoneNumber = "0987639079",
+                //    Address = "Không",
+                //    Role = SD.Role_Admin
+                //};
+                //var result = await _userManager.CreateAsync(user, Input.Password);
+                //if (result.Succeeded)
+                //{
+                //    if (!await _roleManager.RoleExistsAsync(SD.Role_Admin))
+                //    {
+                //        await _roleManager.CreateAsync(new IdentityRole(SD.Role_Admin));
+                //    }
+                //    if (!await _roleManager.RoleExistsAsync(SD.Role_Manager))
+                //    {
+                //        await _roleManager.CreateAsync(new IdentityRole(SD.Role_Manager));
+                //    }
+                //    if (!await _roleManager.RoleExistsAsync(SD.Role_Teacher))
+                //    {
+                //        await _roleManager.CreateAsync(new IdentityRole(SD.Role_Teacher));
+                //    }
+                //    if (!await _roleManager.RoleExistsAsync(SD.Role_Student))
+                //    {
+                //        await _roleManager.CreateAsync(new IdentityRole(SD.Role_Student));
+                //    }
+                //    await _userManager.AddToRoleAsync(user, user.Role);
+                //}
             }
 
             if (!string.IsNullOrEmpty(ErrorMessage))

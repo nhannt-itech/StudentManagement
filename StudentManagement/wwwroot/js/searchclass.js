@@ -5,7 +5,7 @@ $(document).ready(function () {
 
     $.ajax({
         type: "GET",
-        url: "/Teacher/Class/GetStudent/",
+        url: "/Teacher/SearchInfo/GetStudent/",
         success: function (data) {
             $("#StudentList").addItems(data);
         }
@@ -26,7 +26,7 @@ $.fn.addItems = function (data) {
 function loadDataTable() {
     dataTable = $('#tblData').DataTable({
         "ajax": {
-            "url": "/Teacher/Class/GetAll"
+            "url": "/Teacher/SearchInfo/GetAllClass"
         },
         "columns": [
             { "data": "name" },
@@ -58,7 +58,7 @@ $('#Detail').on('show.bs.modal', function (event) {
     var modal = $(this)
     $.ajax({
         method: 'GET',
-        url: '/Teacher/Class/Details/' + idClass,
+        url: '/Teacher/SearchInfo/DetailsClass/' + idClass,
         success: function (data) {
             console.log(data.idClass);
             modal.find('#Id').val(data.id);
