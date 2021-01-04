@@ -1,38 +1,34 @@
-﻿// Set new default font family and font color to mimic Bootstrap's default styling
-Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
-Chart.defaults.global.defaultFontColor = '#858796';
-
-// Pie Chart Example
-var ctx = document.getElementById("myPieChart");
-var myPieChart = new Chart(ctx, {
-    type: 'doughnut',
+﻿
+var ctx = document.getElementById("myChart").getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'pie',
     data: {
         labels: [],
         datasets: [{
-            data: [],
-            backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc', '#e74a3b', '#f6c23e', '#5a5c69'],
-            hoverBackgroundColor: ['#4e73df', '#1cc88a', '#36b9cc', '#e74a3b', '#f6c23e', '#5a5c69'],
-            hoverBorderColor: "rgba(234, 236, 244, 1,1,1)",
-        }],
-    },
-    options: {
-        maintainAspectRatio: false,
-        tooltips: {
-            backgroundColor: "rgb(255,255,255,255,255,255)",
-            bodyFontColor: "#858796",
-            borderColor: '#dddfeb',
-            borderWidth: 1,
-            xPadding: 15,
-            yPadding: 15,
-            displayColors: false,
-            caretPadding: 10,
-        },
-        legend: {
-            display: false
-        },
-        cutoutPercentage: 80,
-    },
+            backgroundColor: [
+                "#2ecc71",
+                "#3498db",
+                "#95a5a6",
+                "#9b59b6",
+                "#f1c40f",
+                "#e74c3c",
+                "#34495e"
+            ],
+            data: []
+        }]
+    }
 });
+
+
+$(document).ready(function () {
+
+    PieChart('/manager/statistic/StatisticGender', data = null);
+
+})
+
+
+
+
 
 $(document).ready(function () {
 
@@ -59,15 +55,17 @@ function PieChart_Call2(url, data = null) {//data này có thể có có thể k
         }
 
         $.getJSON(url).done(function (response) {
-            myPieChart.data.labels = response.labels; // label là hàng ngang, các tiêu đề, ví du : tháng 1,tháng 2,....
-            myPieChart.data.datasets[0].data = response.values; // value là giá trị tương ứng cho từng tiêu đề...
-            myPieChart.update();
+            myChart.data.labels = response.labels; // label là hàng ngang, các tiêu đề, ví du : tháng 1,tháng 2,....
+            myChart.data.datasets[0].data = response.values; // value là giá trị tương ứng cho từng tiêu đề...
+            myChart.update();
         })
 
 
     }
 
 }
+
+
 
 function LineChart_Call(url, data = null) {//data này có thể có có thể ko
     if (data == null) {

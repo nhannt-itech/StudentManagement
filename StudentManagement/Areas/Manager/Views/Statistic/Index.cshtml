@@ -129,10 +129,10 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
                     <div class="dropdown-header">Chọn thống kê</div>
-                    <a class="dropdown-item" onclick="PieChart_Call('/manager/statistic/StatisticGender', data = null)">Thống kê tỉ lệ nam nữ toàn trường</a>
-                    <a class="dropdown-item" onclick="PieChart_Call('/manager/statistic/StatisticGender10', data = null)">Thống kê tỉ lệ nam nữ khối 10</a>
-                    <a class="dropdown-item" onclick="PieChart_Call('/manager/statistic/StatisticGender11', data = null)">Thống kê tỉ lệ nam nữ khối 11</a>
-                    <a class="dropdown-item" onclick="PieChart_Call('/manager/statistic/StatisticGender12', data = null)">Thống kê tỉ lệ nam nữ khối 12</a>
+                    <a class="dropdown-item" onclick="PieChart('/manager/statistic/StatisticGender', data = null)">Thống kê tỉ lệ nam nữ toàn trường</a>
+                    <a class="dropdown-item" onclick="PieChart('/manager/statistic/StatisticGender10', data = null)">Thống kê tỉ lệ nam nữ khối 10</a>
+                    <a class="dropdown-item" onclick="PieChart('/manager/statistic/StatisticGender11', data = null)">Thống kê tỉ lệ nam nữ khối 11</a>
+                    <a class="dropdown-item" onclick="PieChart('/manager/statistic/StatisticGender12', data = null)">Thống kê tỉ lệ nam nữ khối 12</a>
                 </div>
             </div>
         </div>
@@ -142,12 +142,11 @@
                 <canvas id="myPieChart"></canvas>
             </div>
             <div class="mt-4 text-center small">
-
                 <span class="mr-2">
                     <i class="fas fa-circle text-primary"></i> Nam
                 </span>
                 <span class="mr-2">
-                    <i class="fas fa-circle text-danger"></i> Nữ
+                    <i class="fas fa-circle text-success"></i> Nữ
                 </span>
 
             </div>

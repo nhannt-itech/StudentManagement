@@ -177,7 +177,7 @@ using static StudentManagement.Helper;namespace StudentManagement.Areas.Teacher.
                 }
 
 
-
+                
                 return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", scoreVMList) });
             }
             return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "EditScore", scoreVM) });

@@ -68,25 +68,6 @@ namespace StudentManagement.Areas.Teacher.Controllers
                 score.FinalAvg = (score.AvgSem1 + score.AvgSem2) / 2;
                 searchScoreList.Add(score);
 
-
-                FinalResult finalResult = new FinalResult();
-                finalResult.StudentId = score.Student.Id;
-                finalResult.ClassId = id;
-                finalResult.AvgSem1 = score.AvgSem1;
-                finalResult.AvgSem2 = score.AvgSem2;
-                finalResult.Final = score.FinalAvg;
-                try
-                {
-                    _unitOfWork.FinalResult.Add(finalResult);
-                }
-                catch
-                {
-                    _unitOfWork.FinalResult.Update(finalResult);
-                }
-                _unitOfWork.Save();
-              
-
-                
             }
             return View(searchScoreList);
         }

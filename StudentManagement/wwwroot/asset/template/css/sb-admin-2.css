@@ -10,6 +10,7 @@
  * Copyright 2011-2020 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
+
 :root {
   --blue: #4e73df;
   --indigo: #6610f2;
@@ -349,6 +350,10 @@ output {
 summary {
   display: list-item;
   cursor: pointer;
+}
+.container {
+    width: 80%;
+    margin: 15px auto;
 }
 
 template {
