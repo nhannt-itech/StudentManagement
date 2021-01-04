@@ -45,7 +45,7 @@ namespace StudentManagement.Areas.Teacher.Controllers
                                                             {
                                                                 Key = g.Key,
                                                                 AverageTotal = g.Average(p => p.Average),
-                                                            }).Where(x => x.AverageTotal >= 5);
+                                                            }).Where(x => x.AverageTotal >= _unitOfWork.Rule.GetFirstOrDefault(x=>x.Name == "Điểm chuẩn").Min);
                 item.PassQuantity = passAllObj.Count(x => x.Key.ClassId == item.ClassId);
 
                 if (_unitOfWork.ClassStudent.GetAll().Count(x => x.ClassId == item.ClassId) != 0)

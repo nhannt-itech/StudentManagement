@@ -51,7 +51,7 @@ namespace StudentManagement.Areas.Teacher.Controllers
                 item.PassQuantity = _unitOfWork.RecordSubject.GetAll().Count(x => x.ClassId == item.ClassId &&
                                                                                         x.Semester == item.Semester &&
                                                                                         x.SubjectId == item.SubjectId &&
-                                                                                        x.Average >= 5);
+                                                                                        x.Average >= _unitOfWork.Rule.GetFirstOrDefault(x => x.Name == "Điểm chuẩn").Min);
                 if (_unitOfWork.ClassStudent.GetAll().Count(x => x.ClassId == item.ClassId) != 0)
                 {
                     item.Percentage = (float)item.PassQuantity / (float)_unitOfWork.ClassStudent.GetAll().Count(x => x.ClassId == item.ClassId);

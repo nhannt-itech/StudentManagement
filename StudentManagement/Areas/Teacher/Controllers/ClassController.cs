@@ -106,7 +106,7 @@ namespace StudentManagement.Areas.Teacher.Controllers
             return Json(StudentList);
         }
 
-        
+
 
         [HttpGet]
         public IActionResult GetStudentInClass(string? id)
@@ -122,9 +122,11 @@ namespace StudentManagement.Areas.Teacher.Controllers
             {
                 return Json(new { success = false, message = "Thêm học sinh lỗi!" });
             }
-            else if (_unitOfWork.ClassStudent.GetAll(x => x.ClassId == classId).Count() >= 40)
+            else if (_unitOfWork.ClassStudent.GetAll(x => x.ClassId == classId).Count() >= _unitOfWork.Rule.GetFirstOrDefault(x => x.Name == "Sỉ số").Max)
             {
-                return Json(new { success = false, message = "Lớp đã đạt 40 học sinh!" });
+                return Json(new { success = false, message = "Lớp đã đạt " 
+                                        + _unitOfWork.Rule.GetFirstOrDefault(x => x.Name == "Sỉ số").Max.ToString() 
+                                        + " học sinh!" });
             }
             ClassStudent classStudent = new ClassStudent()
             {
@@ -140,7 +142,7 @@ namespace StudentManagement.Areas.Teacher.Controllers
             _unitOfWork.Save();
             CreateRecordStudent(classId, studentId);
             return Json(new { success = true, message = "Bạn đã thêm học sinh thành công!" });
-        }       
+        }
 
         [HttpGet]
         public IActionResult SelectGradeSetClassName(int grade, string year)
@@ -182,7 +184,7 @@ namespace StudentManagement.Areas.Teacher.Controllers
 
             foreach (var item in _unitOfWork.RecordSubject.GetAll(x => x.ClassId == id))
             {
-                foreach(var srs in _unitOfWork.ScoreRecordSubject.GetAll(x=>x.RecordSubjectId == item.Id))
+                foreach (var srs in _unitOfWork.ScoreRecordSubject.GetAll(x => x.RecordSubjectId == item.Id))
                 {
                     _unitOfWork.ScoreRecordSubject.Remove(srs);
                     _unitOfWork.Save();
@@ -191,13 +193,13 @@ namespace StudentManagement.Areas.Teacher.Controllers
                 _unitOfWork.Save();
             }
 
-            foreach (var item in _unitOfWork.ClassStudent.GetAll(x=>x.ClassId == id))
+            foreach (var item in _unitOfWork.ClassStudent.GetAll(x => x.ClassId == id))
             {
                 _unitOfWork.ClassStudent.Remove(item);
                 _unitOfWork.Save();
             }
 
-            foreach (var item in _unitOfWork.Summary.GetAll(x=> x.ClassId == id))
+            foreach (var item in _unitOfWork.Summary.GetAll(x => x.ClassId == id))
             {
                 _unitOfWork.Summary.Remove(item);
                 _unitOfWork.Save();
@@ -216,9 +218,9 @@ namespace StudentManagement.Areas.Teacher.Controllers
         [HttpDelete]
         public IActionResult DeleteStudentFromClass(string? classId, string studentId)
         {
-            foreach(var rc in _unitOfWork.RecordSubject.GetAll(x => x.StudentId == studentId && x.ClassId == classId))
+            foreach (var rc in _unitOfWork.RecordSubject.GetAll(x => x.StudentId == studentId && x.ClassId == classId))
             {
-                foreach(var src in _unitOfWork.ScoreRecordSubject.GetAll(x=>x.RecordSubjectId == rc.Id))
+                foreach (var src in _unitOfWork.ScoreRecordSubject.GetAll(x => x.RecordSubjectId == rc.Id))
                 {
                     _unitOfWork.ScoreRecordSubject.Remove(src);
                     _unitOfWork.Save();
@@ -379,8 +381,8 @@ namespace StudentManagement.Areas.Teacher.Controllers
             var hocSinhKha = (_db.RecordSubject.Where(x => x.Average >= 6.5 && x.Average < 8 && x.Class.Id == id)).Count();
             var hocSinhTB = (_db.RecordSubject.Where(x => x.Average >= 5 && x.Average < 6.5 && x.Class.Id == id)).Count();
             var hocSinhYeu = (_db.RecordSubject.Where(x => x.Average <= 5 && x.Class.Id == id)).Count();
- 
-         
+
+
 
             var obj = new
             {
@@ -389,10 +391,10 @@ namespace StudentManagement.Areas.Teacher.Controllers
                 year = lopHoc.Year,
                 numStudents = lopHoc.NumStudents,
                 grade = lopHoc.Grade,
-                gioi=hocSinhGioi,
-                kha=hocSinhKha,
-                tb=hocSinhTB,
-                yeu=hocSinhYeu
+                gioi = hocSinhGioi,
+                kha = hocSinhKha,
+                tb = hocSinhTB,
+                yeu = hocSinhYeu
 
             };
             return Json(obj);
