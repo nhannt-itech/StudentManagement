@@ -63,9 +63,9 @@ namespace StudentManagement.Areas.Teacher.Controllers
                 SearchScoreVM score = new SearchScoreVM();
                 score.Student = st.Student;
 
-                score.AvgSem1 = st.Student.RecordSubject.Where(x=>x.Semester ==1 && x.ClassId == id).Select(x => x.Average).Average().GetValueOrDefault();
-                score.AvgSem2 = st.Student.RecordSubject.Where(x => x.Semester == 2 && x.ClassId == id).Select(x => x.Average).Average().GetValueOrDefault();
-                score.FinalAvg = (score.AvgSem1 + score.AvgSem2) / 2;
+                score.AvgSem1 = (float)Math.Round((float)st.Student.RecordSubject.Where(x=>x.Semester ==1 && x.ClassId == id).Select(x => x.Average).Average().GetValueOrDefault(),2);
+                score.AvgSem2 = (float)Math.Round((float)st.Student.RecordSubject.Where(x => x.Semester == 2 && x.ClassId == id).Select(x => x.Average).Average().GetValueOrDefault(), 2);
+                score.FinalAvg =(float)Math.Round((score.AvgSem1 + score.AvgSem2) / 2,2);
                 searchScoreList.Add(score);
 
             }

@@ -133,7 +133,7 @@ using static StudentManagement.Helper;namespace StudentManagement.Areas.Teacher.
             scoreVM.RecordSubject = obj;
             scoreVM.ScoreList = _unitOfWork.ScoreRecordSubject.GetAll(x => x.RecordSubjectId == obj.Id).ToList() ;
 
-        
+            ViewBag.Semester = SemesterId;
             if (scoreVM == null)
             {
                 return NotFound();
@@ -163,7 +163,7 @@ using static StudentManagement.Helper;namespace StudentManagement.Areas.Teacher.
                     return NotFound();
                 }
 
-                var recordSubjectList = _unitOfWork.RecordSubject.GetAll(x => x.ClassId == id && x.SubjectId == SubId, includeProperties: "Student");
+                var recordSubjectList = _unitOfWork.RecordSubject.GetAll(x => x.ClassId == ClassId && x.SubjectId == SubId && x.Semester == SemesterId, includeProperties: "Student");
                 var scoreVMList = new List<ScoreVM>();
 
 
