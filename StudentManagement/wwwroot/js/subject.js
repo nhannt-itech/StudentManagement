@@ -16,11 +16,11 @@ function loadDataTable() {
                 "data": "id",
                 "render": function (data) {
                     return `<div class="text-center">
-                            <a href="/Manager/Subject/Upsert/${data}" class="btn btn-success text-white" style="cursor:pointer">
+                            <a href="/Manager/Subject/Upsert/${data}" class="btn btn-success text-white bg-gradient-success" style="cursor:pointer">
                                 <i class="fas fa-edit"></i> 
                             </a>
 
-                            <a  onclick=Delete("/Manager/Subject/Delete/${data}") class="btn btn-danger text-white" style="cursor:pointer">
+                            <a  onclick=Delete("/Manager/Subject/Delete/${data}") class="btn btn-danger bg-gradient-danger text-white" style="cursor:pointer">
                                 <i class="fas fa-trash-alt"></i> 
                             </a>
 

@@ -17,7 +17,7 @@ namespace StudentManagement.Models
 
         public string Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Bạn phải nhập tên lớp học.")]
         public string Name { get; set; }
 
         [Required]
@@ -26,7 +26,7 @@ namespace StudentManagement.Models
         [Required]
         public int? NumStudents { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Bạn phải nhập khối.")]
         [Remote("IsGradeValid", "Class", "Teacher", ErrorMessage = "Lớp trong khối này đã đủ!", AdditionalFields = nameof(Year))]
         public int? Grade { get; set; }
 

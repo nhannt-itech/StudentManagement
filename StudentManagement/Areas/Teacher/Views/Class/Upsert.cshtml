@@ -1,10 +1,10 @@
 ﻿@model StudentManagement.Models.Class
 @{
-    var Title = "Thêm Lớp";
+    var Title = "THÊM LỚP";
 
     if (Model.Id != null)
     {
-        Title = "Chỉnh sửa lớp";
+        Title = "CHỈNH SỬA LỚP";
     }
 
     ViewData["Title"] = Title;
@@ -13,12 +13,11 @@
 @if (Model.Id == null)
 {
     <div class="container">
-        <!-- Nested Row within Card Body -->
         <div class="row">
-            <div class="offset-3 col-lg-6 ">
-                <div class="p-5">
+            <div class="offset-2 col-lg-8 ">
+                <div class="p-4">
                     <div class="text-center">
-                        <h1 class="h4 text-gray-900 mb-4">@Title</h1>
+                        <h1 class="h4 text-gray-900 mb-4"><u>@Title</u></h1>
                     </div>
                     <form method="post">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -67,18 +66,12 @@
 
                         @if (Model.Id == null)
                         {
-                            <button type="submit" class="btn btn-primary btn-user btn-block">
-                                Add
+                            <button type="submit" class="btn btn-success bg-gradient-success btn-user btn-block">
+                                Thêm
                             </button>
                         }
-                        else
-                        {
-                            <button type="submit" class="btn btn-primary btn-user btn-block">
-                                Update
-                            </button>
-                        }
-                        <a asp-controller="Class" asp-action="Index" class="btn btn-warning btn-user btn-block">
-                            Back To List
+                        <a asp-controller="Class" asp-action="Index" class="btn btn-dark bg-gradient-dark btn-user btn-block">
+                            Quay lại
                         </a>
                     </form>
                 </div>
@@ -89,20 +82,21 @@
 else
 {
     <input type="text" id="ClassId" value="@Model.Id" hidden>
-    <h4>Danh sách học sinh lớp @Model.Name</h4>
-    <div class="card shadow mb-4 bg-gray-100">
-        <div class="card-header py-2">
-            <a href="#" data-toggle="modal" data-target="#AddStudentModal" class="float-lg-right btn btn-info ml-2" style="color:white">
-                <i class="fas fa-plus fa-sm"></i>
-                Thêm học sinh
-            </a>
+    <div class="row">
+        <div class="col-6">
+            <h2 class="text-primary">Danh sách học sinh lớp @Model.Name</h2>
         </div>
+
+        <div class="col-6 text-right">
+            <a href="#" data-toggle="modal" data-target="#AddStudentModal" class="btn btn-success bg-gradient-success"><i class="fas fa-plus"></i> &nbsp; Thêm học sinh</a>
+        </div>
+    </div>
+    <div class="card shadow mb-4 bg-gray-100">
         <div class="card-body">
-            <div class="">
-                <br />
+            <div class="table-responsive">
                 <table class="table-bordered border-dark text-gray-900" id="tblStudentInClass" width="100%" cellspacing="0">
                     <thead>
-                        <tr>
+                        <tr class="table-info">
                             <th>Mã số</th>
                             <th>Tên</th>
                             <th>Giới tính</th>
@@ -111,13 +105,21 @@ else
                             <th></th>
                         </tr>
                     </thead>
+                    <tfoot>
+                        <tr class="table-info">
+                            <th>Mã số</th>
+                            <th>Tên</th>
+                            <th>Giới tính</th>
+                            <th>Năm sinh</th>
+                            <th>Địa chỉ</th>
+                            <th></th>
+                        </tr>
+                    </tfoot>
                 </table>
             </div>
         </div>
     </div>
-
     <partial name="_AddStudent" model="ViewBag.AddStudent" />
-
 }
 
 @section Scripts{

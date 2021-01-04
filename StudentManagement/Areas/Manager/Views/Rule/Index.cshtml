@@ -2,18 +2,31 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div class="row">
+    <div class="col-6">
+        <h2 class="text-primary">Danh sách quy định</h2>
+    </div>
+</div>
 <div class="card shadow mb-4 bg-gray-100">
     <div class="card-body">
-        <div class="">
+        <div class="table-responsive">
             <table class="table-bordered border-dark text-gray-900" id="tblData" width="100%" cellspacing="0">
                 <thead>
-                    <tr>
+                    <tr class="table-info">
                         <th>Tên</th>
                         <th>Tối thiểu</th>
                         <th>Tối đa</th>
                         <th></th>
                     </tr>
                 </thead>
+                <tfoot>
+                    <tr class="table-info">
+                        <th>Tên</th>
+                        <th>Tối thiểu</th>
+                        <th>Tối đa</th>
+                        <th></th>
+                    </tr>
+                </tfoot>
             </table>
         </div>
     </div>

@@ -1,81 +1,114 @@
-﻿@model StudentManagement.Models.ViewModels.StudenViewModel;
+﻿@model StudentManagement.Models.Student;
 
 @{
-    var title = "Thêm học sinh";
+    var title = "THÊM HỌC SINH";
+    if (Model.IdAdd != null)
+    {
+        title = "SỬA HỌC SINH";
+    }
 }
 
+<div class="container">
+    <div class="row">
+        <div class="offset-2 col-lg-8 ">
+            <div class="p-4">
+                <div class="text-center">
+                    <h1 class="h4 text-gray-900 mb-4"><u>@title</u></h1>
+                </div>
+                <form method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input id="IdAdd" asp-for="IdAdd" type="text" class="form-control" readonly hidden>
+                    <div class="row" hidden>
+                        <div class="col-3 text-lg">
+                            <label>Id:</label>
+                        </div>
+                        <div class="form-group col-9">
+                            <input id="Id" asp-for="Id" type="text" class="form-control" readonly>
+                            <span asp-validation-for="Id" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3 text-lg">
+                            <label>Email:</label>
+                        </div>
+                        <div class="form-group col-9">
+                            <input id="Email" asp-for="Email" type="email" class="form-control" readonly>
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3 text-lg">
+                            <label>Tên:</label>
+                        </div>
+                        <div class="form-group col-9">
+                            <input id="Name" asp-for="Name" type="text" class="form-control">
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3 text-lg">
+                            Giới tính:
+                        </div>
+                        <div class="form-group col-9">
+                            <select id="Gender" asp-for="Gender" class="form-control">
+                                <option value="">--Nhấp để chọn</option>
+                                <option value="Nam">Nam</option>
+                                <option value="Nữ">Nữ</option>
+                            </select>
+                            <span asp-validation-for="Gender" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3 text-lg">
+                            <label>Ngày sinh:</label>
+                        </div>
+                        <div class="form-group col-9">
+                            <input id="Birth" asp-for="Birth" type="date" class="form-control">
+                            <span asp-validation-for="Birth" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3 text-lg">
+                            <label>Địa chỉ:</label>
+                        </div>
+                        <div class="form-group col-9">
+                            <input id="Address" asp-for="Address" type="text" class="form-control">
+                            <span asp-validation-for="Address" class="text-danger"></span>
+                        </div>
+                    </div>
 
+                    <div class="row" hidden>
+                        <div class="col-3 text-lg">
+                            <label>Năm học:</label>
+                        </div>
+                        <div class="form-group col-9">
+                            <input id="YearToSchool" asp-for="YearToSchool" type="text" class="form-control" readonly>
+                            <span asp-validation-for="YearToSchool" class="text-danger"></span>
+                        </div>
+                    </div>
 
-
-
-
-
-<hr />
-<div class="row justify-content-center">
-    <div class="col-lg-6">
-        <form asp-action="Upsert" method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger">
+                    @if (Model.IdAdd == null)
+                    {
+                        <button type="submit" class="btn btn-success bg-gradient-success btn-user btn-block">
+                            Thêm
+                        </button>
+                    }
+                    else
+                    {
+                        <button type="submit" class="btn btn-success bg-gradient-success btn-user btn-block" onclick="Test()">
+                            Chỉnh sửa
+                        </button>
+                    }
+                    <a asp-controller="Student" asp-action="Index" class="btn btn-dark bg-gradient-dark btn-user btn-block">
+                        Quay lại
+                    </a>
+                </form>
             </div>
-            @if (Model.Id != null)
-            {
-                title = "Chỉnh sửa thông tin học sinh";
-            }
-            <div class="col-12 border-bottom">
-                <h2 class="text-primary">@title</h2>
-            </div>
-            <input asp-for="Id" hidden />
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Gender" class="control-label"></label>
-                <input type="radio" asp-for="Gender" value="Nam" /> Nam
-                <input style="margin-left:68px;" type="radio" asp-for="Gender" value="Nữ" /> Nữ
-                <span asp-validation-for="Gender" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Birth" class="control-label"></label>
-                <input type="date" asp-for="Birth" class="form-control" />
-                <span asp-validation-for="Birth" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Address" class="control-label"></label>
-                <input asp-for="Address" class="form-control" />
-                <span asp-validation-for="Address" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="YearToSchool" class="control-label"></label>
-                <input asp-for="YearToSchool" class="form-control" />
-                <span asp-validation-for="YearToSchool" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                @if (Model.Id != null)
-                {
-                    <input type="submit" value="Cập nhật" class="btn btn-primary" />
-                }
-                else
-                {
-                    <input type="submit" value="Thêm" class="btn btn-primary" onclick="Test()" />
-                }
-            </div>
-        </form>
-        <div>
-            <a asp-action="Index">Quay lại</a>
         </div>
     </div>
 </div>
 
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    <!-- Select 2-->
     <script src="~/js/student.js"></script>
 }

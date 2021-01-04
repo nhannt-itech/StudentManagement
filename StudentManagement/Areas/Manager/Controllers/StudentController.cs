@@ -9,6 +9,8 @@ using StudentManagement.DataAccess.Repository.IRepository;
 using StudentManagement.Models.ViewModels;
 using StudentManagement.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using StudentManagement.Utility;
+using Microsoft.AspNetCore.Identity;
 
 namespace StudentManagement.Areas.Manager.Controllers
 {
@@ -17,11 +19,14 @@ namespace StudentManagement.Areas.Manager.Controllers
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly ApplicationDbContext _db;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public StudentController(IUnitOfWork unitOfWork, ApplicationDbContext db)
+
+        public StudentController(IUnitOfWork unitOfWork, ApplicationDbContext db, UserManager<IdentityUser> userManager)
         {
             _unitOfWork = unitOfWork;
             _db = db;
+            _userManager = userManager;
         }
         public IActionResult Index()
         {
@@ -49,12 +54,12 @@ namespace StudentManagement.Areas.Manager.Controllers
 
         public async Task<IActionResult> Upsert(string? id)
         {
-           if(id != null)
+            if (id != null)
             {
                 var student = await _db.Student.FirstOrDefaultAsync(x => x.Id == id);
-
-                var st = new StudenViewModel()
+                var st = new Student()
                 {
+                    IdAdd = student.Id,
                     Id = student.Id,
                     Name = student.Name,
                     Gender = student.Gender,
@@ -65,35 +70,81 @@ namespace StudentManagement.Areas.Manager.Controllers
                 };
                 return View(st);
             }
-           else
+            else
             {
-                var st = new StudenViewModel();
-                return View(st);
+                var allObj = _unitOfWork.Student.GetAll(x => x.YearToSchool == DateTime.Now.Year);
+                string newStudentId;
+                int max, count = allObj.Count();
+                try
+                {
+                    max = allObj.Max(x => Convert.ToInt32(x.Id.Replace("Stud" + DateTime.Now.Year.ToString(), "")));
+                }
+                catch
+                {
+                    max = 0;
+                }
+                if (count != 0 && count != max)
+                {
+                    for (int i = 1; i < max; i++)
+                    {
+                        if (allObj.Count(x => x.Name.Replace("Stud" + DateTime.Now.Year.ToString() + "/", "") == i.ToString()) == 0)
+                        {
+                            newStudentId = "Stud" + DateTime.Now.Year.ToString() + i.ToString();
+                            var student1 = new Student()
+                            {
+                                Id = newStudentId,
+                                YearToSchool = DateTime.Now.Year,
+                                Email = newStudentId + "@gmail.com"
+                            };
+                            return View(student1);
+                        }
+                    }
+                }
+                newStudentId = "Stud" + DateTime.Now.Year.ToString() + (count + 1).ToString();
+                var student2 = new Student()
+                {
+                    Id = newStudentId,
+                    YearToSchool = DateTime.Now.Year,
+                    Email = newStudentId + "@gmail.com"
+                };
+                return View(student2);
             }
-            
+
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Upsert(StudenViewModel student)
+        public async Task<IActionResult> Upsert(Student student)
         {
             if (ModelState.IsValid)
             {
-                if(student.Id == null)
+                if (student.IdAdd == null)
                 {
                     var students = new Student()
                     {
-                        Id = Guid.NewGuid().ToString(),
+                        Id = student.Id,
                         Name = student.Name,
                         Gender = student.Gender,
                         Birth = student.Birth,
                         Address = student.Address,
                         Email = student.Email,
                         YearToSchool = student.YearToSchool
-
                     };
                     _db.Student.Add(students);
                     await _db.SaveChangesAsync();
+
+                    var user = new ApplicationUser()
+                    {
+                        UserName = student.Email,
+                        Email = student.Email,
+                        Name = student.Name,
+                        PhoneNumber = "",
+                        Address = student.Address,
+                        Role = SD.Role_Student
+                    };
+
+                    await _userManager.CreateAsync(user, "Student123@"); //After is password
+ 
                     return RedirectToAction(nameof(Index));
                 }
                 else
@@ -118,7 +169,7 @@ namespace StudentManagement.Areas.Manager.Controllers
                 return RedirectToAction();
             }
         }
-        
+
         [HttpDelete]
         public async Task<IActionResult> Delete(string id)
         {
@@ -156,7 +207,7 @@ namespace StudentManagement.Areas.Manager.Controllers
 
                 _db.Student.Remove(student);
 
-                
+
                 _db.SaveChanges();
                 return Json(new { success = true, message = "xóa mục thành công" });
             }
@@ -170,16 +221,16 @@ namespace StudentManagement.Areas.Manager.Controllers
         public IActionResult Details(string id)
         {
             //.Include(x => x.RecordSubject).ThenInclude(x => x.Average)
-            var student = _db.Student.Include(x => x.ClassStudent).ThenInclude(x => x.Class)               
+            var student = _db.Student.Include(x => x.ClassStudent).ThenInclude(x => x.Class)
                 .Where(x => x.Id == id).SingleOrDefault();
 
             string ec;
             string ec2;
 
             var average = _unitOfWork.RecordSubject.GetFirstOrDefault(x => x.StudentId == id);
-            if(average == null)
+            if (average == null)
             {
-                ec  = "Chưa nhập đủ điểm";
+                ec = "Chưa nhập đủ điểm";
             }
             else
             {

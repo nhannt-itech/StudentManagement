@@ -13,7 +13,7 @@ namespace StudentManagement.Models
             SummarySubject = new HashSet<SummarySubject>();
         }
         public int Id { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Bạn phải nhập tên môn học.")]
         [MaxLength(50)]
         public string Name { get; set; }
 

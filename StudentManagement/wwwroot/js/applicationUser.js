@@ -28,16 +28,18 @@ function loadDataTable() {
                     var lockout = new Date(data.lockoutEnd).getTime();
                     if (lockout > today) {
                         return `
-                            <a  onclick=LockUnlock('${data.id}') class="btn btn-danger text-white" style="cursor:pointer; width:100px;">
-                                <i class="fas fa-lock-open"></i>  Unlock
+                        <div class="text-center">
+                            <a onclick=LockUnlock('${data.id}') class="btn btn-danger text-white bg-gradient-danger" style="cursor:pointer; width:100px;">
+                                <i class="fas fa-lock-open"></i> &nbsp; Mở
                             </a>
                         </div>
                     `;
                     }
                     else {
                         return `
-                            <a  onclick=LockUnlock('${data.id}') class="btn btn-success text-white" style="cursor:pointer; width:100px;">
-                                <i class="fas fa-lock"></i>  Lock
+                        <div class="text-center">
+                            <a onclick=LockUnlock('${data.id}') class="btn btn-success text-white bg-gradient-success" style="cursor:pointer; width:100px;">
+                                <i class="fas fa-lock"></i> &nbsp; Khóa
                             </a>
                         </div>
                     `;
@@ -58,10 +60,11 @@ function LockUnlock(id) {
         success: function (data) {
             if (data.success) {
                 toastr.success(data.message);
-                $('#tblData').DataTable().ajax.reload();
+                dataTable.ajax.reload();
             }
             else {
                 toastr.error(data.message);
+                dataTable.ajax.reload();
             }
         }
     });

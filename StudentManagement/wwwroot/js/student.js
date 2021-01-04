@@ -15,10 +15,10 @@
                 "render": function (data) {
                     return `
                              <div class="text-center">
-                               <a href="/Manager/Student/Upsert/${data}" class="btn btn-success text-white" style="cursor:pointer">
+                               <a href="/Manager/Student/Upsert/${data}" class="btn btn-success bg-gradient-success text-white" style="cursor:pointer">
                                     <i class="fas fa-edit"></i>
                                 </a>
-                                <a onClick=Delete("/Manager/Student/Delete/${data}") class="btn btn-danger text-white" style="cursor:pointer">
+                                <a onClick=Delete("/Manager/Student/Delete/${data}") class="btn btn-danger bg-gradient-danger text-white" style="cursor:pointer">
                                     <i class="fas fa-trash-alt"></i>
                                 </a>
                             </div>                           

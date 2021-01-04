@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using StudentManagement.DataAccess.Repository.IRepository;
 using StudentManagement.Models;
+using StudentManagement.Utility;
 
 namespace StudentManagement.Areas.Identity.Pages.Account
 {
@@ -22,17 +23,20 @@ namespace StudentManagement.Areas.Identity.Pages.Account
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
+        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IUnitOfWork _unitOfWork;
 
-        public LoginModel(SignInManager<IdentityUser> signInManager, 
+        public LoginModel(SignInManager<IdentityUser> signInManager,
             ILogger<LoginModel> logger,
             UserManager<IdentityUser> userManager,
+            RoleManager<IdentityRole> roleManager,
             IUnitOfWork unitOfWork)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _unitOfWork = unitOfWork;
+            _roleManager = roleManager;
         }
 
         [BindProperty]
@@ -94,7 +98,7 @@ namespace StudentManagement.Areas.Identity.Pages.Account
 
             if (_unitOfWork.Subject.GetAll().Count() == 0)
             {
-                Subject sub = new Subject() { Id=1, Name = "Toán" };
+                Subject sub = new Subject() { Id = 1, Name = "Toán" };
                 Subject sub1 = new Subject() { Id = 2, Name = "Lý" };
                 Subject sub2 = new Subject() { Id = 3, Name = "Hóa" };
                 Subject sub3 = new Subject() { Id = 4, Name = "Sinh" };
@@ -117,6 +121,39 @@ namespace StudentManagement.Areas.Identity.Pages.Account
 
             }
 
+            if (_unitOfWork.ApplicationUser.GetAll().Count() == 0)
+            {
+                var user = new ApplicationUser()
+                {
+                    UserName = "admin@gmail.com",
+                    Email = "admin@gmail.com",
+                    Name = "Nhà phát triển",
+                    PhoneNumber = "0987639079",
+                    Address = "Không",
+                    Role = SD.Role_Admin
+                };
+                var result = await _userManager.CreateAsync(user, Input.Password);
+                if (result.Succeeded)
+                {
+                    if (!await _roleManager.RoleExistsAsync(SD.Role_Admin))
+                    {
+                        await _roleManager.CreateAsync(new IdentityRole(SD.Role_Admin));
+                    }
+                    if (!await _roleManager.RoleExistsAsync(SD.Role_Manager))
+                    {
+                        await _roleManager.CreateAsync(new IdentityRole(SD.Role_Manager));
+                    }
+                    if (!await _roleManager.RoleExistsAsync(SD.Role_Teacher))
+                    {
+                        await _roleManager.CreateAsync(new IdentityRole(SD.Role_Teacher));
+                    }
+                    if (!await _roleManager.RoleExistsAsync(SD.Role_Student))
+                    {
+                        await _roleManager.CreateAsync(new IdentityRole(SD.Role_Student));
+                    }
+                    await _userManager.AddToRoleAsync(user, user.Role);
+                }
+            }
 
             if (!string.IsNullOrEmpty(ErrorMessage))
             {

@@ -13,10 +13,10 @@ namespace StudentManagement.Models
         [Required]
         public string Name { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Bạn phải nhập giá trị tối thiểu.")]
         public int Min { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Bạn phải nhập giá trị tối đa.")]
         public int Max { get; set; }
 
     }
