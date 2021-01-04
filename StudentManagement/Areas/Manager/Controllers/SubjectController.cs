@@ -26,10 +26,7 @@ namespace StudentManagement.Areas.Admin.Controllers
             return View();
         }
 
-        public IActionResult SearchSubject()
-        {
-            return View();
-        }
+
 
         public IActionResult Upsert(int? id)
         {

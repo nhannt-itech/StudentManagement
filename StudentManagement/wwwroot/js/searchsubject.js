@@ -7,7 +7,7 @@ $(document).ready(function () {
 function loadDataTable() {
     dataTable = $('#tblData').DataTable({
         "ajax": {
-            "url": "/Manager/Subject/GetAll"
+            "url": "/Teacher/SearchInfo/GetAllSubject"
         },
         "columns": [
             { "data": "id"},
@@ -35,7 +35,7 @@ $('#Detail').on('show.bs.modal', function (event) {
     var modal = $(this)
     $.ajax({
         method: 'GET',
-        url: '/Manager/Subject/Details/' + idSubject,
+        url: '/Teacher/SearchInfo/DetailsSubject/' + idSubject,
         success: function (data) {
             console.log(data.idSubject);
             modal.find('#Id').val(data.id);
