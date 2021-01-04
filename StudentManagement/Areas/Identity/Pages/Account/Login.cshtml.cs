@@ -132,7 +132,7 @@ namespace StudentManagement.Areas.Identity.Pages.Account
                     Address = "Không",
                     Role = SD.Role_Admin
                 };
-                var result = await _userManager.CreateAsync(user, Input.Password);
+                var result = await _userManager.CreateAsync(user, "Admin123@");
                 if (result.Succeeded)
                 {
                     if (!await _roleManager.RoleExistsAsync(SD.Role_Admin))
