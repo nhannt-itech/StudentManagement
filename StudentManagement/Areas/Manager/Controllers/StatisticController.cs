@@ -2,13 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using StudentManagement.DataAccess.Repository.IRepository;
+using StudentManagement.Utility;
 
 namespace StudentManagement.Areas.Manager.Controllers
 {
     [Area("Manager")]
+    [Authorize(Roles = SD.Role_Manager)]
     public class StatisticController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;

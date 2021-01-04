@@ -2,14 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using StudentManagement.DataAccess.Data;
 using StudentManagement.DataAccess.Repository.IRepository;
+using StudentManagement.Utility;
 
 namespace StudentManagement.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = SD.Role_Admin)]
     public class ApplicationUserController : Controller
     {
         private readonly ApplicationDbContext _db;

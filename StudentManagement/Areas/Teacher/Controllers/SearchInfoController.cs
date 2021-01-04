@@ -11,10 +11,12 @@ using StudentManagement.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using StudentManagement.Utility;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace StudentManagement.Areas.Teacher.Controllers
 {
     [Area("Teacher")]
+    [Authorize(Roles = SD.Role_Teacher + "," + SD.Role_Manager)]
     public class SearchInfoController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;

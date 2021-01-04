@@ -2,16 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using StudentManagement.DataAccess.Data;
 using StudentManagement.DataAccess.Repository.IRepository;
 using StudentManagement.Models;
+using StudentManagement.Utility;
 
 namespace StudentManagement.Areas.Admin.Controllers
 {
     [Area("Manager")]
-    //[Authorize(Roles = SD.Role_Admin)]
+    [Authorize(Roles = SD.Role_Manager)]
     public class SubjectController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;

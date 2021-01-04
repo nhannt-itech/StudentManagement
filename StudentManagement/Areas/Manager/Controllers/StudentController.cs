@@ -11,10 +11,12 @@ using StudentManagement.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using StudentManagement.Utility;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace StudentManagement.Areas.Manager.Controllers
 {
     [Area("Manager")]
+    [Authorize(Roles = SD.Role_Manager)]
     public class StudentController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;

@@ -2,14 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using StudentManagement.DataAccess.Repository.IRepository;
 using StudentManagement.Models.ViewModels;
+using StudentManagement.Utility;
 
 namespace StudentManagement.Areas.Teacher.Controllers
 {
     [Area("Teacher")]
+    [Authorize(Roles = SD.Role_Teacher + "," + SD.Role_Manager)]
     public class SummaryController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;

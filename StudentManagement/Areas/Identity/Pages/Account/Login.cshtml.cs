@@ -132,7 +132,9 @@ namespace StudentManagement.Areas.Identity.Pages.Account
                     Address = "Không",
                     Role = SD.Role_Admin
                 };
+
                 var result = await _userManager.CreateAsync(user, "Admin123@");
+
                 if (result.Succeeded)
                 {
                     if (!await _roleManager.RoleExistsAsync(SD.Role_Admin))
@@ -146,10 +148,6 @@ namespace StudentManagement.Areas.Identity.Pages.Account
                     if (!await _roleManager.RoleExistsAsync(SD.Role_Teacher))
                     {
                         await _roleManager.CreateAsync(new IdentityRole(SD.Role_Teacher));
-                    }
-                    if (!await _roleManager.RoleExistsAsync(SD.Role_Student))
-                    {
-                        await _roleManager.CreateAsync(new IdentityRole(SD.Role_Student));
                     }
                     await _userManager.AddToRoleAsync(user, user.Role);
                 }

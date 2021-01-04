@@ -24,7 +24,8 @@ using StudentManagement.Utility;
 namespace StudentManagement.Areas.Identity.Pages.Account
 {
 
-    [AllowAnonymous]
+    //[AllowAnonymous]
+    [Authorize(Roles = SD.Role_Admin)]
     public class RegisterModel : PageModel
     {
         private readonly SignInManager<IdentityUser> _signInManager;
@@ -111,10 +112,6 @@ namespace StudentManagement.Areas.Identity.Pages.Account
             {
                 await _roleManager.CreateAsync(new IdentityRole(SD.Role_Teacher));
             }
-            if (!await _roleManager.RoleExistsAsync(SD.Role_Student))
-            {
-                await _roleManager.CreateAsync(new IdentityRole(SD.Role_Student));
-            }
             ReturnUrl = returnUrl;
             Input = new InputModel()
             {
@@ -174,10 +171,6 @@ namespace StudentManagement.Areas.Identity.Pages.Account
                     if (!await _roleManager.RoleExistsAsync(SD.Role_Teacher))
                     {
                         await _roleManager.CreateAsync(new IdentityRole(SD.Role_Teacher));
-                    }
-                    if (!await _roleManager.RoleExistsAsync(SD.Role_Student))
-                    {
-                        await _roleManager.CreateAsync(new IdentityRole(SD.Role_Student));
                     }
 
                     if (user.Role == null)

@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using StudentManagement.Utility
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -37,116 +39,131 @@
                 </div>
                 <div class="sidebar-brand-text">QUẢN LÝ HỌC SINH</div>
             </a>
+            @if (User.IsInRole(SD.Role_Admin))
+            {
+                <hr class="sidebar-divider">
 
-            <hr class="sidebar-divider">
-
-            <div class="sidebar-heading">
-                Admin
-            </div>
-
-            <li class="nav-item">
-                <a class="nav-link" asp-area="Admin" asp-controller="ApplicationUser" asp-action="Index">
-                    <i class="fas fa-user-cog"></i>
-                    <span>Quản lý tài khoản</span>
-                </a>
-            </li>
-
-            <hr class="sidebar-divider">
-
-            <div class="sidebar-heading">
-                Quản Lý
-            </div>
-            <li class="nav-item">
-                <a class="nav-link" asp-area="Manager" asp-controller="Rule" asp-action="Index">
-                    <i class="fas fa-book-open"></i>
-                    <span>Quản lý quy định</span>
-                </a>
-                <a class="nav-link" asp-area="Manager" asp-controller="Student" asp-action="Index">
-                    <i class="fas fa-user-graduate"></i>
-                    <span>Quản lý học sinh</span>
-                </a>
-                <a class="nav-link" asp-area="Manager" asp-controller="Subject" asp-action="Index">
-                    <i class="fas fa-book"></i>
-                    <span>Quản lý môn học</span>
-                </a>
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseChart" aria-expanded="true" aria-controls="collapseChart">
-                    <i class="fas fa-fw fa-columns"></i>
-                    <span>Biểu đồ</span>
-                </a>
-                <div id="collapseChart" class="collapse" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" asp-area="Manager" asp-controller="Statistic" asp-action="Index">
-                            Thống kê thông tin
-                        </a>
-                        <a class="collapse-item" asp-area="Manager" asp-controller="ResultStatistic" asp-action="Index">
-                            Thống kê kết quả
-                        </a>
-                    </div>
+                <div class="sidebar-heading">
+                    Admin
                 </div>
-            </li>
 
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Giáo Viên
-            </div>
-            <li class="nav-item">
-                <a class="nav-link" asp-area="Teacher" asp-controller="Class" asp-action="Index">
-                    <i class="fas fa-user-friends"></i>
-                    <span>Quản lý lớp học</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" asp-area="Teacher" asp-controller="ScoreManage" asp-action="Index">
-                    <i class="fas fa-file-word"></i>
-                    <span>Quản lý điểm số</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" asp-area="Teacher" asp-controller="SearchScore" asp-action="Index">
-                    <i class="fas fa-bookmark"></i>
-                    <span>Tổng kết điểm </span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSummary" aria-expanded="true" aria-controls="collapseSummary">
-                    <i class="fas fa-fw fa-columns"></i>
-                    <span>Thống kê</span>
-                </a>
-                <div id="collapseSummary" class="collapse" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" asp-area="Teacher" asp-controller="SummarySubject" asp-action="Index">
-                            Môn học
-                        </a>
-                        <a class="collapse-item" asp-area="Teacher" asp-controller="Summary" asp-action="Index">
-                            Tổng quát
-                        </a>
-                    </div>
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="Admin" asp-controller="ApplicationUser" asp-action="Index">
+                        <i class="fas fa-user-cog"></i>
+                        <span>Quản lý tài khoản</span>
+                    </a>
+                </li>
+            }
+
+            @if (User.IsInRole(SD.Role_Manager))
+            {
+                <hr class="sidebar-divider">
+
+                <div class="sidebar-heading">
+                    Quản Lý
                 </div>
-            </li>
-            <li class="nav-item">
 
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="Manager" asp-controller="Rule" asp-action="Index">
+                        <i class="fas fa-book-open"></i>
+                        <span>Quản lý quy định</span>
+                    </a>
+                </li>
+                <li class="nav-item">
 
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSearch" aria-expanded="true" aria-controls="collapseSummary">
-                    <i class="fas fa-search"></i>
-                    <span>Thông tin</span>
-                </a>
-                <div id="collapseSearch" class="collapse" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" asp-area="Teacher" asp-controller="SearchInfo" asp-action="SearchStudent">
-                            Học sinh
-                        </a>
-                        <a class="collapse-item" asp-area="Teacher" asp-controller="SearchInfo" asp-action="SearchClass">
-                            Lớp học
-                        </a>
-                        <a class="collapse-item" asp-area="Teacher" asp-controller="SearchInfo" asp-action="SearchSubject">
-                            Môn học
-                        </a>
+                    <a class="nav-link" asp-area="Manager" asp-controller="Student" asp-action="Index">
+                        <i class="fas fa-user-graduate"></i>
+                        <span>Quản lý học sinh</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+
+                    <a class="nav-link" asp-area="Manager" asp-controller="Subject" asp-action="Index">
+                        <i class="fas fa-book"></i>
+                        <span>Quản lý môn học</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseChart" aria-expanded="true" aria-controls="collapseChart">
+                        <i class="fas fa-fw fa-columns"></i>
+                        <span>Biểu đồ</span>
+                    </a>
+                    <div id="collapseChart" class="collapse" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <a class="collapse-item" asp-area="Manager" asp-controller="Statistic" asp-action="Index">
+                                Thống kê thông tin
+                            </a>
+                            <a class="collapse-item" asp-area="Manager" asp-controller="ResultStatistic" asp-action="Index">
+                                Thống kê kết quả
+                            </a>
+                        </div>
                     </div>
+                </li>
+            }
+
+            @if (User.IsInRole(SD.Role_Manager) || User.IsInRole(SD.Role_Teacher))
+            {
+                <!-- Divider -->
+                <hr class="sidebar-divider">
+                <!-- Heading -->
+                <div class="sidebar-heading">
+                    Giáo Viên
                 </div>
-            </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="Teacher" asp-controller="Class" asp-action="Index">
+                        <i class="fas fa-user-friends"></i>
+                        <span>Quản lý lớp học</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="Teacher" asp-controller="ScoreManage" asp-action="Index">
+                        <i class="fas fa-file-word"></i>
+                        <span>Quản lý điểm số</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="Teacher" asp-controller="SearchScore" asp-action="Index">
+                        <i class="fas fa-bookmark"></i>
+                        <span>Tổng kết điểm </span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSummary" aria-expanded="true" aria-controls="collapseSummary">
+                        <i class="fas fa-fw fa-columns"></i>
+                        <span>Thống kê</span>
+                    </a>
+                    <div id="collapseSummary" class="collapse" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <a class="collapse-item" asp-area="Teacher" asp-controller="SummarySubject" asp-action="Index">
+                                Môn học
+                            </a>
+                            <a class="collapse-item" asp-area="Teacher" asp-controller="Summary" asp-action="Index">
+                                Tổng quát
+                            </a>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSearch" aria-expanded="true" aria-controls="collapseSummary">
+                        <i class="fas fa-search"></i>
+                        <span>Thông tin</span>
+                    </a>
+                    <div id="collapseSearch" class="collapse" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <a class="collapse-item" asp-area="Teacher" asp-controller="SearchInfo" asp-action="SearchStudent">
+                                Học sinh
+                            </a>
+                            <a class="collapse-item" asp-area="Teacher" asp-controller="SearchInfo" asp-action="SearchClass">
+                                Lớp học
+                            </a>
+                            <a class="collapse-item" asp-area="Teacher" asp-controller="SearchInfo" asp-action="SearchSubject">
+                                Môn học
+                            </a>
+                        </div>
+                    </div>
+                </li>
+            }
 
             <hr class="sidebar-divider d-none d-md-block">
 
