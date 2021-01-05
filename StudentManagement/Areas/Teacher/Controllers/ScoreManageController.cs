@@ -135,7 +135,7 @@ using static StudentManagement.Helper;namespace StudentManagement.Areas.Teacher.
             scoreVM.RecordSubject = obj;
             scoreVM.ScoreList = _unitOfWork.ScoreRecordSubject.GetAll(x => x.RecordSubjectId == obj.Id).ToList() ;
 
-            ViewBag.Semester = SemesterId;
+             ViewBag.Semester = SemesterId;
             if (scoreVM == null)
             {
                 return NotFound();
