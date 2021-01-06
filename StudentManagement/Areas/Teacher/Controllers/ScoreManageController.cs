@@ -15,7 +15,7 @@ using StudentManagement.Utility;
 using static StudentManagement.Helper;namespace StudentManagement.Areas.Teacher.Controllers
 {
     [Area("Teacher")]
- //   [Authorize(Roles = SD.Role_Teacher + "," + SD.Role_Manager)]
+    [Authorize(Roles = SD.Role_Teacher + "," + SD.Role_Manager)]
     public class ScoreManageController : Controller
     {
         private readonly ILogger<ScoreManageController> _logger;
