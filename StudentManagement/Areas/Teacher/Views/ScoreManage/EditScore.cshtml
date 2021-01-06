@@ -9,6 +9,12 @@
         <form asp-action="EditScore" asp-route-id="@Model.RecordSubject.Id" onsubmit="return jQueryAjaxPost(this);" autocomplete="off">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="RecordSubject.Id" />
+            <input type="hidden" asp-for="RecordSubject.ClassId" />
+            <input type="hidden" asp-for="RecordSubject.StudentId" />
+            <input type="hidden" asp-for="RecordSubject.Semester" />
+            <input type="hidden" asp-for="RecordSubject.SubjectId" />
+            <input type="hidden" asp-for="Student.Gender" />
+            <input type="hidden" asp-for="Student.Birth" />
             <input type="hidden" asp-for="Student.Id" />
 
 
@@ -42,14 +48,12 @@
                 </div>
             }
 
-        <div class="form-group">
-            <input type="submit" value="Submit" class="btn btn-primary btn-block" />
-            @*<a href='@Url.Action("StudentScore", "ScoreManage", new { id = ViewBag.Semester})'>
+            <div class="form-group">
+                <input type="submit" value="Submit" class="btn btn-primary btn-block" />
 
-            </a>*@
 
-        </div>
-            @*<input type="submit" value="Submit" class="btn btn-primary btn-block" />*@
+            </div>
+
 
 
         </form>
