@@ -1,4 +1,4 @@
-﻿using System;
+﻿ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -37,13 +37,13 @@ namespace StudentManagement.Areas.Teacher.Controllers
 
         [HttpPost]
         public IActionResult Index(int grade, string year, int semester)
-        {
-            var allObj = _unitOfWork.Summary.GetAll(x => x.Class.Grade == grade &&
+          {
+            var allObj = _unitOfWork.Summary.GetAll(x =>  x.Class.Grade == grade &&
                                                                        x.Class.Year == year &&
                                                                        x.Semester == semester, includeProperties: "Class");
-            foreach (var item in allObj)
+              foreach (var item in allObj)
             {
-                var passAllObj = _unitOfWork.RecordSubject.GetAll().GroupBy(x => new { x.ClassId, x.StudentId })
+                var passAllObj = _unitOfWork.RecordSubject.GetAll(x=>x.Semester == semester).GroupBy(x => new { x.ClassId, x.StudentId })
                                                             .Select(g => new
                                                             {
                                                                 Key = g.Key,
