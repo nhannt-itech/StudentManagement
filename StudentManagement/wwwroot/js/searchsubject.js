@@ -40,8 +40,10 @@ $('#Detail').on('show.bs.modal', function (event) {
             console.log(data.idSubject);
             modal.find('#Id').val(data.id);
             modal.find('#Name').val(data.name);
-            modal.find('#PassQuantity').val(data.pass);
-            modal.find('#PercentTage').val(data.per);            
+            modal.find('#PassQuantity1').val(data.pass1);
+            modal.find('#PercentTage1').val(data.per1);  
+            modal.find('#PassQuantity2').val(data.pass2);
+            modal.find('#PercentTage2').val(data.per2);  
         }
     })
 })

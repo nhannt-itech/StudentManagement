@@ -136,23 +136,42 @@ namespace StudentManagement.Areas.Teacher.Controllers
 
             var subject = _unitOfWork.Subject.GetFirstOrDefault(x => x.Id == id);
 
-            int? passQuantity = 0;
-            float? percent = 0;
+            int? passQuantity1 = 0;
+            int? passQuantity2 = 0;
+            float? percent1 = 0;
+            float? percent2 = 0;
 
-            var summary = _unitOfWork.SummarySubject.GetFirstOrDefault(x => x.SubjectId == id);
-            if (summary != null)
+
+            var summary1 = _unitOfWork.SummarySubject.GetAll(x => x.SubjectId == id && x.Semester == 1).ToList();
+            foreach(var x in summary1)
             {
-                passQuantity = summary.PassQuantity;
-                percent = summary.Percentage;
-            }
+                percent1 += x.Percentage;
+                passQuantity1 += x.PassQuantity;
+                
+            }        
+            percent1 = (percent1 / (summary1.Count())) * 100;
 
+            var summary2 = _unitOfWork.SummarySubject.GetAll(x => x.SubjectId == id && x.Semester == 2).ToList();
+            foreach (var x in summary2)
+            {
+                percent2 += x.Percentage;
+                passQuantity2 += x.PassQuantity;
+
+            }
+            percent2 = (percent2 / (summary2.Count())) * 100;
+
+            string Per1 = percent1.ToString() + "%";
+            string Per2 = percent2.ToString() + "%";
 
             var obj = new
             {
                 id = subject.Id,
                 name = subject.Name,
-                pass = passQuantity,
-                per = percent
+                pass1 = passQuantity1,
+                pass2=passQuantity2,
+                per1 = Per1,
+                per2 = Per2
+
             };
             return Json(obj);
         }
@@ -161,13 +180,48 @@ namespace StudentManagement.Areas.Teacher.Controllers
         public IActionResult DetailsClass(string id)
         {
             var lopHoc = _unitOfWork.Class.GetFirstOrDefault(x => x.Id == id);
+            var studentList = _unitOfWork.ClassStudent.GetAll(x => x.ClassId == id, includeProperties: "Student");
+            var recordList = _unitOfWork.RecordSubject.GetAll(x => x.ClassId == id);
+
+            foreach (var u in studentList)
+            {
+                u.Student.RecordSubject = _unitOfWork.RecordSubject.GetAll(x => x.StudentId == u.StudentId).ToList();
+            }
 
 
-            // var summary = (_unitOfWork.RecordSubject.GetFirstOrDefault(x => x.ClassId == id && x.Average > 8));
-            var hocSinhGioi = (_db.RecordSubject.Where(x => x.Average >= 8 && x.ClassId == id)).Count();
-            var hocSinhKha = (_db.RecordSubject.Where(x => x.Average >= 6.5 && x.Average < 8 && x.Class.Id == id)).Count();
-            var hocSinhTB = (_db.RecordSubject.Where(x => x.Average >= 5 && x.Average < 6.5 && x.Class.Id == id)).Count();
-            var hocSinhYeu = (_db.RecordSubject.Where(x => x.Average <= 5 && x.Class.Id == id)).Count();
+            ViewBag.lop = _unitOfWork.Class.Get(id).Name.ToString();
+
+
+            int hsGioi = 0;
+            int hsKha = 0;
+            int hsTB = 0;
+            int hsYeu = 0;
+            var searchScoreList = new List<SearchScoreVM>();
+            foreach (var st in studentList)
+            {
+                SearchScoreVM score = new SearchScoreVM();
+                score.Student = st.Student;
+
+                score.AvgSem1 = (float)Math.Round((float)st.Student.RecordSubject.Where(x => x.Semester == 1 && x.ClassId == id).Select(x => x.Average).Average().GetValueOrDefault(), 2);
+                score.AvgSem2 = (float)Math.Round((float)st.Student.RecordSubject.Where(x => x.Semester == 2 && x.ClassId == id).Select(x => x.Average).Average().GetValueOrDefault(), 2);
+                score.FinalAvg = score.FinalAvg = (float)Math.Round((score.AvgSem1 + score.AvgSem2) / 2, 2);
+                searchScoreList.Add(score);
+            }
+
+            foreach(var a in searchScoreList)
+            {
+                if (a.FinalAvg >= 8)
+                    hsGioi++;
+
+                if (a.FinalAvg >= 6.5 && a.FinalAvg < 8)
+                    hsKha++;
+                if (a.FinalAvg >= 5 && a.FinalAvg < 6.5)
+                    hsTB++;
+                if(a.FinalAvg <5)
+                {
+                    hsYeu++;
+                }
+            }
 
             var obj = new
             {
@@ -176,10 +230,10 @@ namespace StudentManagement.Areas.Teacher.Controllers
                 year = lopHoc.Year,
                 numStudents = lopHoc.NumStudents,
                 grade = lopHoc.Grade,
-                gioi = hocSinhGioi,
-                kha = hocSinhKha,
-                tb = hocSinhTB,
-                yeu = hocSinhYeu
+                gioi = hsGioi,
+                kha = hsKha,
+                tb = hsTB,
+                yeu = hsYeu
 
             };
             return Json(obj);

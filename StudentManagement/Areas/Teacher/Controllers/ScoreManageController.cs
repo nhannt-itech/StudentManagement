@@ -130,6 +130,7 @@ using static StudentManagement.Helper;namespace StudentManagement.Areas.Teacher.
             var obj = _unitOfWork.RecordSubject.Get(id);
             
             obj.Student = _unitOfWork.Student.Get(obj.StudentId); //lấy student
+
             obj.Subject = _unitOfWork.Subject.Get(obj.SubjectId.GetValueOrDefault()); // lấy môn học 
             scoreVM.Student = obj.Student;
             scoreVM.RecordSubject = obj;
@@ -146,7 +147,7 @@ using static StudentManagement.Helper;namespace StudentManagement.Areas.Teacher.
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult EditScore(string id, ScoreVM scoreVM) // id of RecordSubject.Id
+        public IActionResult EditScore(ScoreVM scoreVM) // id of RecordSubject.Id
         {
             if (ModelState.IsValid)
             {
@@ -181,6 +182,12 @@ using static StudentManagement.Helper;namespace StudentManagement.Areas.Teacher.
 
                 
                 return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", scoreVMList) });
+            }
+            else
+            {
+                var errors = ModelState.Select(x => x.Value.Errors)
+                          .Where(y => y.Count > 0)
+                          .ToList();
             }
             return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "EditScore", scoreVM) });
         }
