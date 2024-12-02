@@ -1,0 +1,63 @@
+﻿@model List<StudentManagement.Models.ViewModels.ScoreVM>
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+
+<table class="table">
+    <thead class="thead-light">
+        <tr>
+            <th>
+                STT
+            </th>
+            <th>
+                Họ tên
+            </th>
+            <th>
+                Điểm 15P
+            </th>
+            <th>
+                Điểm 1T
+            </th>
+            <th>
+                Điểm Thi 
+            </th>
+            @*<th>
+                <a onclick="showInPopup('@Url.Action("AddOrEdit","Transaction",null,Context.Request.Scheme)','New Transaction')" class="btn btn-success text-white"><i class="fas fa-random" style="cursor:pointer;"></i> New Transaction</a>
+            </th>*@
+        </tr>
+    </thead>
+    <tbody>
+        @{ int count = 0;}
+        @foreach (var item in Model)
+        {
+            count = count + 1;
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => count)
+
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Student.Name)
+                </td>
+                <td>
+                    @{var paramaterValue = item.ScoreList.Where(x => x.RecordType == "D15P").Select(x => x.Score).FirstOrDefault(); }
+                    @Html.DisplayFor(modelItem => paramaterValue)
+                </td>
+                <td>
+                    @{var paramaterValue1 = item.ScoreList.Where(x => x.RecordType == "D1T").Select(x => x.Score).FirstOrDefault(); }
+                    @Html.DisplayFor(modelItem => paramaterValue1)
+                </td>
+                <td>
+                    @{var paramaterValue2 = item.ScoreList.Where(x => x.RecordType == "DHK").Select(x => x.Score).FirstOrDefault(); }
+                    @Html.DisplayFor(modelItem => paramaterValue2)
+                </td>
+                <td>
+                    <div>
+                        <a onclick="showInPopup('@Url.Action("EditScore","ScoreManage",new {id=item.RecordSubject.Id},Context.Request.Scheme)','Chỉnh sửa điểm')" class="btn btn-success text-white" style="cursor:pointer;"><i class="fas fa-pencil-alt"></i></a>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

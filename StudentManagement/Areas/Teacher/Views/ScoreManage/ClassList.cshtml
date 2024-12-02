@@ -1,0 +1,33 @@
+﻿@model List<StudentManagement.Models.Class>;
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="">@ViewBag.subject</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Danh sách lớp</li>
+    </ol>
+</nav>
+
+<form asp-controller="ScoreManage" asp-action="ClassList" asp-route-id="@ViewBag.subId" method="get">
+    <p>
+        Tìm kiếm: <input type="text" name="SearchString">
+        <input type="submit" value="Filter" />
+    </p>
+</form> 
+
+\
+<div class="list-group" style="margin-left:200px; margin-right:200px; text-align:center;">
+    <a href="#" class="list-group-item list-group-item-action list-group-item-success active">
+        <b>DANH SÁCH LỚP HỌC</b>
+    </a>
+    @foreach (var clas in Model)
+    {
+        <a href="/Teacher/ScoreManage/SemesterList?id=@clas.Id" class="list-group-item list-group-item-action"><b>@clas.Name</b></a>
+    }
+
+</div>
+<br />
+
